@@ -1,6 +1,6 @@
-import {useState, useEffect} from 'react'
-import {motion, AnimatePresence} from 'framer-motion'
-import {User, Menu, X} from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { User, Menu, X, Home, Users, Dumbbell, MessageSquare, Settings, LogOut, ChevronRight } from 'lucide-react'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,21 +9,22 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {Button} from "@/components/ui/button"
-import {Link} from "react-router";
-import {ModeToggle} from "@/components/shared/mode-toggle.tsx";
+import { Button } from "@/components/ui/button"
+import { Link } from "react-router"
+import { ModeToggle } from "@/components/shared/mode-toggle"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const navItems = [
-    {name: 'Home', href: '/'},
-    {name: 'All Trainers', href: '/trainers'},
-    {name: 'All Classes', href: '/classes'},
-    {name: 'Community', href: '/community'},
+    { name: 'Home', href: '/', icon: Home },
+    { name: 'All Trainers', href: '/trainers', icon: Users },
+    { name: 'All Classes', href: '/classes', icon: Dumbbell },
+    { name: 'Community', href: '/community', icon: MessageSquare },
 ]
 
 const userNavItems = [
-    {name: 'Profile', href: '/profile'},
-    {name: 'Dashboard', href: '/dashboard'},
-    {name: 'Settings', href: '/settings'},
+    { name: 'Profile', href: '/profile', icon: User },
+    { name: 'Dashboard', href: '/dashboard', icon: ChevronRight },
+    { name: 'Settings', href: '/settings', icon: Settings },
 ]
 
 const menuVariants = {
@@ -31,8 +32,8 @@ const menuVariants = {
         opacity: 1,
         height: 'auto',
         transition: {
-            duration: 0.2,
-            staggerChildren: 0.05,
+            duration: 0.3,
+            staggerChildren: 0.07,
             delayChildren: 0.1
         }
     },
@@ -40,7 +41,7 @@ const menuVariants = {
         opacity: 0,
         height: 0,
         transition: {
-            duration: 0.2,
+            duration: 0.3,
             staggerChildren: 0.05,
             staggerDirection: -1,
             when: "afterChildren"
@@ -53,18 +54,28 @@ const menuItemVariants = {
         y: 0,
         opacity: 1,
         transition: {
-            y: {stiffness: 500, velocity: -50}
+            y: { stiffness: 1000, velocity: -100 }
         }
     },
     closed: {
         y: 50,
         opacity: 0,
         transition: {
-            y: {stiffness: 500}
+            y: { stiffness: 1000 }
         }
     }
 }
 
+const borderVariants = {
+    hidden: { scaleX: 0 },
+    visible: {
+        scaleX: 1,
+        transition: {
+            delay: 0.3,
+            duration: 0.6
+        }
+    }
+}
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
@@ -80,12 +91,12 @@ export default function Navbar() {
 
     return (
         <motion.nav
-            className={`fixed  w-full z-50 transition-colors duration-200 ${
-                isScrolled ? 'bg-gradient-to-br from-purple-100 to-pink-100 dark:from-gray-900 dark:to-black backdrop-blur-sm shadow-lg' : 'bg-transparent'
+            className={`fixed w-full z-50 transition-colors duration-200 ${
+                isScrolled ? 'bg-gradient-to-br from-purple-100 to-pink-100 dark:from-gray-900 dark:to-black backdrop-blur-sm shadow-md' : 'bg-transparent'
             }`}
-            initial={{y: -100}}
-            animate={{y: 0}}
-            transition={{duration: 0.3}}
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.3 }}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
@@ -109,17 +120,16 @@ export default function Navbar() {
                     </div>
                     <div className="hidden md:block">
                         <div className="ml-4 flex items-center md:ml-6">
-                            <ModeToggle/>
+                            <ModeToggle />
                             <DropdownMenu modal={false}>
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="ghost" className="ml-3">
-                                        <User className="h-5 w-5"/>
+                                        <User className="h-5 w-5" />
                                     </Button>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent
-                                    className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-gray-900 dark:to-black">
+                                <DropdownMenuContent className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-gray-900 dark:to-black">
                                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                    <DropdownMenuSeparator/>
+                                    <DropdownMenuSeparator />
                                     {userNavItems.map((item) => (
                                         <DropdownMenuItem key={item.name}>
                                             <Link to={item.href}>{item.name}</Link>
@@ -136,22 +146,22 @@ export default function Navbar() {
                                 {isOpen ? (
                                     <motion.div
                                         key="close"
-                                        initial={{opacity: 0, rotate: -90}}
-                                        animate={{opacity: 1, rotate: 0}}
-                                        exit={{opacity: 0, rotate: 90}}
-                                        transition={{duration: 0.2}}
+                                        initial={{ opacity: 0, rotate: -90 }}
+                                        animate={{ opacity: 1, rotate: 0 }}
+                                        exit={{ opacity: 0, rotate: 90 }}
+                                        transition={{ duration: 0.2 }}
                                     >
-                                        <X className="h-6 w-6"/>
+                                        <X className="h-6 w-6" />
                                     </motion.div>
                                 ) : (
                                     <motion.div
                                         key="menu"
-                                        initial={{opacity: 0, rotate: 90}}
-                                        animate={{opacity: 1, rotate: 0}}
-                                        exit={{opacity: 0, rotate: -90}}
-                                        transition={{duration: 0.2}}
+                                        initial={{ opacity: 0, rotate: 90 }}
+                                        animate={{ opacity: 1, rotate: 0 }}
+                                        exit={{ opacity: 0, rotate: -90 }}
+                                        transition={{ duration: 0.2 }}
                                     >
-                                        <Menu className="h-6 w-6"/>
+                                        <Menu className="h-6 w-6" />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -169,53 +179,73 @@ export default function Navbar() {
                         exit="closed"
                         variants={menuVariants}
                     >
-                        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                        <motion.div
+                            className="px-4 py-3 bg-purple-50/50 dark:bg-gray-800/50"
+                            variants={menuItemVariants}
+                        >
+                            <div className="flex items-center space-x-3">
+                                <Avatar>
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>JD</AvatarFallback>
+                                </Avatar>
+                                <div className="flex-1">
+                                    <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">John Doe</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">john@example.com</p>
+                                </div>
+                                <ModeToggle />
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            className="h-px bg-gray-200 dark:bg-gray-700"
+                            variants={borderVariants}
+                            initial="hidden"
+                            animate="visible"
+                        />
+
+                        {/* Main Navigation Section */}
+                        <div className="px-2 pt-2 pb-4 space-y-1">
                             {navItems.map((item) => (
                                 <motion.div key={item.name} variants={menuItemVariants}>
                                     <Link
                                         to={item.href}
-                                        className="text-gray-800 dark:text-gray-200 hover:bg-purple-200/50 dark:hover:bg-purple-800/50 hover:text-purple-700 dark:hover:text-purple-300 block px-3 py-2 rounded-md text-base font-medium"
+                                        className="flex items-center space-x-3 text-gray-800 dark:text-gray-200 hover:bg-purple-200/50 dark:hover:bg-purple-800/50 hover:text-purple-700 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium"
                                     >
-                                        {item.name}
+                                        <item.icon className="h-5 w-5" />
+                                        <span>{item.name}</span>
                                     </Link>
                                 </motion.div>
                             ))}
                         </div>
-                        <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
-                            <div className="flex items-center px-5">
-                                <div className="flex-shrink-0">
-                                    <User className="h-8 w-8 rounded-full"/>
-                                </div>
-                                <div className="ml-3">
-                                    <div
-                                        className="text-base font-medium leading-none text-gray-800 dark:text-gray-200">John
-                                        Doe
-                                    </div>
-                                    <div
-                                        className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">john@example.com
-                                    </div>
-                                </div>
-                                <div className="ml-auto">
-                                    <ModeToggle/>
-                                </div>
-                            </div>
-                            <div className="mt-3 px-2 space-y-1">
-                                {userNavItems.map((item) => (
-                                    <motion.div key={item.name} variants={menuItemVariants}>
-                                        <Link
-                                            to={item.href}
-                                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-gray-200 hover:bg-purple-200/50 dark:hover:bg-purple-800/50 hover:text-purple-700 dark:hover:text-purple-300"
-                                        >
-                                            {item.name}
-                                        </Link>
-                                    </motion.div>
-                                ))}
-                                <motion.div variants={menuItemVariants}>
-                                    <button
-                                        className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-gray-200 hover:bg-purple-200/50 dark:hover:bg-purple-800/50 hover:text-purple-700 dark:hover:text-purple-300">Logout
-                                    </button>
+
+                        {/* User Navigation Section */}
+                        <motion.div
+                            className="h-px bg-gray-200 dark:bg-gray-700"
+                            variants={borderVariants}
+                            initial="hidden"
+                            animate="visible"
+                        />
+
+                        <div className="px-2 pt-4 pb-3 space-y-1">
+                            {userNavItems.map((item) => (
+                                <motion.div key={item.name} variants={menuItemVariants}>
+                                    <Link
+                                        to={item.href}
+                                        className="flex items-center space-x-3 text-gray-800 dark:text-gray-200 hover:bg-purple-200/50 dark:hover:bg-purple-800/50 hover:text-purple-700 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium"
+                                    >
+                                        <item.icon className="h-5 w-5" />
+                                        <span>{item.name}</span>
+                                    </Link>
                                 </motion.div>
-                            </div>
+                            ))}
+                            <motion.div variants={menuItemVariants}>
+                                <button
+                                    className="flex w-full items-center space-x-3 text-gray-800 dark:text-gray-200 hover:bg-purple-200/50 dark:hover:bg-purple-800/50 hover:text-purple-700 dark:hover:text-purple-300 px-3 py-2 rounded-md text-base font-medium"
+                                >
+                                    <LogOut className="h-5 w-5" />
+                                    <span>Logout</span>
+                                </button>
+                            </motion.div>
                         </div>
                     </motion.div>
                 )}
