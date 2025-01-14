@@ -1,18 +1,24 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { User, Menu, X, Home, Users, Dumbbell, MessageSquare, Settings, LogOut, ChevronRight } from 'lucide-react'
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+    User,
+    Menu,
+    X,
+    Home,
+    Users,
+    Dumbbell,
+    MessageSquare,
+    Settings,
+    LogOut,
+    ChevronRight,
+    UserIcon
+} from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router"
 import { ModeToggle } from "@/components/shared/mode-toggle"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import useAuthStore from "@/store/authStore.ts";
+import AuthUserProfile from "@/components/AuthUserProfile.tsx";
 
 const navItems = [
     { name: 'Home', href: '/', icon: Home },
@@ -78,6 +84,7 @@ const borderVariants = {
 }
 
 export default function Navbar() {
+    const { currentUser } = useAuthStore()
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
 
@@ -119,25 +126,9 @@ export default function Navbar() {
                         </div>
                     </div>
                     <div className="hidden md:block">
-                        <div className="ml-4 flex items-center md:ml-6">
+                        <div className="ml-4 flex gap-4 items-center md:ml-6">
                             <ModeToggle />
-                            <DropdownMenu modal={false}>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" className="ml-3">
-                                        <User className="h-5 w-5" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-gray-900 dark:to-black">
-                                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    {userNavItems.map((item) => (
-                                        <DropdownMenuItem key={item.name}>
-                                            <Link to={item.href}>{item.name}</Link>
-                                        </DropdownMenuItem>
-                                    ))}
-                                    <DropdownMenuItem>Logout</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                            <AuthUserProfile/>
                         </div>
                     </div>
                     <div className="md:hidden">
@@ -185,12 +176,12 @@ export default function Navbar() {
                         >
                             <div className="flex items-center space-x-3">
                                 <Avatar>
-                                    <AvatarImage src="https://github.com/shadcn.png" />
-                                    <AvatarFallback>JD</AvatarFallback>
+                                    <AvatarImage src={currentUser?.photoURL || undefined} />
+                                    <AvatarFallback><UserIcon/></AvatarFallback>
                                 </Avatar>
                                 <div className="flex-1">
-                                    <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">John Doe</h3>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">john@example.com</p>
+                                    <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">{currentUser?.displayName}</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{currentUser?.email}</p>
                                 </div>
                                 <ModeToggle />
                             </div>
@@ -218,7 +209,6 @@ export default function Navbar() {
                             ))}
                         </div>
 
-                        {/* User Navigation Section */}
                         <motion.div
                             className="h-px bg-gray-200 dark:bg-gray-700"
                             variants={borderVariants}
