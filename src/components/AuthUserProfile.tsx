@@ -1,79 +1,81 @@
 import {
     DropdownMenu,
-    DropdownMenuContent, DropdownMenuGroup,
+    DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel, DropdownMenuSeparator,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu.tsx";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
-import useAuthStore from "@/store/authStore.ts";
-import {UserIcon} from "lucide-react";
-import {Link} from "react-router";
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import useAuthStore from "@/store/authStore";
+import { UserIcon } from 'lucide-react';
+import { Link } from "react-router";
+import { Button } from "@/components/ui/button";
 
 export default function AuthUserProfile() {
-    const {currentUser} = useAuthStore()
+    const { currentUser, logout } = useAuthStore()
+
+    if (!currentUser) {
+        return (
+            <>
+                <Button asChild  className="text-white bg-transparent hover:bg-purple-500/30">
+                    <Link to="/login">Login</Link>
+                </Button>
+                <Button asChild className="text-white bg-purple-500 hover:bg-purple-600">
+                    <Link to="/signup">Sign Up</Link>
+                </Button>
+            </>
+
+        )
+    }
 
     return (
-        <>
-            <DropdownMenu modal={false}>
-                <DropdownMenuTrigger asChild>
-                        <Avatar className="size-8">
-                            <AvatarImage
-                                src={currentUser?.photoURL || undefined}
-                                alt={currentUser?.displayName || undefined}
-                            />
-                            <AvatarFallback>
-                                <UserIcon/>
-                            </AvatarFallback>
-                        </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" forceMount>
-                    {currentUser ? (
-                        <>
-                            <DropdownMenuLabel className="font-normal">
-                                <div className="flex flex-col space-y-1">
-                                    <p className="text-sm font-medium leading-none">
-                                        {currentUser.displayName || 'User'}
-                                    </p>
-                                    <p className="text-xs leading-none text-muted-foreground">
-                                        {currentUser.email || ''}
-                                    </p>
-                                </div>
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator/>
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem>
-                                    Profile
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    Dashboard
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    Settings
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator/>
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem>
-                                    Logout
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                        </>
-                    ) : (
-                        <>
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem>
-                                    <Link to="/login">Login</Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <Link to="/signup">Signup</Link>
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                        </>
-                    )}
-                </DropdownMenuContent>
-            </DropdownMenu>
-
-        </>
+        <DropdownMenu modal={false}>
+            <DropdownMenuTrigger asChild>
+                <Avatar className="size-8 cursor-pointer">
+                    <AvatarImage
+                        src={currentUser.photoURL || undefined}
+                        alt={currentUser.displayName || undefined}
+                    />
+                    <AvatarFallback>
+                        <UserIcon className="text-gray-300" />
+                    </AvatarFallback>
+                </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" forceMount className="w-56 bg-black/90 backdrop-blur-md text-gray-300 border-purple-500/30">
+                <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none text-white">
+                            {currentUser.displayName || 'User'}
+                        </p>
+                        <p className="text-xs leading-none text-gray-400">
+                            {currentUser.email || ''}
+                        </p>
+                    </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-purple-500/30" />
+                <DropdownMenuGroup>
+                    <DropdownMenuItem className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
+                        Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
+                        Dashboard
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
+                        Settings
+                    </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator className="bg-purple-500/30" />
+                <DropdownMenuGroup>
+                    <DropdownMenuItem className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
+                        <button onClick={logout} className="w-full text-left">
+                            Logout
+                        </button>
+                    </DropdownMenuItem>
+                </DropdownMenuGroup>
+            </DropdownMenuContent>
+        </DropdownMenu>
     )
 }
+
