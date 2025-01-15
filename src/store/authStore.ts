@@ -15,11 +15,6 @@ import {auth} from "@/lib/Firebase.ts";
 import {createUserInDB} from "@/api/user.ts";
 
 
-export interface DBUser {
-    email: string;
-    displayName?: string;
-    photoURL?: string;
-}
 
 type AuthState = {
     currentUser: User | null;
@@ -90,7 +85,6 @@ const useAuthStore = create<AuthStore>((set) => ({
     login: async (email: string, password: string) => {
         try {
             const result = await signInWithEmailAndPassword(auth, email, password);
-            console.log(result);
             await createUserInDB(result?.user)
         } catch (error) {
             console.error(error);
