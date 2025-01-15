@@ -44,7 +44,6 @@ export default function FeaturesSection() {
             features={features}
             title="Transform Your Fitness Journey"
             autoPlayInterval={5000}
-            imageHeight="h-[624px]"
         />
     )
 }
