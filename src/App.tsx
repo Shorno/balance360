@@ -3,6 +3,7 @@ import {Toaster} from "react-hot-toast";
 import MainLayout from "@/components/layouts/MainLayout.tsx";
 import Home from "@/pages/Home.tsx";
 import SignupPage from "@/pages/auth/Signup.tsx";
+import LoginPage from "@/pages/auth/Login.tsx";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
                         <Route index element={<Home/>}/>
                     </Route>
                     <Route element={<SignupPage/>} path="/signup"/>
+                    <Route element={<LoginPage/>} path="/login"/>
                 </Routes>
             </BrowserRouter>
             <Toaster position={"top-center"}/>

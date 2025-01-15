@@ -12,14 +12,13 @@ import {
 } from "firebase/auth"
 
 import {auth} from "@/lib/Firebase.ts";
+import {createUserInDB} from "@/api/user.ts";
 
 
 export interface DBUser {
-    firebaseUID: string;
     email: string;
     displayName?: string;
     photoURL?: string;
-    role: 'user' | 'admin' | 'superAdmin';
 }
 
 type AuthState = {
@@ -58,8 +57,7 @@ const useAuthStore = create<AuthStore>((set) => ({
                     set({currentUser: updatedUser});
                 }
             }
-            // await syncUserToDB(user);
-            // await generateJWT(email);
+            await createUserInDB(user)
             return userCredential;
         } catch (error) {
             console.error(error);
@@ -71,8 +69,7 @@ const useAuthStore = create<AuthStore>((set) => ({
         try {
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
-            // await syncUserToDB(result.user);
-            // await generateJWT(result?.user?.email);
+            await createUserInDB(result?.user)
             return result.user;
         } catch (error) {
             console.error(error);
@@ -94,8 +91,7 @@ const useAuthStore = create<AuthStore>((set) => ({
         try {
             const result = await signInWithEmailAndPassword(auth, email, password);
             console.log(result);
-            // await syncUserToDB(result.user);
-            // await generateJWT(result?.user?.email);
+            await createUserInDB(result?.user)
         } catch (error) {
             console.error(error);
             throw error;
