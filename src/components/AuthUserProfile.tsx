@@ -19,11 +19,9 @@ export default function AuthUserProfile() {
     if (!currentUser) {
         return (
             <>
-                <Button asChild  className="text-white bg-transparent hover:bg-purple-500/30">
+
+                <Button asChild className="text-white bg-purple-500/70 hover:bg-purple-600">
                     <Link to="/login">Login</Link>
-                </Button>
-                <Button asChild className="text-white bg-purple-500 hover:bg-purple-600">
-                    <Link to="/signup">Sign Up</Link>
                 </Button>
             </>
 
