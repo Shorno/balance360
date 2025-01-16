@@ -58,7 +58,7 @@ export default function AuthUserProfile() {
                         Profile
                     </DropdownMenuItem>
                     <DropdownMenuItem className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
-                        Dashboard
+                        <Link to={"/dashboard"}>Dashboard</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
                         Settings

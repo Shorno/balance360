@@ -13,3 +13,8 @@ export const createUserInDB = async (user: User) => {
     localStorage.setItem('token', token);
     return response.data;
 }
+
+export const getRoleByEmail = async (email: string) => {
+    const response = await api.get(`/users/role/${email}`);
+    return response.data;
+}

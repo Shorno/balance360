@@ -323,7 +323,7 @@ export default function BecomeATrainerForm() {
                             <div className="pt-6 border-t border-gray-700">
                                 <Button
                                     type="submit"
-                                    className="w-full h-12 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
+                                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg  rounded-lg transition-all duration-200 transform"
                                     disabled={isPending}
                                 >
                                     {isPending ? "Submitting..." : "Apply to Become a Trainer"}
