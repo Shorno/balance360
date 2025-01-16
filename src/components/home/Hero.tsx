@@ -52,7 +52,7 @@ export default function Hero() {
         if (areImagesLoaded) {
             const interval = setInterval(() => {
                 setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-            }, 5000)
+            }, 12000)
 
             return () => clearInterval(interval)
         }

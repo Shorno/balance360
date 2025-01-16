@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
 import useAuthStore from '@/store/authStore'
-import {SignupFormData, signupSchema} from "@/schema/authSchema"
+import {SignupFormData, signupSchema} from "@/schema/schema.ts"
 import toast from "react-hot-toast"
 import UploadAndPreviewPhoto from "@/components/UploadAndPreviewPhoto.tsx";
 
@@ -125,10 +125,15 @@ export default function SignupForm() {
                         control={form.control}
                         name="photoURL"
                         render={({field}) => (
-                            <FormItem className={field.value ? "pb-8" : null!}>
+                            <FormItem className={field.value ? "pb-10" : null!}>
                                 <FormLabel className="text-gray-200">Profile Photo</FormLabel>
                                 <FormControl>
-                                    <UploadAndPreviewPhoto onImageUpload={handleImageUpload}/>
+                                    <UploadAndPreviewPhoto
+                                        onImageUpload={handleImageUpload}
+                                        imageClassName={"size-24 rounded-full"}
+                                        containerClassName={"h-28"}
+                                        previewClassName={"h-24"}
+                                    />
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>

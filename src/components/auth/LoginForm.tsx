@@ -14,7 +14,7 @@ import {
 import {Input} from "@/components/ui/input"
 import useAuthStore from '@/store/authStore'
 import toast from "react-hot-toast"
-import {LoginFormData, loginSchema} from "@/schema/authSchema.ts";
+import {LoginFormData, loginSchema} from "@/schema/schema.ts";
 
 export default function LoginForm() {
     const {login, signInWithGoogle} = useAuthStore()

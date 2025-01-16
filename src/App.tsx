@@ -4,6 +4,10 @@ import MainLayout from "@/components/layouts/MainLayout.tsx";
 import Home from "@/pages/Home.tsx";
 import SignupPage from "@/pages/auth/Signup.tsx";
 import LoginPage from "@/pages/auth/Login.tsx";
+import AllTrainersPage from "@/pages/AllTrainersPage.tsx";
+import TrainerDetailsPage from "@/pages/TrainerDetailsPage.tsx";
+import BecomeATrainerPage from "@/pages/BeATrainerPage.tsx";
+import ProtectedRoutes from "@/components/layouts/ProtectedRoutes.tsx";
 
 function App() {
 
@@ -13,6 +17,11 @@ function App() {
                 <Routes>
                     <Route element={<MainLayout/>}>
                         <Route index element={<Home/>}/>
+                        <Route element={<AllTrainersPage/>} path="/trainers"/>
+                        <Route element={<TrainerDetailsPage/>} path="/trainers/details"/>
+                        <Route element={<ProtectedRoutes/>}>
+                            <Route element={<BecomeATrainerPage/>} path="/become-a-trainer"/>
+                        </Route>
                     </Route>
                     <Route element={<SignupPage/>} path="/signup"/>
                     <Route element={<LoginPage/>} path="/login"/>
