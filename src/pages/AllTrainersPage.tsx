@@ -1,4 +1,5 @@
 import { TrainerCard, TrainerCardProps } from "@/components/TrainerCard"
+import {Link} from "react-router";
 
 const trainers: TrainerCardProps[] = [
     {
@@ -41,7 +42,7 @@ const trainers: TrainerCardProps[] = [
 
 export default function AllTrainersPage() {
     return (
-        <div className="py-16 min-h-screen bg-gray-900">
+        <div className="py-32 min-h-screen bg-gray-900">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center text-white">
                     Our Expert Trainers
@@ -52,6 +53,11 @@ export default function AllTrainersPage() {
                         <TrainerCard key={trainer._id} {...trainer} />
                     ))}
                 </div>
+                <Link to={"/become-a-trainer"}>
+                    <button className="bg-gray-800 text-white px-4 py-2 rounded-lg mt-8">
+                        Become a Trainer
+                    </button>
+                </Link>
             </div>
         </div>
     )
