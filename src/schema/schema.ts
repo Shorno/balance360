@@ -49,6 +49,10 @@ export const trainerFormSchema = z.object({
         required_error: "Available time is required"
     }).min(1, "Available time is required"),
 
+    details: z.string({
+        required_error: "Details is required"
+    }).min(10, "Details must be at least 10 characters"),
+
     yearsOfExperience: z.number({
         required_error: "Years of experience is required"
     }).min(1, "At least 1 year of experience is required"),
@@ -57,7 +61,6 @@ export const trainerFormSchema = z.object({
 
     rejectionReason: z.string().optional().nullable()
 });
-
 
 
 export type LoginFormData = z.infer<typeof loginSchema>

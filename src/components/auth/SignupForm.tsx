@@ -124,15 +124,12 @@ export default function SignupForm() {
                     <FormField
                         control={form.control}
                         name="photoURL"
-                        render={({field}) => (
-                            <FormItem className={field.value ? "pb-10" : null!}>
+                        render={() => (
+                            <FormItem>
                                 <FormLabel className="text-gray-200">Profile Photo</FormLabel>
                                 <FormControl>
                                     <UploadAndPreviewPhoto
                                         onImageUpload={handleImageUpload}
-                                        imageClassName={"size-24 rounded-full"}
-                                        containerClassName={"h-28"}
-                                        previewClassName={"h-24"}
                                     />
                                 </FormControl>
                                 <FormMessage/>
