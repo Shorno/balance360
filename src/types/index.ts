@@ -3,3 +3,5 @@ export enum Role {
     Trainer = "trainer",
     Admin = "admin"
 }
+
+

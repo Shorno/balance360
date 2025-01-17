@@ -10,6 +10,7 @@ import BecomeATrainerPage from "@/pages/BeATrainerPage.tsx";
 import ProtectedRoutes from "@/components/layouts/ProtectedRoutes.tsx";
 import AdminLayout from "@/components/layouts/DashboardLayout.tsx";
 import Dashboard from "@/pages/Dashboard/Dashboard.tsx";
+import TrainerApplications from "@/pages/Dashboard/Admin/TrainerApplications.tsx";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
                     </Route>
                     <Route element={<AdminLayout/>}>
                         <Route element={<Dashboard/>} path="/dashboard"/>
+                        <Route element={<TrainerApplications/>} path="/dashboard/trainers/applications"/>
                     </Route>
 
                     <Route element={<SignupPage/>} path="/signup"/>
