@@ -9,7 +9,7 @@ import {ErrorState} from "@/components/data-states/error-state.tsx";
 
 const breadcrumb = <>
     <BreadcrumbItem>
-        <Link to={"/trainers"}>
+        <Link to={"/dashboard/trainers"}>
             <BreadcrumbLink>
                 Trainers
             </BreadcrumbLink>
@@ -38,7 +38,6 @@ export default function TrainerApplications() {
     return (
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
-
             <ApplicationListTable data={applications}/>
         </>
     )

@@ -7,7 +7,7 @@ export default function AdminLayout() {
         <>
             <SidebarProvider defaultOpen={true}>
                 <AppSidebar/>
-                <SidebarInset>
+                <SidebarInset className={"bg-gray-900"}>
                     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                         <Outlet/>
                     </div>

@@ -10,7 +10,7 @@ import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
 
 const breadcrumb = <>
     <BreadcrumbItem>
-        <Link to={"/dashboard"}>
+        <Link to={"/dashboard/trainers"}>
             <BreadcrumbLink>
                 Trainers
             </BreadcrumbLink>

@@ -212,11 +212,11 @@ export function ApplicationListTable({data}: { data: TrainerApplicationData[] })
                 </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="ml-auto h-9">
+                        <Button variant="outline" className="ml-auto h-9 bg-gray-850">
                             View <ChevronDown className="ml-2 h-4 w-4"/>
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-[150px]">
+                    <DropdownMenuContent align="end" className="w-[150px] bg-gray-900">
                         {table
                             .getAllColumns()
                             .filter((column) => column.getCanHide())

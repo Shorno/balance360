@@ -31,7 +31,7 @@ export default function TrainerApplicationDetails({ application }: TrainerApplic
     const [rejectionFeedback, setRejectionFeedback] = useState("")
 
     return (
-        <div className="bg-gray-900 py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
+        <div className="py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
             <Card className="max-w-7xl mx-auto bg-gray-800/50 border-gray-700">
                 <CardHeader className="border-b border-gray-700">
                     <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
