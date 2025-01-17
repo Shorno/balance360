@@ -34,12 +34,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {TrainerFormData} from "@/schema/schema.ts"
 import {cn} from "@/lib/utils"
 import {Badge} from "@/components/ui/badge"
 import {Link} from "react-router";
+import {TrainerApplicationData} from "@/types";
 
-const columns: ColumnDef<TrainerFormData>[] = [
+const columns: ColumnDef<TrainerApplicationData>[] = [
     {
         accessorKey: "profileImage",
         header: "Image",
@@ -155,20 +155,23 @@ const columns: ColumnDef<TrainerFormData>[] = [
         id: "actions",
         header: "Actions",
         enableHiding: false,
-        cell: () => (
-            <div className="flex hover:text-purple-500">
-                <Link to={"/details"}>
-                  <div className={"flex justify-center items-center gap-2"}>
-                      Trainer Details
-                      <ArrowRight className="h-5 w-5"/>
-                  </div>
-                </Link>
-            </div>
-        ),
+        cell: ({ row }) => {
+            const _id = row.original._id;
+            return (
+                <div className="flex hover:text-purple-500">
+                    <Link to={`/dashboard/trainers/applications/${_id}`}>
+                        <div className="flex justify-center items-center gap-2">
+                            Trainer Details
+                            <ArrowRight className="h-5 w-5" />
+                        </div>
+                    </Link>
+                </div>
+            );
+        },
     },
 ]
 
-export function ApplicationListTable({data}: { data: TrainerFormData[] }) {
+export function ApplicationListTable({data}: { data: TrainerApplicationData[] }) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})

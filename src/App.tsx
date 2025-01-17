@@ -11,6 +11,7 @@ import ProtectedRoutes from "@/components/layouts/ProtectedRoutes.tsx";
 import AdminLayout from "@/components/layouts/DashboardLayout.tsx";
 import Dashboard from "@/pages/Dashboard/Dashboard.tsx";
 import TrainerApplications from "@/pages/Dashboard/Admin/TrainerApplications.tsx";
+import TrainerApplicationDetailsPage from "@/pages/Dashboard/Admin/TrainerApplicationDetailsPage.tsx";
 
 function App() {
 
@@ -27,8 +28,11 @@ function App() {
                         </Route>
                     </Route>
                     <Route element={<AdminLayout/>}>
-                        <Route element={<Dashboard/>} path="/dashboard"/>
-                        <Route element={<TrainerApplications/>} path="/dashboard/trainers/applications"/>
+                        <Route path="/dashboard">
+                            <Route index element={<Dashboard/>}/>
+                            <Route path="trainers/applications"  element={<TrainerApplications/>}/>
+                            <Route path="trainers/applications/:_id" element={<TrainerApplicationDetailsPage/>}/>
+                        </Route>
                     </Route>
 
                     <Route element={<SignupPage/>} path="/signup"/>
