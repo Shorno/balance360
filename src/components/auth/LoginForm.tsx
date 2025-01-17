@@ -38,7 +38,7 @@ export default function LoginForm() {
         const {email, password} = values;
         try {
             setIsLoading(true);
-            login(email, password);
+            await login(email, password);
             toast.success('Login successful');
             navigate(previousPage, {replace: true});
         } catch (error: any) {
