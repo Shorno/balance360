@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import {Button} from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
@@ -7,14 +7,18 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CalendarDays, Clock, Award } from 'lucide-react'
-import { useState } from 'react'
+import {Badge} from "@/components/ui/badge"
+import {Textarea} from "@/components/ui/textarea"
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
+import {CalendarDays, Clock, Award} from 'lucide-react'
+import {useState} from 'react'
+import {useMutation} from "@tanstack/react-query";
+import {approveTrainerApplication} from "@/api/admin.ts";
+import toast from "react-hot-toast";
 
 interface TrainerApplicationDetailsProps {
     application: {
+        _id: string
         fullName: string
         email: string
         yearsOfExperience: number
@@ -26,37 +30,59 @@ interface TrainerApplicationDetailsProps {
     }
 }
 
-export default function TrainerApplicationDetails({ application }: TrainerApplicationDetailsProps) {
+export default function TrainerApplicationDetails({application}: TrainerApplicationDetailsProps) {
+    console.log(application)
+
+    const {mutateAsync, isPending} = useMutation({
+        mutationFn: approveTrainerApplication,
+        onSuccess: () => {
+            toast.success("Trainer request has been approved")
+            console.log("Trainer Application Approved")
+        },
+        onError: (error) => {
+            toast.error("Failed to approve application")
+            console.error(error)
+        }
+    })
+
+    const handleApprove = async () => {
+        await mutateAsync(application._id)
+    }
+
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
     const [rejectionFeedback, setRejectionFeedback] = useState("")
 
     return (
-        <div className="py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
+        <div className="py-4 sm:py-8 sm:px-6 lg:px-8">
             <Card className="max-w-7xl mx-auto bg-gray-800/50 border-gray-700">
                 <CardHeader className="border-b border-gray-700">
                     <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                         <div>
-                            <CardTitle className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                            <CardTitle
+                                className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                                 Trainer Application
                             </CardTitle>
-                            <p className="text-gray-400 mt-2 text-sm sm:text-base">Application details for {application.fullName}</p>
+                            <p className="text-gray-400 mt-2 text-sm sm:text-base">Application details
+                                for {application.fullName}</p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
                             <Button
-                                onClick={() => {}}
+                                onClick={handleApprove}
                                 className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white"
                             >
-                                Confirm Application
+                                {isPending ? "Processing Request" : "Confirm Application"}
                             </Button>
                             <Dialog open={isRejectModalOpen} onOpenChange={setIsRejectModalOpen}>
                                 <DialogTrigger asChild>
-                                    <Button variant="destructive" className="w-full sm:w-auto bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600">
+                                    <Button variant="destructive"
+                                            className="w-full sm:w-auto bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600">
                                         Reject Application
                                     </Button>
                                 </DialogTrigger>
                                 <DialogContent className="bg-gray-800 border-gray-700 w-[90vw] max-w-[425px]">
                                     <DialogHeader>
-                                        <DialogTitle className="text-xl sm:text-2xl text-white">Reject Application</DialogTitle>
+                                        <DialogTitle className="text-xl sm:text-2xl text-white">Reject
+                                            Application</DialogTitle>
                                         <DialogDescription className="text-gray-400 text-sm sm:text-base">
                                             Please provide feedback for rejecting this application
                                         </DialogDescription>
@@ -89,7 +115,8 @@ export default function TrainerApplicationDetails({ application }: TrainerApplic
                                             </Button>
                                             <Button
                                                 variant="destructive"
-                                                onClick={() => {}}
+                                                onClick={() => {
+                                                }}
                                                 className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-xs sm:text-sm"
                                             >
                                                 Confirm Rejection
@@ -106,16 +133,17 @@ export default function TrainerApplicationDetails({ application }: TrainerApplic
                         <div className="space-y-6 sm:space-y-8">
                             <div className="space-y-4 sm:space-y-6">
                                 <div className="flex items-center space-x-4">
-                                    <Award className="w-5 h-5 text-purple-400" />
+                                    <Award className="w-5 h-5 text-purple-400"/>
                                     <div>
                                         <h3 className="text-base sm:text-lg font-semibold text-white">Experience</h3>
                                         <p className="text-sm sm:text-base text-gray-400">{application.yearsOfExperience} years</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start space-x-4">
-                                    <CalendarDays className="w-5 h-5 text-purple-400 mt-1" />
+                                    <CalendarDays className="w-5 h-5 text-purple-400 mt-1"/>
                                     <div>
-                                        <h3 className="text-base sm:text-lg font-semibold text-white">Available Days</h3>
+                                        <h3 className="text-base sm:text-lg font-semibold text-white">Available
+                                            Days</h3>
                                         <div className="flex flex-wrap gap-2 mt-2">
                                             {application.availableDays.map((day) => (
                                                 <Badge key={day} className="bg-gray-700 text-white text-xs sm:text-sm">
@@ -126,16 +154,18 @@ export default function TrainerApplicationDetails({ application }: TrainerApplic
                                     </div>
                                 </div>
                                 <div className="flex items-center space-x-4">
-                                    <Clock className="w-5 h-5 text-purple-400" />
+                                    <Clock className="w-5 h-5 text-purple-400"/>
                                     <div>
-                                        <h3 className="text-base sm:text-lg font-semibold text-white">Available Time</h3>
+                                        <h3 className="text-base sm:text-lg font-semibold text-white">Available
+                                            Time</h3>
                                         <p className="text-sm sm:text-base text-gray-400">{application.availableTime}</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div>
-                                <h3 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-4">Skills & Expertise</h3>
+                                <h3 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-4">Skills &
+                                    Expertise</h3>
                                 <div className="flex flex-wrap gap-2">
                                     {application.skills.map((skill) => (
                                         <Badge
@@ -163,7 +193,8 @@ export default function TrainerApplicationDetails({ application }: TrainerApplic
                                 />
                             </div>
                             <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
-                                <h3 className="text-base sm:text-lg font-semibold text-white mb-2">Contact Information</h3>
+                                <h3 className="text-base sm:text-lg font-semibold text-white mb-2">Contact
+                                    Information</h3>
                                 <div className="space-y-2">
                                     <p className="text-sm sm:text-base text-gray-400">
                                         <span className="font-medium text-gray-300">Name:</span> {application.fullName}

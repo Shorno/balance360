@@ -79,6 +79,7 @@ export default function BecomeATrainerForm() {
     const form = useForm<TrainerFormData>({
         resolver: zodResolver(trainerFormSchema),
         defaultValues: {
+
             email: currentUser?.email || '',
             availableDays: [],
         }

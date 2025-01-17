@@ -9,3 +9,8 @@ export const getTrainerApplicationDetails = async (id: string) => {
     const response = await secureApi.get(`/admin/trainer-applications/${id}`);
     return response.data;
 }
+
+export const approveTrainerApplication = async (id: string) => {
+    const response = await secureApi.post(`/admin/trainer-applications/${id}/approve`);
+    return response.data;
+}
