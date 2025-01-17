@@ -59,12 +59,7 @@ export function NavUser({currentUser}: { currentUser: User }) {
                         align="end"
                         sideOffset={4}
                     >
-                        <DropdownMenuGroup>
-                                <div className={"flex items-center gap-1 text-sm"}>
-                                    Switch Theme
-                                </div>
-                        </DropdownMenuGroup>
-                        <DropdownMenuSeparator/>
+
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
                                 <BadgeCheck/>

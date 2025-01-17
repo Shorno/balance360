@@ -8,6 +8,8 @@ import AllTrainersPage from "@/pages/AllTrainersPage.tsx";
 import TrainerDetailsPage from "@/pages/TrainerDetailsPage.tsx";
 import BecomeATrainerPage from "@/pages/BeATrainerPage.tsx";
 import ProtectedRoutes from "@/components/layouts/ProtectedRoutes.tsx";
+import AdminLayout from "@/components/layouts/DashboardLayout.tsx";
+import Dashboard from "@/pages/Dashboard/Dashboard.tsx";
 
 function App() {
 
@@ -23,6 +25,10 @@ function App() {
                             <Route element={<BecomeATrainerPage/>} path="/become-a-trainer"/>
                         </Route>
                     </Route>
+                    <Route element={<AdminLayout/>}>
+                        <Route element={<Dashboard/>} path="/dashboard"/>
+                    </Route>
+
                     <Route element={<SignupPage/>} path="/signup"/>
                     <Route element={<LoginPage/>} path="/login"/>
                 </Routes>

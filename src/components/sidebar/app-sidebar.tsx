@@ -1,168 +1,151 @@
 import {
-    BookIcon,
+    ActivityIcon,
+    CreditCard, FilePlusIcon, FileUser,
     GalleryVerticalEnd,
-    LayoutDashboardIcon,
-    ListOrderedIcon,
-    LogsIcon,
-    LucideListOrdered,
-    Settings2,
+    ListOrderedIcon, ListPlusIcon,
+    NewspaperIcon, UserIcon,
     UsersIcon,
 } from "lucide-react"
 
-import {NavMain} from "@/components/sidebar/nav-main.tsx"
 import {NavUser} from "@/components/sidebar/nav-user.tsx"
 import {TeamSwitcher} from "@/components/sidebar/team-switcher.tsx"
 import {Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail,} from "@/components/ui/sidebar.tsx"
 import {NavSingle} from "@/components/sidebar/nav-single.tsx";
 import useAuthStore from "@/store/authStore.ts";
-import {useUserRole} from "@/hooks/useUserRole.tsx";
 import {Role} from "@/types";
+import {useUserRole} from "@/hooks/useUserRole.ts";
 
-const adminNav = {
-    team: {
-        name: "X Book Store",
-        logo: GalleryVerticalEnd,
-        plan: "Enterprise",
+
+const navigationConfig = {
+    admin: {
+        team: {
+            name: "Balance360",
+            logo: GalleryVerticalEnd,
+            plan: "Enterprise",
+        },
+        navSingle: [
+            {
+                name: "Trainers",
+                url: "/dashboard/trainers",
+                icon: UsersIcon,
+            },
+            {
+                name: "Applied Trainers",
+                url: "/dashboard/trainers/applications",
+                icon: FileUser
+            },
+            {
+                name: "Balance",
+                url: "/dashboard/balance",
+                icon: CreditCard
+            },
+            {
+                name: "Add New Class",
+                url: "/dashboard/add-class",
+                icon: FilePlusIcon
+            },
+            {
+                name: "Newsletter Subscribers",
+                url: "/dashboard/newsletter-subscribers",
+                icon: NewspaperIcon
+            },
+            {
+                name: "Add Forum",
+                url: "/dashboard/add-forum",
+                icon: ListPlusIcon
+            },
+        ],
     },
-    navSingle: [
-        {
-            name: "Dashboard",
-            url: "",
-            icon: LayoutDashboardIcon,
+    trainer: {
+        team: {
+            name: "X Book Store",
+            logo: GalleryVerticalEnd,
+            plan: "Enterprise",
         },
-        {
-            name: "Users",
-            url: "/admin/users",
-            icon: UsersIcon,
-        },
-        {
-            name: "Books",
-            url: "/admin/books",
-            icon: BookIcon
-        },
-        {
-            name: "Orders",
-            url: "/admin/orders",
-            icon: LucideListOrdered
-        },
-    ],
-    navWithSub: [
-        {
-            title: "Management",
-            url: "#",
-            icon: LogsIcon,
-            isActive: true,
-            items: [
-                {
-                    title: "Add Book",
-                    url: "/admin/add-book",
-                },
-                {
-                    title: "Applications",
-                    url: "admin/applications",
-                },
-                {
-                    title: "Statistics",
-                    url: "admin/statistics",
-                },
-            ],
-        },
-        {
-            title: "Settings",
-            url: "#",
-            icon: Settings2,
-            items: [
-                {
-                    title: "General",
-                    url: "#",
-                },
-
-                {
-                    title: "Billing",
-                    url: "#",
-                },
-            ],
-        },
-    ],
-}
-
-const trainerNav = {
-    team: {
-        name: "X Book Store",
-        logo: GalleryVerticalEnd,
-        plan: "Enterprise",
+        navSingle: [
+            {
+                name: "Manage Slots",
+                url: "/dashboard/slots",
+                icon: ListOrderedIcon
+            },
+            {
+                name: "Add New Slot",
+                url: "/dashboard/slots/new-slot",
+                icon: FilePlusIcon
+            },
+            {
+                name: "Add Forum",
+                url: "/dashboard/add-forum",
+                icon: ListPlusIcon
+            },
+        ],
     },
-    navSingle: [
-        {
-            name: "Dashboard",
-            url: "",
-            icon: LayoutDashboardIcon,
+    member: {
+        team: {
+            name: "Balance360",
+            logo: GalleryVerticalEnd,
+            plan: "Basic",
         },
-        {
-            name: "Books",
-            url: "/admin/books",
-            icon: BookIcon
-        },
-        {
-            name: "Orders",
-            url: "/admin/orders",
-            icon: ListOrderedIcon
-        },
-
-    ],
-    navWithSub: [
-        {
-            title: "Management",
-            url: "#",
-            icon: LogsIcon,
-            isActive: true,
-            items: [
-                {
-                    title: "Statistics",
-                    url: "admin/statistics",
-                },
-            ],
-        },
-        {
-            title: "Settings",
-            url: "#",
-            icon: Settings2,
-            items: [
-                {
-                    title: "General",
-                    url: "#",
-                },
-
-                {
-                    title: "Billing",
-                    url: "#",
-                },
-            ],
-        },
-    ],
+        navSingle: [
+            {
+                name: "Activity Log",
+                url: "/dashboard/activity-log",
+                icon: ActivityIcon
+            },
+            {
+                name: "Profile",
+                url: "/dashboard/proile",
+                icon: UserIcon
+            },
+            {
+                name: "Booked Trainers",
+                url: "/dashboard/booked-trainers",
+                icon: ListOrderedIcon
+            },
+        ],
+    }
 }
-
 
 export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
     const {currentUser} = useAuthStore()
     const role: Role = useUserRole()
-    const isAdmin = role === Role.Admin
-    const links = (isAdmin ? adminNav : trainerNav)
 
+    const getNavigation = (role: Role) => {
+        switch(role) {
+            case Role.Admin:
+                return navigationConfig.admin
+            case Role.Trainer:
+                return navigationConfig.trainer
+            case Role.Member:
+                return navigationConfig.member
+            default:
+                return navigationConfig.member
+        }
+    }
+
+    const links = getNavigation(role)
 
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
                 <TeamSwitcher team={links.team}/>
             </SidebarHeader>
-            <SidebarContent>
-                <NavSingle navSingle={links.navSingle}/>
-                <NavMain items={links.navWithSub}/>
-            </SidebarContent>
-            <SidebarFooter>
-                <NavUser currentUser={currentUser!}/>
-            </SidebarFooter>
-            <SidebarRail/>
+            {
+                !role &&
+                <div>Loading</div>
+            }
+
+            {role &&
+                <>
+                    <SidebarContent>
+                        <NavSingle navSingle={links.navSingle}/>
+                    </SidebarContent>
+                    <SidebarFooter>
+                        <NavUser currentUser={currentUser!}/>
+                    </SidebarFooter>
+                    <SidebarRail/>
+                </>
+            }
         </Sidebar>
     )
 }
