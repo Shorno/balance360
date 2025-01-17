@@ -4,6 +4,8 @@ import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
 import {BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator} from "@/components/ui/breadcrumb.tsx";
 import {Link} from "react-router";
 import {ApplicationListTable} from "@/components/ApplicationListTable.tsx";
+import {LoadingState} from "@/components/data-states/loading-state.tsx";
+import {ErrorState} from "@/components/data-states/error-state.tsx";
 
 const breadcrumb = <>
     <BreadcrumbItem>
@@ -27,10 +29,10 @@ export default function TrainerApplications() {
     console.log(applications)
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return <LoadingState/>
     }
     if (isError) {
-        return <div>Error</div>
+        return <ErrorState/>
     }
 
     return (
