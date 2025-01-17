@@ -544,7 +544,7 @@ const SidebarMenuButton = React.forwardRef<
       asChild = false,
       isActive = false,
       variant = "default",
-      size = "default",
+      size = "lg",
       tooltip,
       className,
       ...props
@@ -662,12 +662,12 @@ const SidebarMenuSkeleton = React.forwardRef<
     >
       {showIcon && (
         <Skeleton
-          className="size-4 rounded-md"
+          className="size-6 rounded-md"
           data-sidebar="menu-skeleton-icon"
         />
       )}
       <Skeleton
-        className="h-4 flex-1 max-w-[--skeleton-width]"
+        className="h-6 flex-1 max-w-[--skeleton-width]"
         data-sidebar="menu-skeleton-text"
         style={
           {

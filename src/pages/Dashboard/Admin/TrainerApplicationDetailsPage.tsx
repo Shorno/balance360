@@ -50,8 +50,6 @@ export default function TrainerApplicationDetailsPage() {
     return (
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
-
-
             <TrainerApplicationDetails
                 application={applicationDetails}
             />
