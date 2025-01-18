@@ -19,3 +19,9 @@ export const getApprovedTrainers = async () => {
     const response = await secureApi.get('/admin/trainers');
     return response.data;
 }
+
+export const rejectTrainerApplication = async (id: string, rejectionReason: string) => {
+    const response = await secureApi.post(`/admin/trainer-applications/${id}/reject`, { rejectionReason });
+    return response.data;
+};
+

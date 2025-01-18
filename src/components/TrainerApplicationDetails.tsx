@@ -13,8 +13,9 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 import {CalendarDays, Clock, Award} from 'lucide-react'
 import {useState} from 'react'
 import {useMutation} from "@tanstack/react-query";
-import {approveTrainerApplication} from "@/api/admin.ts";
+import {approveTrainerApplication, rejectTrainerApplication} from "@/api/admin.ts";
 import toast from "react-hot-toast";
+import {useNavigate} from "react-router";
 
 interface TrainerApplicationDetailsProps {
     application: {
@@ -31,13 +32,17 @@ interface TrainerApplicationDetailsProps {
 }
 
 export default function TrainerApplicationDetails({application}: TrainerApplicationDetailsProps) {
-    console.log(application)
+    const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
+    const [rejectionFeedback, setRejectionFeedback] = useState("")
+
+    const navigate = useNavigate()
+
 
     const {mutateAsync, isPending} = useMutation({
         mutationFn: approveTrainerApplication,
         onSuccess: () => {
             toast.success("Trainer request has been approved")
-            console.log("Trainer Application Approved")
+            navigate("/dashboard/trainers")
         },
         onError: (error) => {
             toast.error("Failed to approve application")
@@ -49,8 +54,26 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
         await mutateAsync(application._id)
     }
 
-    const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
-    const [rejectionFeedback, setRejectionFeedback] = useState("")
+
+    const {mutateAsync: rejectApplication, isPending: isRejectionPending} = useMutation({
+        mutationFn: ({id, rejectionReason}: { id: string; rejectionReason: string }) =>
+            rejectTrainerApplication(id, rejectionReason),
+        onSuccess: () => {
+            toast.success("Trainer request has been rejected");
+            navigate("/dashboard/trainers")
+            setIsRejectModalOpen(false);
+        },
+        onError: (error) => {
+            toast.error("Failed to reject application");
+            console.error(error);
+        }
+    });
+
+
+    const handleReject = async () => {
+        await rejectApplication({id: application._id, rejectionReason: rejectionFeedback});
+    }
+
 
     return (
         <div className="py-4 sm:py-8 sm:px-6 lg:px-8">
@@ -70,7 +93,7 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
                                 onClick={handleApprove}
                                 className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white"
                             >
-                                {isPending ? "Processing Request" : "Confirm Application"}
+                                {isPending ? "Processing Request..." : "Confirm Application"}
                             </Button>
                             <Dialog open={isRejectModalOpen} onOpenChange={setIsRejectModalOpen}>
                                 <DialogTrigger asChild>
@@ -115,11 +138,10 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
                                             </Button>
                                             <Button
                                                 variant="destructive"
-                                                onClick={() => {
-                                                }}
+                                                onClick={handleReject}
                                                 className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-xs sm:text-sm"
                                             >
-                                                Confirm Rejection
+                                                {isRejectionPending ? "Processing Request..." : "Reject Application"}
                                             </Button>
                                         </div>
                                     </div>
