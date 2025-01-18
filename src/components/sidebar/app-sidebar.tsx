@@ -14,14 +14,11 @@ import {
     SidebarContent,
     SidebarFooter,
     SidebarHeader,
-    SidebarMenuSkeleton,
 } from "@/components/ui/sidebar.tsx"
 import {NavSingle} from "@/components/sidebar/nav-single.tsx";
 import useAuthStore from "@/store/authStore.ts";
 import {Role} from "@/types";
 import {useUserRole} from "@/hooks/useUserRole.ts";
-import {useMemo} from "react";
-import {Skeleton} from "@/components/ui/skeleton.tsx";
 
 
 const navigationConfig = {
@@ -102,7 +99,7 @@ const navigationConfig = {
             },
             {
                 name: "Profile",
-                url: "/dashboard/proile",
+                url: "/dashboard/profile",
                 icon: UserIcon
             },
             {
@@ -131,55 +128,19 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
         }
     }
 
-    //adjust skeleton number and size
-    const renderSkeletons = useMemo(() => {
-        const maxLinks = Math.max(
-            navigationConfig.admin.navSingle.length,
-            navigationConfig.trainer.navSingle.length,
-            navigationConfig.member.navSingle.length
-        );
-
-        return Array(maxLinks).fill(0).map((_, index) => (
-            <div className={"flex flex-col my-1 pt-1"}>
-                <SidebarMenuSkeleton key={index} showIcon={true}/>
-            </div>
-        ));
-    }, []);
 
     const links = getNavigation(role)
 
     return (
-        <Sidebar collapsible="icon" {...props} variant={"inset"}>
+        <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
-                {!role ? (
-                    <div className={"flex mb-2"}>
-                        <Skeleton className="h-8 w-8 rounded-lg mt-3"/>
-                        <div className="flex flex-col ml-2 mt-4 gap-2">
-                            <Skeleton className="h-3 w-24"/>
-                            <Skeleton className="h-2 w-16"/>
-                        </div>
-                    </div>
-                ) : (
                     <TeamSwitcher team={links.team}/>
-                )}
             </SidebarHeader>
-
             <SidebarContent>
-                {!role ? renderSkeletons : <NavSingle navSingle={links.navSingle}/>}
+                 <NavSingle navSingle={links.navSingle}/>
             </SidebarContent>
-
             <SidebarFooter>
-                {!role || !currentUser ? (
-                    <div className="flex items-center space-x-4 ml-1">
-                        <Skeleton className="h-10 w-10 rounded-full"/>
-                        <div className="space-y-2">
-                            <Skeleton className="h-4 w-[100px]"/>
-                            <Skeleton className="h-3 w-[60px]"/>
-                        </div>
-                    </div>
-                ) : (
                     <NavUser currentUser={currentUser}/>
-                )}
             </SidebarFooter>
         </Sidebar>
     )

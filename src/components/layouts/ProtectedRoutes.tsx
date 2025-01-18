@@ -1,5 +1,6 @@
 import useAuthStore from "@/store/authStore.ts";
 import {Navigate, Outlet, useLocation} from "react-router";
+import {LoadingState} from "@/components/data-states/loading-state.tsx";
 
 export default function ProtectedRoutes() {
     const location = useLocation();
@@ -7,7 +8,9 @@ export default function ProtectedRoutes() {
 
 
     if (authLoading) {
-        return <div>Loading</div>;
+        return <div className={"flex min-h-screen justify-center items-center"}>
+            <LoadingState/>
+        </div>
     }
 
 

@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/sidebar.tsx"
 import {User} from "firebase/auth";
 
-export function NavUser({currentUser}: { currentUser: User }) {
+export function NavUser({currentUser}: { currentUser: User | null }) {
     const {isMobile} = useSidebar()
 
     return (

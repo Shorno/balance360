@@ -10,7 +10,7 @@ interface ErrorStateProps {
 export function ErrorState({ className, message = "Something went wrong", retry }: ErrorStateProps) {
     return (
         <div className={cn(
-            "flex flex-col items-center justify-center min-h-[200px] w-full text-center p-6",
+            "flex flex-col items-center justify-center min-h-[200px] w-1/2 text-center p-6",
             "bg-gray-800/50 border border-red-500/20 rounded-lg",
             className
         )}>

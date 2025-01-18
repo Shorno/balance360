@@ -13,6 +13,7 @@ import TrainerApplications from "@/pages/Dashboard/Admin/TrainerApplications.tsx
 import TrainerApplicationDetailsPage from "@/pages/Dashboard/Admin/TrainerApplicationDetailsPage.tsx";
 import AllTrainers from "@/pages/Dashboard/Admin/AllTrainers.tsx";
 import ActivityLogPage from "@/pages/Dashboard/Member/ActivityLogPage.tsx";
+import ProfilePage from "@/pages/Dashboard/Member/ProfilePage.tsx";
 
 function App() {
 
@@ -28,14 +29,20 @@ function App() {
                             <Route element={<BecomeATrainerPage/>} path="/become-a-trainer"/>
                         </Route>
                     </Route>
-                    <Route element={<AdminLayout/>}>
-                        <Route path="/dashboard">
-                            <Route index path={"trainers"} element={<AllTrainers/>}/>
-                            <Route path="trainers/applications"  element={<TrainerApplications/>}/>
-                            <Route path="trainers/applications/:_id" element={<TrainerApplicationDetailsPage/>}/>
-                            <Route path="activity-log" element={<ActivityLogPage/>}/>
-                        </Route>
-                    </Route>
+
+                 <Route element={<ProtectedRoutes/>}>
+                     <Route element={<AdminLayout/>}>
+                         <Route path="/dashboard">
+                             <Route index path={"trainers"} element={<AllTrainers/>}/>
+                             <Route path="trainers/applications"  element={<TrainerApplications/>}/>
+                             <Route path="trainers/applications/:_id" element={<TrainerApplicationDetailsPage/>}/>
+
+                             <Route path="activity-log" element={<ActivityLogPage/>}/>
+                             <Route path="profile" element={<ProfilePage/>}/>
+                         </Route>
+                     </Route>
+                 </Route>
+
                     <Route element={<SignupPage/>} path="/signup"/>
                     <Route element={<LoginPage/>} path="/login"/>
                 </Routes>

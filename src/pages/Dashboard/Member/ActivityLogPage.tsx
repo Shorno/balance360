@@ -21,6 +21,7 @@ import {getApplicationStatus} from "@/api/user.ts";
 import {useQuery} from "@tanstack/react-query";
 import useAuthStore from "@/store/authStore.ts";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
+import {ErrorState} from "@/components/data-states/error-state.tsx";
 
 
 const breadcrumb =
@@ -45,7 +46,7 @@ export default function ActivityLogPage() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const {currentUser} = useAuthStore()
 
-    const {data: application} = useQuery({
+    const {data: application, isError} = useQuery({
         queryKey: ['application', currentUser?.email],
         queryFn: () => getApplicationStatus(currentUser?.email || ''),
         select: (data) => data?.data,
@@ -69,6 +70,11 @@ export default function ActivityLogPage() {
             default:
                 return null
         }
+    }
+    if (isError) {
+        return <div className={"flex justify-center items-center h-screen w-full"}>
+            <ErrorState/>
+        </div>
     }
 
     return (
