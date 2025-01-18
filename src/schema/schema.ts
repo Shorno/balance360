@@ -52,7 +52,9 @@ export const trainerFormSchema = z.object({
     details: z.string({
         required_error: "Details is required"
     }).min(10, "Details must be at least 10 characters"),
-
+    age: z.number({
+        required_error: "Age is required"
+    }),
     yearsOfExperience: z.number({
         required_error: "Years of experience is required"
     }).min(1, "At least 1 year of experience is required"),

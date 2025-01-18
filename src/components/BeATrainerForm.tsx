@@ -19,7 +19,7 @@ import {useMutation} from "@tanstack/react-query";
 import {applyForTrainer} from "@/api/trainer.ts";
 import {toast} from "react-hot-toast";
 import {Textarea} from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {Card, CardContent, CardHeader, CardTitle, CardDescription} from "@/components/ui/card";
 
 export interface TrainerApplication {
     fullName: string;
@@ -93,10 +93,11 @@ export default function BecomeATrainerForm() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gray-900 py-8  sm:px-6 lg:px-8">
             <Card className="max-w-7xl mx-auto bg-gray-800/50 border-gray-700">
                 <CardHeader className="text-center pb-8 border-b border-gray-700">
-                    <CardTitle className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    <CardTitle
+                        className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                         Become a Trainer
                     </CardTitle>
                     <CardDescription className="text-gray-400 mt-2">
@@ -144,24 +145,49 @@ export default function BecomeATrainerForm() {
                                         )}
                                     />
 
-                                    <FormField
-                                        control={form.control}
-                                        name="yearsOfExperience"
-                                        render={({field}) => (
-                                            <FormItem>
-                                                <FormLabel className="text-gray-200">Years of Experience</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        type="number"
-                                                        {...field}
-                                                        onChange={(e) => field.onChange(parseInt(e.target.value))}
-                                                        className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
-                                                    />
-                                                </FormControl>
-                                                <FormMessage/>
-                                            </FormItem>
-                                        )}
-                                    />
+                                    <div className={"flex flex-col sm:flex-row gap-4"}>
+                                        <FormField
+                                            control={form.control}
+                                            name="age"
+                                            render={({field}) => (
+                                                <FormItem
+                                                    className={"flex-1"}
+                                                >
+                                                    <FormLabel className="text-gray-200">Age</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            type="number"
+                                                            {...field}
+                                                            onChange={(e) => field.onChange(parseInt(e.target.value))}
+                                                            className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage/>
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="yearsOfExperience"
+                                            render={({field}) => (
+                                                <FormItem
+                                                    className={"flex-1"}
+                                                >
+                                                    <FormLabel className="text-gray-200">Years of Experience</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            type="number"
+                                                            {...field}
+                                                            onChange={(e) => field.onChange(parseInt(e.target.value))}
+                                                            className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage/>
+                                                </FormItem>
+                                            )}
+                                        />
+
+                                    </div>
 
                                     <FormField
                                         control={form.control}
@@ -169,7 +195,8 @@ export default function BecomeATrainerForm() {
                                         render={() => (
                                             <FormItem>
                                                 <FormLabel className="text-gray-200">Skills & Expertise</FormLabel>
-                                                <div className="grid grid-cols-2 gap-3 mt-2 bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                                                <div
+                                                    className="grid grid-cols-2 gap-3 mt-2 bg-gray-800/50 p-4 rounded-lg border border-gray-700">
                                                     {skillOptions.map((skill) => (
                                                         <FormField
                                                             key={skill}

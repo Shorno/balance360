@@ -10,7 +10,7 @@ import {
 import {Badge} from "@/components/ui/badge"
 import {Textarea} from "@/components/ui/textarea"
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
-import {CalendarDays, Clock, Award} from 'lucide-react'
+import {CalendarDays, Clock, Award, CakeIcon} from 'lucide-react'
 import {useState} from 'react'
 import {useMutation} from "@tanstack/react-query";
 import {approveTrainerApplication, rejectTrainerApplication} from "@/api/admin.ts";
@@ -22,7 +22,8 @@ interface TrainerApplicationDetailsProps {
         _id: string
         fullName: string
         email: string
-        yearsOfExperience: number
+        yearsOfExperience: number,
+        age: number,
         skills: string[]
         availableDays: string[]
         availableTime: string
@@ -159,6 +160,13 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
                                     <div>
                                         <h3 className="text-base sm:text-lg font-semibold text-white">Experience</h3>
                                         <p className="text-sm sm:text-base text-gray-400">{application.yearsOfExperience} years</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                    <CakeIcon className="w-5 h-5 text-purple-400"/>
+                                    <div>
+                                        <h3 className="text-base sm:text-lg font-semibold text-white">Age</h3>
+                                        <p className="text-sm sm:text-base text-gray-400">{application.age} years</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start space-x-4">

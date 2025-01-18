@@ -149,7 +149,7 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
     const links = getNavigation(role)
 
     return (
-        <Sidebar collapsible="icon" {...props}>
+        <Sidebar collapsible="icon" {...props} variant={"inset"}>
             <SidebarHeader>
                 {!role ? (
                     <div className={"flex mb-2"}>

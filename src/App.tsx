@@ -12,6 +12,7 @@ import AdminLayout from "@/components/layouts/DashboardLayout.tsx";
 import TrainerApplications from "@/pages/Dashboard/Admin/TrainerApplications.tsx";
 import TrainerApplicationDetailsPage from "@/pages/Dashboard/Admin/TrainerApplicationDetailsPage.tsx";
 import AllTrainers from "@/pages/Dashboard/Admin/AllTrainers.tsx";
+import ActivityLogPage from "@/pages/Dashboard/Member/ActivityLogPage.tsx";
 
 function App() {
 
@@ -32,9 +33,9 @@ function App() {
                             <Route index path={"trainers"} element={<AllTrainers/>}/>
                             <Route path="trainers/applications"  element={<TrainerApplications/>}/>
                             <Route path="trainers/applications/:_id" element={<TrainerApplicationDetailsPage/>}/>
+                            <Route path="activity-log" element={<ActivityLogPage/>}/>
                         </Route>
                     </Route>
-
                     <Route element={<SignupPage/>} path="/signup"/>
                     <Route element={<LoginPage/>} path="/login"/>
                 </Routes>

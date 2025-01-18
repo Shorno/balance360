@@ -18,3 +18,8 @@ export const getRoleByEmail = async (email: string) => {
     const response = await api.get(`/users/role/${email}`);
     return response.data;
 }
+
+export const getApplicationStatus = async (email: string) => {
+    const response = await api.get(`/users/application/${email}`);
+    return response.data;
+}
