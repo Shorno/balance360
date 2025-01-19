@@ -14,6 +14,8 @@ import TrainerApplicationDetailsPage from "@/pages/Dashboard/Admin/TrainerApplic
 import AllTrainers from "@/pages/Dashboard/Admin/AllTrainers.tsx";
 import ActivityLogPage from "@/pages/Dashboard/Member/ActivityLogPage.tsx";
 import ProfilePage from "@/pages/Dashboard/Member/ProfilePage.tsx";
+import AddNewSlotPage from "@/pages/Dashboard/Member/AddNewSlotPage.tsx";
+import AddClassPage from "@/pages/Dashboard/Admin/AddClassPage.tsx";
 
 function App() {
 
@@ -36,9 +38,15 @@ function App() {
                              <Route index path={"trainers"} element={<AllTrainers/>}/>
                              <Route path="trainers/applications"  element={<TrainerApplications/>}/>
                              <Route path="trainers/applications/:_id" element={<TrainerApplicationDetailsPage/>}/>
+                             <Route path="add-class" element={<AddClassPage/>}/>
 
                              <Route path="activity-log" element={<ActivityLogPage/>}/>
                              <Route path="profile" element={<ProfilePage/>}/>
+
+
+                             <Route path="slots/new-slot" element={<AddNewSlotPage/>}/>
+
+
                          </Route>
                      </Route>
                  </Route>

@@ -1,4 +1,5 @@
 import {secureApi} from "@/lib/axios.ts";
+import {ClassFormValues} from "@/components/AddClassForm.tsx";
 
 export const getTrainerApplications = async () => {
     const response = await secureApi.get('/admin/trainer-applications');
@@ -25,3 +26,7 @@ export const rejectTrainerApplication = async (id: string, rejectionReason: stri
     return response.data;
 };
 
+export const addClass = async (classData: ClassFormValues) => {
+    const response = await secureApi.post('/admin/classes', classData);
+    return response.data;
+}
