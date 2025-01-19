@@ -1,5 +1,5 @@
 import {secureApi} from "@/lib/axios.ts";
-import {ClassFormValues} from "@/components/AddClassForm.tsx";
+import {ClassFormValues} from "@/schema/schema.ts";
 
 export const getTrainerApplications = async () => {
     const response = await secureApi.get('/admin/trainer-applications');
