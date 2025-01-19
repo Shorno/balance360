@@ -26,7 +26,7 @@ import useAuthStore from "@/store/authStore"
 import {useImageUpload} from '@/hooks/useImageUpload'
 import {updateProfile} from 'firebase/auth'
 import toast from "react-hot-toast"
-import {ChangeEvent, useEffect, useState} from "react"
+import {ChangeEvent, useEffect, useState, useRef} from "react"
 import {createUserInDB} from "@/api/user.ts"
 
 const breadcrumb = (
@@ -50,6 +50,7 @@ export default function ProfilePage() {
     const {currentUser} = useAuthStore()
     const {mutateAsync: uploadImage, isPending: isUploading} = useImageUpload()
     const [hasChanges, setHasChanges] = useState(false)
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
@@ -81,6 +82,10 @@ export default function ProfilePage() {
         } catch (error: any) {
             toast.error("Failed to upload image. Please try again.")
         }
+    }
+
+    const triggerFileInput = () => {
+        fileInputRef.current?.click()
     }
 
     const onSubmit = async (data: FormValues) => {
@@ -121,7 +126,8 @@ export default function ProfilePage() {
                 <div className="max-w-3xl mx-auto space-y-6">
                     <Card className="bg-gray-800/50 border-gray-700">
                         <CardHeader className="border-b border-gray-700">
-                            <CardTitle className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                            <CardTitle
+                                className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                                 Profile Settings
                             </CardTitle>
                             <CardDescription className="text-gray-400">
@@ -149,29 +155,39 @@ export default function ProfilePage() {
                                                         <label
                                                             htmlFor="profile-image"
                                                             className={`absolute bottom-0 right-0 p-1.5 rounded-full bg-gray-800 border border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                                            onClick={triggerFileInput}
                                                         >
                                                             {isUploading ? (
-                                                                <Loader2 className="w-4 h-4 mt-1 text-gray-300 animate-spin"/>
+                                                                <Loader2
+                                                                    className="w-4 h-4 mt-1 text-gray-300 animate-spin"/>
                                                             ) : (
                                                                 <Camera className="w-4 h-4 text-gray-300"/>
                                                             )}
-                                                            <input
-                                                                type="file"
-                                                                id="profile-image"
-                                                                className="hidden"
-                                                                accept="image/*"
-                                                                onChange={handleImageUpload}
-                                                                disabled={isUploading}
-                                                            />
                                                         </label>
                                                     </div>
                                                     <div className="flex-1 space-y-1">
-                                                        <p className="text-sm font-medium text-gray-300">Change Photo</p>
+                                                        <Button
+                                                            type="button"
+                                                            size="sm"
+                                                            onClick={triggerFileInput}
+                                                            disabled={isUploading}
+                                                            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white disabled:opacity-50"
+                                                        >
+                                                            Change Photo
+                                                        </Button>
                                                         <p className="text-sm text-gray-500">
                                                             JPG or PNG.
                                                         </p>
                                                     </div>
                                                 </div>
+                                                <input
+                                                    ref={fileInputRef}
+                                                    type="file"
+                                                    className="hidden"
+                                                    accept="image/*"
+                                                    onChange={handleImageUpload}
+                                                    disabled={isUploading}
+                                                />
                                                 <FormMessage className="text-red-400"/>
                                             </FormItem>
                                         )}
