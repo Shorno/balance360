@@ -16,6 +16,7 @@ import ActivityLogPage from "@/pages/Dashboard/Member/ActivityLogPage.tsx";
 import ProfilePage from "@/pages/Dashboard/Member/ProfilePage.tsx";
 import AddNewSlotPage from "@/pages/Dashboard/Member/AddNewSlotPage.tsx";
 import AddClassPage from "@/pages/Dashboard/Admin/AddClassPage.tsx";
+import AllClassesPage from "@/pages/AllClassesPage.tsx";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
                         <Route index element={<Home/>}/>
                         <Route element={<AllTrainersPage/>} path="/trainers"/>
                         <Route element={<TrainerDetailsPage/>} path="/trainers/details"/>
+                        <Route element={<AllClassesPage/>} path="/classes"/>
                         <Route element={<ProtectedRoutes/>}>
                             <Route element={<BecomeATrainerPage/>} path="/become-a-trainer"/>
                         </Route>
@@ -45,8 +47,6 @@ function App() {
 
 
                              <Route path="slots/new-slot" element={<AddNewSlotPage/>}/>
-
-
                          </Route>
                      </Route>
                  </Route>

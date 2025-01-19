@@ -65,6 +65,34 @@ export const trainerFormSchema = z.object({
 });
 
 
+export const classFormSchema = z.object({
+    name: z.string().min(2, {
+        message: "Class name must be at least 2 characters.",
+    }),
+    image: z.string().min(1, {
+        message: "Please upload a class image.",
+    }),
+    details: z.string().min(10, {
+        message: "Details must be at least 10 characters.",
+    }),
+    duration: z.string().min(1, {
+        message: "Please provide the class duration.",
+    }),
+    maxParticipants: z.number({
+        message: "Please provide the maximum number of participants"
+    }).min(2, {
+        message: "Minimum 2 participants are required.",
+    }),
+    intensity: z.string().min(1, {
+        message: "Please provide the class intensity.",
+    }),
+    category: z.string().min(1, {
+        message: "Please provide the class category.",
+    }),
+})
+
+
 export type LoginFormData = z.infer<typeof loginSchema>
 export type SignupFormData = z.infer<typeof signupSchema>
 export type TrainerFormData = z.infer<typeof trainerFormSchema>
+export type ClassFormValues = z.infer<typeof classFormSchema>

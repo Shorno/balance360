@@ -13,27 +13,13 @@ import {
 import {Input} from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea"
 import {Card, CardContent, CardHeader, CardTitle, CardDescription} from "@/components/ui/card"
-import {Dumbbell, ImageIcon, Info, FileText} from 'lucide-react'
+import {Dumbbell, ImageIcon, FileText, Clock, Users, LayoutDashboardIcon} from 'lucide-react'
 import UploadAndPreviewPhoto from "@/components/UploadAndPreviewPhoto"
-import * as z from "zod"
 import toast from "react-hot-toast";
 import {useMutation} from "@tanstack/react-query";
 import {addClass} from "@/api/admin.ts";
+import {classFormSchema, ClassFormValues} from "@/schema/schema.ts";
 
-const classFormSchema = z.object({
-    name: z.string().min(2, {
-        message: "Class name must be at least 2 characters.",
-    }),
-    image: z.string().min(1, {
-        message: "Please upload a class image.",
-    }),
-    details: z.string().min(10, {
-        message: "Details must be at least 10 characters.",
-    }),
-    additionalInfo: z.string().optional(),
-})
-
-export type ClassFormValues = z.infer<typeof classFormSchema>
 
 export default function AddNewClassForm() {
     const form = useForm<ClassFormValues>({
@@ -42,7 +28,10 @@ export default function AddNewClassForm() {
             name: "",
             image: "",
             details: "",
-            additionalInfo: "",
+            duration: "",
+            maxParticipants: 0,
+            intensity: "",
+            category: "",
         },
     })
 
@@ -50,6 +39,7 @@ export default function AddNewClassForm() {
         mutationFn: addClass,
         onSuccess: () => {
             toast.success("Class added successfully")
+            form.reset()
         },
         onError: () => {
             toast.error("An error occurred, please try again")
@@ -62,7 +52,7 @@ export default function AddNewClassForm() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gray-900 py-8 sm:px-6 lg:px-8">
             <Card className="max-w-4xl mx-auto bg-gray-800/50 border-gray-700">
                 <CardHeader className="text-center pb-8 border-b border-gray-700">
                     <CardTitle
@@ -156,32 +146,112 @@ export default function AddNewClassForm() {
                                     </FormItem>
                                 )}
                             />
-
-                            <FormField
-                                control={form.control}
-                                name="additionalInfo"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel className="text-gray-200">
-                                            <div className="flex items-center gap-2">
-                                                <Info className="w-4 h-4 text-purple-400"/>
-                                                Additional Information
-                                            </div>
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Textarea
-                                                placeholder="Any additional information, requirements, or special instructions..."
-                                                {...field}
-                                                className="bg-gray-800 border-gray-600 text-white h-24 focus:ring-purple-400"
-                                            />
-                                        </FormControl>
-                                        <FormDescription className="text-gray-400">
-                                            Optional: Add any extra details that might be helpful
-                                        </FormDescription>
-                                        <FormMessage/>
-                                    </FormItem>
-                                )}
-                            />
+                            <div className={"flex flex-col lg:flex-row gap-10"}>
+                                <FormField
+                                    control={form.control}
+                                    name="duration"
+                                    render={({field}) => (
+                                        <FormItem className={"flex-1"}>
+                                            <FormLabel className="text-gray-200">
+                                                <div className="flex items-center gap-2">
+                                                    <Clock className="w-4 h-4 text-purple-400"/>
+                                                    Class Duration
+                                                </div>
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="e.g., 60 minutes"
+                                                    {...field}
+                                                    className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                />
+                                            </FormControl>
+                                            <FormDescription className="text-gray-400">
+                                                Specify the duration of the class
+                                            </FormDescription>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="maxParticipants"
+                                    render={({field}) => (
+                                        <FormItem className={"flex-1"}>
+                                            <FormLabel className="text-gray-200">
+                                                <div className="flex items-center gap-2">
+                                                    <Users className="w-4 h-4 text-purple-400"/>
+                                                    Max Participants
+                                                </div>
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    type={"number"}
+                                                    placeholder="e.g., 10"
+                                                    {...field}
+                                                    onChange={(e) => field.onChange(parseInt(e.target.value))}
+                                                    className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                />
+                                            </FormControl>
+                                            <FormDescription className="text-gray-400">
+                                                Specify the maximum number of participants allowed
+                                            </FormDescription>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <div className={"flex flex-col lg:flex-row  gap-10"}>
+                                <FormField
+                                    control={form.control}
+                                    name="intensity"
+                                    render={({field}) => (
+                                        <FormItem className={"flex-1"}>
+                                            <FormLabel className="text-gray-200">
+                                                <div className="flex items-center gap-2">
+                                                    <Dumbbell className="w-4 h-4 text-purple-400"/>
+                                                    Intensity
+                                                </div>
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="e.g., High / Medium"
+                                                    {...field}
+                                                    className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                />
+                                            </FormControl>
+                                            <FormDescription className="text-gray-400">
+                                                Specify the intensity level of the class
+                                            </FormDescription>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="category"
+                                    render={({field}) => (
+                                        <FormItem className={"flex-1"}>
+                                            <FormLabel className="text-gray-200">
+                                                <div className="flex items-center gap-2">
+                                                    <LayoutDashboardIcon className="w-4 h-4 text-purple-400"/>
+                                                    Category
+                                                </div>
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="e.g., Dance / Martial Arts"
+                                                    {...field}
+                                                    className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                />
+                                            </FormControl>
+                                            <FormDescription className="text-gray-400">
+                                                Specify the category of the class
+                                            </FormDescription>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
 
                             <div className="pt-6 border-t border-gray-700">
                                 <Button
