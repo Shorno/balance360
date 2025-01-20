@@ -17,6 +17,7 @@ import ProfilePage from "@/pages/Dashboard/Member/ProfilePage.tsx";
 import AddNewSlotPage from "@/pages/Trainer/AddNewSlotPage.tsx";
 import AddClassPage from "@/pages/Dashboard/Admin/AddClassPage.tsx";
 import AllClassesPage from "@/pages/AllClassesPage.tsx";
+import ManageSlot from "@/pages/Trainer/ManageSlot.tsx";
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
                              <Route path="profile" element={<ProfilePage/>}/>
 
 
+                             <Route path="slots" element={<ManageSlot/>}/>
                              <Route path="slots/new-slot" element={<AddNewSlotPage/>}/>
                          </Route>
                      </Route>

@@ -1,4 +1,3 @@
-import AddNewSlotForm from "@/components/AddNewSlotFrom.tsx";
 import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
 import {BreadcrumbItem, BreadcrumbPage} from "@/components/ui/breadcrumb.tsx";
 
@@ -6,15 +5,15 @@ const breadcrumb =
 
     <BreadcrumbItem>
         <BreadcrumbPage>
-            New Slot
+            Slots
         </BreadcrumbPage>
     </BreadcrumbItem>
 
-export default function AddNewSlotPage() {
+export default function ManageSlot() {
     return (
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
-            <AddNewSlotForm/>
+            Manage Slot
         </>
     )
 }
