@@ -40,8 +40,7 @@ export default function AddNewSlotForm() {
         onSuccess: () => {
             toast.success("Slot added successfully")
         },
-        onError: (error: any) => {
-            console.error("Failed to add new slot", error)
+        onError: () => {
             toast.error("Failed to add new slot")
         }
     })
@@ -54,7 +53,7 @@ export default function AddNewSlotForm() {
     const classOptions = classList?.map((classItem: { id: string; name: string }) => ({
         value: classItem.name,
         label: classItem.name
-    })) || []
+    })) as { value: string; label: string }[] || []
 
     const form = useForm<AddNewSlotFormData>({
         resolver: zodResolver(addNewSlotSchema),
@@ -211,7 +210,8 @@ export default function AddNewSlotForm() {
                                                         value={availableDayOptions.filter((option) =>
                                                             value?.includes(option.value)
                                                         )}
-                                                        onChange={(selectedOptions) =>
+                                                        // @ts-ignore
+                                                        onChange={(selectedOptions: readonly { value: string; label: string }[]) =>
                                                             onChange(selectedOptions.map((option) => option.value))
                                                         }
                                                         className="react-select-container"
@@ -241,8 +241,9 @@ export default function AddNewSlotForm() {
                                                         <Select
 
                                                             options={classOptions}
-                                                            value={classOptions.find((option: any) => option.value === value)}
-                                                            onChange={(selectedOption) =>
+                                                            value={classOptions.find((option) => option.value === value)}
+                                                            // @ts-ignore
+                                                            onChange={(selectedOption: { value: string; label: string } | null) =>
                                                                 onChange(selectedOption ? selectedOption.value : '')
                                                             }
                                                             className="react-select-container"

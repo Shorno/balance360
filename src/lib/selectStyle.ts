@@ -1,35 +1,37 @@
-export const reactSelectStyles = {
-    control: (base) => ({
+import { StylesConfig, CSSObjectWithLabel } from "react-select";
+
+export const reactSelectStyles: StylesConfig = {
+    control: (base: CSSObjectWithLabel) => ({
         ...base,
-        backgroundColor: '#1f2937',
-        borderColor: '#4B5563',
+        backgroundColor: "#1f2937",
+        borderColor: "#4B5563",
     }),
-    menu: (base) => ({
+    menu: (base: CSSObjectWithLabel) => ({
         ...base,
-        backgroundColor: '#1f2937',
+        backgroundColor: "#1f2937",
     }),
-    option: (base, state) => ({
+    option: (base: CSSObjectWithLabel, state: { isFocused: boolean }) => ({
         ...base,
-        backgroundColor: state.isFocused ? '#374151' : '#1f2937',
-        color: 'white',
+        backgroundColor: state.isFocused ? "#374151" : "#1f2937",
+        color: "white",
     }),
-    singleValue: (base) => ({
+    singleValue: (base: CSSObjectWithLabel) => ({
         ...base,
-        color: 'white',
+        color: "white",
     }),
-    multiValue: (base) => ({
+    multiValue: (base: CSSObjectWithLabel) => ({
         ...base,
-        backgroundColor: '#374151',
+        backgroundColor: "#374151",
     }),
-    multiValueLabel: (base) => ({
+    multiValueLabel: (base: CSSObjectWithLabel) => ({
         ...base,
-        color: 'white',
+        color: "white",
     }),
-    multiValueRemove: (base) => ({
+    multiValueRemove: (base: CSSObjectWithLabel) => ({
         ...base,
-        color: 'white',
-        ':hover': {
-            backgroundColor: '#4B5563',
+        color: "white",
+        ":hover": {
+            backgroundColor: "#4B5563",
         },
     }),
 };
