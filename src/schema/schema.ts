@@ -92,6 +92,19 @@ export const classFormSchema = z.object({
 })
 
 
+export const addNewSlotSchema = z.object({
+    slotName: z.string().min(1, "Slot name is required").max(100, "Slot name must be 100 characters or less"),
+    slotDuration: z
+        .string()
+        .min(1, "Duration is required")
+        .regex(/^\d+\s*(hour|minute|min|hr|h|m)s?$/i, "Invalid duration format. Use formats like '1 hour' or '30 minutes'"),
+    selectedDays: z.array(z.string()).min(1, "Select at least one day"),
+    selectedClass: z.string().min(1, "Please select a class"),
+    startTime: z.string().regex(/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(am|pm)$/i, "Invalid time format. Use 'HH:MM AM/PM'"),
+    additionalInfo: z.string().max(500, "Additional information must be 500 characters or less").optional(),
+})
+
+export type AddNewSlotFormData = z.infer<typeof addNewSlotSchema>
 export type LoginFormData = z.infer<typeof loginSchema>
 export type SignupFormData = z.infer<typeof signupSchema>
 export type TrainerFormData = z.infer<typeof trainerFormSchema>

@@ -14,7 +14,7 @@ import TrainerApplicationDetailsPage from "@/pages/Dashboard/Admin/TrainerApplic
 import AllTrainers from "@/pages/Dashboard/Admin/AllTrainers.tsx";
 import ActivityLogPage from "@/pages/Dashboard/Member/ActivityLogPage.tsx";
 import ProfilePage from "@/pages/Dashboard/Member/ProfilePage.tsx";
-import AddNewSlotPage from "@/pages/Dashboard/Member/AddNewSlotPage.tsx";
+import AddNewSlotPage from "@/pages/Trainer/AddNewSlotPage.tsx";
 import AddClassPage from "@/pages/Dashboard/Admin/AddClassPage.tsx";
 import AllClassesPage from "@/pages/AllClassesPage.tsx";
 
