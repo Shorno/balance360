@@ -2,13 +2,38 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import {ClassFormValues} from "@/schema/schema.ts";
 import {Clock, Dumbbell, Users} from "lucide-react";
 import {Badge} from "@/components/ui/badge.tsx";
+import {TooltipProvider} from "@radix-ui/react-tooltip";
+import {useQuery} from "@tanstack/react-query";
+import TrainerList from "@/components/TrainerList.tsx";
+import {getClassWithTrainers} from "@/api/class.ts";
+import {Skeleton} from "@/components/ui/skeleton.tsx";
 
 
+interface ClassDetailsCardProps extends ClassFormValues {
+    _id: string
+    trainers: string[]
+}
 
-export default function ClassDetailsCard({classItem} : {classItem: ClassFormValues}) {
+
+export interface TrainerDetails {
+    _id: string
+    fullName: string
+    email: string
+    profileImage: string
+}
+
+export default function ClassDetailsCard({classItem}: { classItem: ClassDetailsCardProps }) {
+
+    const {data: trainers, isLoading} = useQuery({
+        queryKey: ["trainerInfo", classItem._id],
+        queryFn: () => getClassWithTrainers(classItem._id),
+        select: (data) => data?.trainers
+    })
+
+
     return (
         <Card
-              className="bg-gray-800/50 border-gray-700 overflow-hidden hover:border-purple-500/50 transition-all duration-300">
+            className="bg-gray-800/50 border-gray-700 overflow-hidden hover:border-purple-500/50 transition-all duration-300">
             <div className="aspect-video w-full overflow-hidden">
                 <img
                     src={classItem?.image}
@@ -19,15 +44,15 @@ export default function ClassDetailsCard({classItem} : {classItem: ClassFormValu
             <CardHeader>
                 <div className="flex justify-between items-start">
                     <div>
-                       <div className={"flex justify-between items-center"}>
-                           <CardTitle className="text-xl text-white mb-2">{classItem?.name}</CardTitle>
-                           <Badge
-                               variant="secondary"
-                               className="bg-purple-500/20 text-purple-300 border border-purple-500/30"
-                           >
-                               {classItem?.category}
-                           </Badge>
-                       </div>
+                        <div className={"flex justify-between items-center"}>
+                            <CardTitle className="text-xl text-white mb-2">{classItem?.name}</CardTitle>
+                            <Badge
+                                variant="secondary"
+                                className="bg-purple-500/20 text-purple-300 border border-purple-500/30"
+                            >
+                                {classItem?.category}
+                            </Badge>
+                        </div>
                         <CardDescription className="text-gray-400">
                             {classItem?.details}
                         </CardDescription>
@@ -50,32 +75,24 @@ export default function ClassDetailsCard({classItem} : {classItem: ClassFormValu
                     </div>
                 </div>
 
-                {/*<div>*/}
-                {/*    <h4 className="text-sm font-medium text-gray-300 mb-3">Class Trainers</h4>*/}
-                {/*    <div className="flex -space-x-2 overflow-hidden">*/}
-                {/*        <TooltipProvider>*/}
-                {/*            {classItem.trainers.map((trainer) => (*/}
-                {/*                <Tooltip key={trainer.id}>*/}
-                {/*                    <TooltipTrigger>*/}
-                {/*                        <Avatar*/}
-                {/*                            className="border-2 border-gray-800 cursor-pointer hover:scale-105 transition-transform"*/}
-                {/*                            // onClick={() => handleTrainerClick(trainer.id)}*/}
-                {/*                        >*/}
-                {/*                            <AvatarImage src={trainer.image} alt={trainer.name}/>*/}
-                {/*                            <AvatarFallback>{trainer.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>*/}
-                {/*                        </Avatar>*/}
-                {/*                    </TooltipTrigger>*/}
-                {/*                    <TooltipContent>*/}
-                {/*                        <div className="text-sm">*/}
-                {/*                            <p className="font-medium">{trainer.name}</p>*/}
-                {/*                            <p className="text-xs text-gray-400">{trainer.specialization}</p>*/}
-                {/*                        </div>*/}
-                {/*                    </TooltipContent>*/}
-                {/*                </Tooltip>*/}
-                {/*            ))}*/}
-                {/*        </TooltipProvider>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+                <div>
+                    <h4 className="text-sm font-medium text-gray-300 mb-3">Class Trainers</h4>
+                    <div className="flex p-1  overflow-hidden">
+                        <TooltipProvider>
+                            {
+                                isLoading ?
+                                    Array.from({length: 3}).map((_, index) =>
+                                        <Skeleton key={index} className="w-10 h-10 rounded-full"/>)
+                                    :
+                                    (
+                                        trainers?.length > 0 ? <TrainerList trainers={trainers}/> :
+                                            <div className="text-gray-400">No trainers for the class yet.</div>
+                                    )
+                            }
+                        </TooltipProvider>
+
+                    </div>
+                </div>
 
             </CardContent>
         </Card>

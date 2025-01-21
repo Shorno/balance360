@@ -23,11 +23,6 @@ export default function AllTrainers() {
         select: (data) => data?.data
     })
 
-    console.log(trainers)
-
-    if (isLoading) {
-        return <LoadingState/>
-    }
     if (isError) {
         return <ErrorState/>
     }
@@ -36,7 +31,11 @@ export default function AllTrainers() {
     return (
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
-            <TrainersListTable data={trainers}/>
+
+            {
+                isLoading ? <LoadingState/> : <TrainersListTable data={trainers}/>
+
+            }
         </>
     )
 }
