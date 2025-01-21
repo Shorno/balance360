@@ -39,9 +39,6 @@ export default function TrainerApplicationDetailsPage() {
         select: (data) => data?.data
     })
 
-    if (isLoading) {
-        return <LoadingState/>
-    }
     if (isError) {
         return <ErrorState/>
     }
@@ -50,9 +47,13 @@ export default function TrainerApplicationDetailsPage() {
     return (
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
-            <TrainerApplicationDetails
-                application={applicationDetails}
-            />
+
+            {
+                isLoading ? <LoadingState/> : <TrainerApplicationDetails
+                    application={applicationDetails}
+                />
+            }
+
         </>
     )
 }

@@ -1,8 +1,7 @@
 import {SidebarInset, SidebarProvider} from "@/components/ui/sidebar.tsx";
 import {AppSidebar} from "@/components/sidebar/app-sidebar.tsx";
 import {Outlet} from "react-router";
-export default function AdminLayout() {
-
+export default function DashboardLayout() {
     return (
         <>
             <SidebarProvider defaultOpen={true}>

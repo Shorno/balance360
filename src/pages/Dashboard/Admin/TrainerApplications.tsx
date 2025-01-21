@@ -9,7 +9,7 @@ import {ErrorState} from "@/components/data-states/error-state.tsx";
 
 const breadcrumb = <>
     <BreadcrumbItem>
-        <Link to={"/dashboard/trainers"}>
+        <Link to={"/dashboard/admin/trainers"}>
             <BreadcrumbLink>
                 Trainers
             </BreadcrumbLink>
@@ -26,11 +26,7 @@ export default function TrainerApplications() {
         queryFn: getTrainerApplications,
         select: (data) => data.data
     })
-    console.log(applications)
 
-    if (isLoading) {
-        return <LoadingState/>
-    }
     if (isError) {
         return <ErrorState/>
     }
@@ -38,7 +34,10 @@ export default function TrainerApplications() {
     return (
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
-            <ApplicationListTable data={applications}/>
+            {
+                isLoading ? <LoadingState/> : <ApplicationListTable data={applications}/>
+            }
+
         </>
     )
 }

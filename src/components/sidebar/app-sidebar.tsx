@@ -34,32 +34,32 @@ const navigationConfig = {
         navSingle: [
             {
                 name: "Trainers",
-                url: "/dashboard/trainers",
+                url: "/dashboard/admin/trainers",
                 icon: UsersIcon,
             },
             {
                 name: "Applied Trainers",
-                url: "/dashboard/trainers/applications",
+                url: "/dashboard/admin/trainers/applications",
                 icon: FileUser
             },
             {
                 name: "Balance",
-                url: "/dashboard/balance",
+                url: "/dashboard/admin/balance",
                 icon: CreditCard
             },
             {
                 name: "Add New Class",
-                url: "/dashboard/add-class",
+                url: "/dashboard/admin/add-class",
                 icon: FilePlusIcon
             },
             {
                 name: "Newsletter Subscribers",
-                url: "/dashboard/newsletter-subscribers",
+                url: "/dashboard/admin/newsletter-subscribers",
                 icon: NewspaperIcon
             },
             {
                 name: "Add Forum",
-                url: "/dashboard/add-forum",
+                url: "/dashboard/admin/add-forum",
                 icon: ListPlusIcon
             },
         ],
@@ -73,17 +73,17 @@ const navigationConfig = {
         navSingle: [
             {
                 name: "Manage Slots",
-                url: "/dashboard/slots",
+                url: "/dashboard/trainer/slots",
                 icon: ListOrderedIcon
             },
             {
                 name: "Add New Slot",
-                url: "/dashboard/slots/new-slot",
+                url: "/dashboard/trainer/slots/new-slot",
                 icon: FilePlusIcon
             },
             {
                 name: "Add Forum",
-                url: "/dashboard/add-forum",
+                url: "/dashboard/trainer/add-forum",
                 icon: ListPlusIcon
             },
         ],
@@ -97,17 +97,17 @@ const navigationConfig = {
         navSingle: [
             {
                 name: "Activity Log",
-                url: "/dashboard/activity-log",
+                url: "/dashboard/member/activity-log",
                 icon: ActivityIcon
             },
             {
                 name: "Profile",
-                url: "/dashboard/profile",
+                url: "/dashboard/member/profile",
                 icon: UserIcon
             },
             {
                 name: "Booked Trainers",
-                url: "/dashboard/booked-trainers",
+                url: "/dashboard/member/booked-trainers",
                 icon: ListOrderedIcon
             },
         ],
