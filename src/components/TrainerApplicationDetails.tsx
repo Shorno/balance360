@@ -36,6 +36,8 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
     const [rejectionFeedback, setRejectionFeedback] = useState("")
 
+    console.log(application)
+
     const navigate = useNavigate()
 
 
@@ -43,7 +45,7 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
         mutationFn: approveTrainerApplication,
         onSuccess: () => {
             toast.success("Trainer request has been approved")
-            navigate("/dashboard/trainers")
+            navigate("/dashboard/admin/trainers")
         },
         onError: (error) => {
             toast.error("Failed to approve application")
@@ -61,7 +63,7 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
             rejectTrainerApplication(id, rejectionReason),
         onSuccess: () => {
             toast.success("Trainer request has been rejected");
-            navigate("/dashboard/trainers")
+            navigate("/dashboard/admin/trainers")
             setIsRejectModalOpen(false);
         },
         onError: (error) => {
@@ -87,7 +89,7 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
                                 Trainer Application
                             </CardTitle>
                             <p className="text-gray-400 mt-2 text-sm sm:text-base">Application details
-                                for {application.fullName}</p>
+                                for {application?.fullName}</p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
                             <Button
@@ -114,13 +116,13 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
                                     <div className="space-y-4 sm:space-y-6 py-2 sm:py-4">
                                         <div className="flex items-center space-x-4">
                                             <img
-                                                src={application.profileImage || "/placeholder.svg"}
-                                                alt={application.fullName}
+                                                src={application?.profileImage || "/placeholder.svg"}
+                                                alt={application?.fullName}
                                                 className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover"
                                             />
                                             <div>
-                                                <h4 className="text-base sm:text-lg font-semibold text-white">{application.fullName}</h4>
-                                                <p className="text-xs sm:text-sm text-gray-400">{application.email}</p>
+                                                <h4 className="text-base sm:text-lg font-semibold text-white">{application?.fullName}</h4>
+                                                <p className="text-xs sm:text-sm text-gray-400">{application?.email}</p>
                                             </div>
                                         </div>
                                         <Textarea
@@ -159,14 +161,14 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
                                     <Award className="w-5 h-5 text-purple-400"/>
                                     <div>
                                         <h3 className="text-base sm:text-lg font-semibold text-white">Experience</h3>
-                                        <p className="text-sm sm:text-base text-gray-400">{application.yearsOfExperience} years</p>
+                                        <p className="text-sm sm:text-base text-gray-400">{application?.yearsOfExperience} years</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center space-x-4">
                                     <CakeIcon className="w-5 h-5 text-purple-400"/>
                                     <div>
                                         <h3 className="text-base sm:text-lg font-semibold text-white">Age</h3>
-                                        <p className="text-sm sm:text-base text-gray-400">{application.age} years</p>
+                                        <p className="text-sm sm:text-base text-gray-400">{application?.age} years</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start space-x-4">
@@ -175,7 +177,7 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
                                         <h3 className="text-base sm:text-lg font-semibold text-white">Available
                                             Days</h3>
                                         <div className="flex flex-wrap gap-2 mt-2">
-                                            {application.availableDays.map((day) => (
+                                            {application?.availableDays.map((day) => (
                                                 <Badge key={day} className="bg-gray-700 text-white text-xs sm:text-sm">
                                                     {day}
                                                 </Badge>
@@ -188,7 +190,7 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
                                     <div>
                                         <h3 className="text-base sm:text-lg font-semibold text-white">Available
                                             Time</h3>
-                                        <p className="text-sm sm:text-base text-gray-400">{application.availableTime}</p>
+                                        <p className="text-sm sm:text-base text-gray-400">{application?.availableTime}</p>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +199,7 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
                                 <h3 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-4">Skills &
                                     Expertise</h3>
                                 <div className="flex flex-wrap gap-2">
-                                    {application.skills.map((skill) => (
+                                    {application?.skills.map((skill) => (
                                         <Badge
                                             key={skill}
                                             className="bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs sm:text-sm"
@@ -210,15 +212,15 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
 
                             <div>
                                 <h3 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-4">About</h3>
-                                <p className="text-sm sm:text-base text-gray-400 whitespace-pre-wrap">{application.details}</p>
+                                <p className="text-sm sm:text-base text-gray-400 whitespace-pre-wrap">{application?.details}</p>
                             </div>
                         </div>
 
                         <div className="space-y-4 sm:space-y-6">
                             <div className="aspect-square rounded-lg overflow-hidden border-2 border-gray-700">
                                 <img
-                                    src={application.profileImage || "/placeholder.svg"}
-                                    alt={application.fullName}
+                                    src={application?.profileImage || "/placeholder.svg"}
+                                    alt={application?.fullName}
                                     className="w-full h-full object-cover"
                                 />
                             </div>
@@ -227,10 +229,10 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
                                     Information</h3>
                                 <div className="space-y-2">
                                     <p className="text-sm sm:text-base text-gray-400">
-                                        <span className="font-medium text-gray-300">Name:</span> {application.fullName}
+                                        <span className="font-medium text-gray-300">Name:</span> {application?.fullName}
                                     </p>
                                     <p className="text-sm sm:text-base text-gray-400">
-                                        <span className="font-medium text-gray-300">Email:</span> {application.email}
+                                        <span className="font-medium text-gray-300">Email:</span> {application?.email}
                                     </p>
                                 </div>
                             </div>

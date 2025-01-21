@@ -159,7 +159,7 @@ const columns: ColumnDef<TrainerApplicationData>[] = [
             const _id = row.original._id;
             return (
                 <div className="flex hover:text-purple-500">
-                    <Link to={`/dashboard/trainers/applications/${_id}`}>
+                    <Link to={`/dashboard/admin/trainers/applications/${_id}`}>
                         <div className="flex justify-center items-center gap-2">
                             Trainer Details
                             <ArrowRight className="h-5 w-5" />

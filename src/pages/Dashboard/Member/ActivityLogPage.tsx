@@ -21,7 +21,7 @@ import {getApplicationStatus} from "@/api/user.ts";
 import {useQuery} from "@tanstack/react-query";
 import useAuthStore from "@/store/authStore.ts";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
-import {ErrorState} from "@/components/data-states/error-state.tsx";
+import BecomeTrainerCTA from "@/components/BecomeTrainerCTA.tsx";
 
 
 const breadcrumb =
@@ -46,7 +46,7 @@ export default function ActivityLogPage() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const {currentUser} = useAuthStore()
 
-    const {data: application, isError} = useQuery({
+    const {data: application, isLoading} = useQuery({
         queryKey: ['application', currentUser?.email],
         queryFn: () => getApplicationStatus(currentUser?.email || ''),
         select: (data) => data?.data,
@@ -71,11 +71,6 @@ export default function ActivityLogPage() {
                 return null
         }
     }
-    if (isError) {
-        return <div className={"flex justify-center items-center h-screen w-full"}>
-            <ErrorState/>
-        </div>
-    }
 
     return (
         <>
@@ -94,97 +89,108 @@ export default function ActivityLogPage() {
                         </CardDescription>
                     </CardHeader>
                     {
-                        application ? (
-                                <CardContent className="pt-6">
-                                    <div className="space-y-6">
-                                        <div
-                                            className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 rounded-lg border border-gray-700 bg-gray-800/30">
-                                            <div className="flex items-center gap-4">
-                                                <img
-                                                    src={application?.profileImage}
-                                                    alt={application?.fullName}
-                                                    className="w-16 h-16 rounded-md object-cover"
-                                                />
-                                                <div className="space-y-1">
-                                                    <h3 className="text-lg font-semibold text-white">
-                                                        {application?.fullName}
-                                                    </h3>
-                                                    {
-                                                        application?.createdAt &&
-                                                        <p className="text-sm text-gray-400">
-                                                            Applied
-                                                            on {new Date(application?.createdAt).toLocaleDateString("en-US", {
-                                                            month: "long",
-                                                            day: "numeric",
-                                                            year: "numeric"
-                                                        })}
-                                                        </p>
-                                                    }
-                                                    <div className="flex items-center gap-2">
-                                                        {getStatusBadge(application?.status)}
-                                                        {application?.status === 'rejected' && (
-                                                            <Button
-                                                                variant="ghost"
-                                                                size="sm"
-                                                                onClick={() => setIsModalOpen(true)}
-                                                                className="hover:bg-gray-700 h-7 px-2 text-sm"
-                                                            >
-                                                                <Eye className="w-4 h-4 mr-1 text-gray-400"/>
-                                                                View Feedback
-                                                            </Button>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {application?.status === 'pending' && (
-                                            <div
-                                                className="text-center p-4 rounded-lg border border-yellow-500/20 bg-yellow-500/5">
-                                                <p className="text-yellow-200">
-                                                    Your application is currently under review. We'll notify you once a
-                                                    decision has
-                                                    been made.
-                                                </p>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                                        <DialogContent className="bg-gray-800 border-gray-700">
-                                            <DialogHeader>
-                                                <DialogTitle className="text-xl text-white">
-                                                    Application Feedback
-                                                </DialogTitle>
-                                            </DialogHeader>
+                        isLoading? <LoadingState/> :
+                            (
+                                application ?
+                                    (
+                                        <CardContent className="pt-6">
                                             <div className="space-y-6">
-                                                <div className="flex items-center space-x-4">
-                                                    <img
-                                                        src={application?.profileImage}
-                                                        alt={application?.fullName}
-                                                        className="w-16 h-16 rounded-full object-cover"
-                                                    />
-                                                    <div>
-                                                        <h4 className="text-lg font-semibold text-white">
-                                                            {application?.fullName}
-                                                        </h4>
-                                                        <p className="text-sm text-gray-400">
-                                                            {application?.email}
-                                                        </p>
+                                                <div
+                                                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 rounded-lg border border-gray-700 bg-gray-800/30">
+                                                    <div className="flex items-center gap-4">
+                                                        <img
+                                                            src={application?.profileImage}
+                                                            alt={application?.fullName}
+                                                            className="w-16 h-16 rounded-md object-cover"
+                                                        />
+                                                        <div className="space-y-1">
+                                                            <h3 className="text-lg font-semibold text-white">
+                                                                {application?.fullName}
+                                                            </h3>
+                                                            {
+                                                                application?.createdAt &&
+                                                                <p className="text-sm text-gray-400">
+                                                                    Applied
+                                                                    on {new Date(application?.createdAt).toLocaleDateString("en-US", {
+                                                                    month: "long",
+                                                                    day: "numeric",
+                                                                    year: "numeric"
+                                                                })}
+                                                                </p>
+                                                            }
+                                                            <div className="flex items-center gap-2">
+                                                                {getStatusBadge(application?.status)}
+                                                                {application?.status === 'rejected' && (
+                                                                    <Button
+                                                                        variant="ghost"
+                                                                        size="sm"
+                                                                        onClick={() => setIsModalOpen(true)}
+                                                                        className="hover:bg-gray-700 h-7 px-2 text-sm"
+                                                                    >
+                                                                        <Eye className="w-4 h-4 mr-1 text-gray-400"/>
+                                                                        View Feedback
+                                                                    </Button>
+                                                                )}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
-                                                    <p className="text-gray-300 whitespace-pre-wrap">
-                                                        {application?.rejectionReason}
-                                                    </p>
-                                                </div>
+
+                                                {application?.status === 'pending' && (
+                                                    <div
+                                                        className="text-center p-4 rounded-lg border border-yellow-500/20 bg-yellow-500/5">
+                                                        <p className="text-yellow-200">
+                                                            Your application is currently under review. We'll notify you once a
+                                                            decision has
+                                                            been made.
+                                                        </p>
+                                                    </div>
+                                                )}
                                             </div>
-                                        </DialogContent>
-                                    </Dialog>
-                                </CardContent>
+
+                                            <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+                                                <DialogContent className="bg-gray-800 border-gray-700">
+                                                    <DialogHeader>
+                                                        <DialogTitle className="text-xl text-white">
+                                                            Application Feedback
+                                                        </DialogTitle>
+                                                    </DialogHeader>
+                                                    <div className="space-y-6">
+                                                        <div className="flex items-center space-x-4">
+                                                            <img
+                                                                src={application?.profileImage}
+                                                                alt={application?.fullName}
+                                                                className="w-16 h-16 rounded-full object-cover"
+                                                            />
+                                                            <div>
+                                                                <h4 className="text-lg font-semibold text-white">
+                                                                    {application?.fullName}
+                                                                </h4>
+                                                                <p className="text-sm text-gray-400">
+                                                                    {application?.email}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
+                                                            <p className="text-gray-300 whitespace-pre-wrap">
+                                                                {application?.rejectionReason}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </DialogContent>
+                                            </Dialog>
+                                        </CardContent>
+
+                                    ) :
+                                    (
+                                        <div className="text-center p-8 flex flex-col gap-10">
+                                            <p className="text-gray-400">
+                                                You haven't submitted a trainer application yet.
+                                            </p>
+                                            <BecomeTrainerCTA/>
+                                        </div>
+                                    )
                             )
-                            :
-                            <LoadingState/>
                     }
                 </Card>
             </div>

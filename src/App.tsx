@@ -32,19 +32,14 @@ function App() {
                         <Route index element={<Home/>}/>
                         <Route path="/trainers" element={<AllTrainersPage/>}/>
                         <Route path="/trainers/:id" element={<TrainerDetailsPage/>}/>
+                        <Route path="/become-a-trainer" element={<BecomeATrainerPage/>}/>
                         <Route path="/classes" element={<AllClassesPage/>}/>
                     </Route>
 
-                    {/* Auth Routes */}
                     <Route path="/login" element={<LoginPage/>}/>
                     <Route path="/signup" element={<SignupPage/>}/>
 
-                    {/* Protected Routes */}
                     <Route element={<ProtectedRoutes/>}>
-                        {/* Protected member route */}
-                        <Route path="/become-a-trainer" element={<BecomeATrainerPage/>}/>
-
-                        {/* Dashboard Routes */}
                         <Route element={<DashboardLayout/>}>
                             <Route path="/dashboard">
                                 <Route index element={<DashboardRedirect/>}/>
@@ -54,7 +49,7 @@ function App() {
                                     <Route path="admin">
                                         <Route path="trainers" element={<AllTrainers/>}/>
                                         <Route path="trainers/applications" element={<TrainerApplications/>}/>
-                                        <Route path="trainers/applications/:id"
+                                        <Route path="trainers/applications/:_id"
                                                element={<TrainerApplicationDetailsPage/>}/>
                                         <Route path="add-class" element={<AddClassPage/>}/>
                                         <Route path="balance" element={<div>Balance Page</div>}/>

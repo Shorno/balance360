@@ -18,7 +18,7 @@ const breadcrumb = <>
     </BreadcrumbItem>
     <BreadcrumbSeparator/>
     <BreadcrumbItem>
-        <Link to={"/dashboard/trainers/applications"}>
+        <Link to={"/dashboard/admin/trainers/applications"}>
             <BreadcrumbLink>
                 Applications
             </BreadcrumbLink>
@@ -31,7 +31,7 @@ const breadcrumb = <>
 
 export default function TrainerApplicationDetailsPage() {
     const {_id} = useParams();
-    console.log(_id)
+    console.log("id", _id)
     const {data: applicationDetails, isLoading, isError} = useQuery({
         queryKey: ['trainerApplication', _id],
         queryFn: () => getTrainerApplicationDetails(_id || ""),
