@@ -2,7 +2,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import {ClassFormValues} from "@/schema/schema.ts";
 import {Clock, Dumbbell, Users} from "lucide-react";
 import {Badge} from "@/components/ui/badge.tsx";
-import {TooltipProvider} from "@radix-ui/react-tooltip";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@radix-ui/react-tooltip";
 import {useQuery} from "@tanstack/react-query";
 import TrainerList from "@/components/TrainerList.tsx";
 import {getClassWithTrainers} from "@/api/class.ts";
@@ -77,20 +77,35 @@ export default function ClassDetailsCard({classItem}: { classItem: ClassDetailsC
 
                 <div>
                     <h4 className="text-sm font-medium text-gray-300 mb-3">Class Trainers</h4>
-                    <div className="flex p-1  overflow-hidden">
+                    <div className="flex p-1 overflow-hidden">
                         <TooltipProvider>
-                            {
-                                isLoading ?
-                                    Array.from({length: 3}).map((_, index) =>
-                                        <Skeleton key={index} className="w-10 h-10 rounded-full"/>)
-                                    :
-                                    (
-                                        trainers?.length > 0 ? <TrainerList trainers={trainers}/> :
-                                            <div className="text-gray-400">No trainers for the class yet.</div>
-                                    )
-                            }
+                            {isLoading ? (
+                                Array.from({length: 3}).map((_, index) => (
+                                    <Skeleton key={index} className="w-10 h-10 rounded-full"/>
+                                ))
+                            ) : (
+                                trainers?.length > 0 ? (
+                                    <div className="flex gap-2">
+                                        {trainers.map((trainer: TrainerDetails) => (
+                                            <Tooltip key={trainer._id}>
+                                                <TooltipTrigger>
+                                                    <TrainerList trainers={[trainer]}/>
+                                                </TooltipTrigger>
+                                                <TooltipContent
+                                                    className="bg-gray-800 border border-gray-600/50 rounded-md p-2">
+                                                    <div className="text-center">
+                                                        <h4 className="text-sm font-medium text-white">{trainer.fullName}</h4>
+                                                        <p className="text-xs text-gray-400">{trainer.email}</p>
+                                                    </div>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="text-gray-400 text-sm">No trainers assigned yet</div>
+                                )
+                            )}
                         </TooltipProvider>
-
                     </div>
                 </div>
 
