@@ -27,11 +27,10 @@ function App() {
         <>
             <BrowserRouter>
                 <Routes>
-                    {/* Public Routes */}
                     <Route element={<MainLayout/>}>
                         <Route index element={<Home/>}/>
                         <Route path="/trainers" element={<AllTrainersPage/>}/>
-                        <Route path="/trainers/:id" element={<TrainerDetailsPage/>}/>
+                        <Route path="/trainers/:_id" element={<TrainerDetailsPage/>}/>
                         <Route path="/become-a-trainer" element={<BecomeATrainerPage/>}/>
                         <Route path="/classes" element={<AllClassesPage/>}/>
                     </Route>
@@ -44,7 +43,6 @@ function App() {
                             <Route path="/dashboard">
                                 <Route index element={<DashboardRedirect/>}/>
 
-                                {/* Admin Routes */}
                                 <Route element={<RoleProtectedRoute allowedRoles={[Role.Admin]}/>}>
                                     <Route path="admin">
                                         <Route path="trainers" element={<AllTrainers/>}/>
@@ -59,7 +57,6 @@ function App() {
                                     </Route>
                                 </Route>
 
-                                {/* Trainer Routes */}
                                 <Route element={<RoleProtectedRoute allowedRoles={[Role.Trainer]}/>}>
                                     <Route path="trainer">
                                         <Route path="slots" element={<ManageSlot/>}/>
