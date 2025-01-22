@@ -1,65 +1,41 @@
-import { TrainerCard, TrainerCardProps } from "@/components/TrainerCard"
-import {Link} from "react-router";
+import {useQuery} from "@tanstack/react-query";
+import {getApprovedTrainers} from "@/api/admin.ts";
+import TrainerCard, {TrainerInfoDetails} from "@/components/TrainerCard.tsx";
+import {LoadingState} from "@/components/data-states/loading-state.tsx";
 
-const trainers: TrainerCardProps[] = [
-    {
-        _id: "1",
-        name: "John Doe",
-        image: "/images/trainers/john-doe.jpg",
-        experience: 5,
-        availableSlots: 3,
-        socialLinks: [
-            { platform: "facebook", url: "https://facebook.com/johndoe" },
-            { platform: "twitter", url: "https://twitter.com/johndoe" },
-            { platform: "instagram", url: "https://instagram.com/johndoe" },
-            { platform: "linkedin", url: "https://linkedin.com/in/johndoe" }
-        ]
-    },
-    {
-        _id: "2",
-        name: "Jane Smith",
-        image: "/images/trainers/jane-smith.jpg",
-        experience: 7,
-        availableSlots: 2,
-        socialLinks: [
-            { platform: "facebook", url: "https://facebook.com/janesmith" },
-            { platform: "twitter", url: "https://twitter.com/janesmith" },
-            { platform: "instagram", url: "https://instagram.com/janesmith" }
-        ]
-    },
-    {
-        _id: "3",
-        name: "Mike Johnson",
-        image: "/images/trainers/mike-johnson.jpg",
-        experience: 3,
-        availableSlots: 5,
-        socialLinks: [
-            { platform: "facebook", url: "https://facebook.com/mikejohnson" },
-            { platform: "linkedin", url: "https://linkedin.com/in/mikejohnson" }
-        ]
-    },
-]
 
 export default function AllTrainersPage() {
-    return (
-        <div className="py-32 min-h-screen bg-gray-900">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center text-white">
-                    Our Expert Trainers
-                </h2>
+    const {data: trainers, isLoading} = useQuery({
+        queryKey: ['trainers'],
+        queryFn: () => getApprovedTrainers(),
+        select: (data) => data?.data
+    })
+    console.log(trainers)
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {trainers.map((trainer) => (
-                        <TrainerCard key={trainer._id} {...trainer} />
-                    ))}
+
+    return (
+        <div className="min-h-screen bg-gray-900 py-32 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+                        Our Expert Trainers
+                    </h1>
+                    <p className="text-gray-300 max-w-2xl mx-auto">
+                        Work with our certified fitness professionals to achieve your health and fitness goals.
+                        Each trainer brings unique expertise and a personalized approach to your fitness journey.
+                    </p>
                 </div>
-                <Link to={"/become-a-trainer"}>
-                    <button className="bg-gray-800 text-white px-4 py-2 rounded-lg mt-8">
-                        Become a Trainer
-                    </button>
-                </Link>
+
+                {
+                    isLoading ? <LoadingState/>
+                        :
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {trainers?.map((trainer: TrainerInfoDetails) => (
+                                <TrainerCard key={trainer._id} trainer={trainer}/>
+                            ))}
+                        </div>
+                }
             </div>
         </div>
     )
 }
-

@@ -1,75 +1,93 @@
-import { motion } from "framer-motion"
-import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import {Card, CardContent} from "@/components/ui/card.tsx";
+import {Badge} from "@/components/ui/badge.tsx";
+import {Award, Calendar, ChevronRight, Clock} from "lucide-react";
+import {Button} from "@/components/ui/button.tsx";
 import {Link} from "react-router";
 
-interface SocialLink {
-    platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin'
-    url: string
-}
-
-export interface TrainerCardProps {
+export interface TrainerInfoDetails {
     _id: string
-    name: string
-    image: string
-    experience: number
-    availableSlots: number
-    socialLinks: SocialLink[]
+    fullName: string
+    email: string
+    profileImage: string
+    yearsOfExperience: number
+    age: number
+    availableDays: string[]
+    availableTime: string
+    details: string
+    skills: string[]
 }
 
-const socialIcons = {
-    facebook: Facebook,
-    twitter: Twitter,
-    instagram: Instagram,
-    linkedin: Linkedin
-}
-
-export function TrainerCard({ _id, name, image, experience, availableSlots, socialLinks }: TrainerCardProps) {
+export default function TrainerCard({trainer}: { trainer: TrainerInfoDetails }) {
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-        >
-            <Card className="overflow-hidden bg-gray-800 text-white">
-                <div className="relative h-64">
-                    <img
-                        src={image || "/placeholder.svg"}
-                        alt={name}
-                    />
-                </div>
-                <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">{name}</h3>
-                    <p className="text-gray-300 mb-2">{experience} years of experience</p>
-                    <p className="text-gray-300 mb-4">{availableSlots} available slots</p>
-                    <div className="flex space-x-4">
-                        {socialLinks.map(({ platform, url }) => {
-                            const Icon = socialIcons[platform]
-                            return (
-                                <a
-                                    key={platform}
-                                    href={url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-gray-400 hover:text-white transition-colors"
-                                    aria-label={`${name}'s ${platform} profile`}
-                                >
-                                    <Icon size={20} />
-                                </a>
-                            )
-                        })}
+            <Card
+                key={trainer._id}
+                className="bg-gray-800/50 border-gray-700 hover:border-purple-500/50 transition-all duration-300 group"
+            >
+                <CardContent className="p-0">
+                    <div className="relative">
+                        <div className="aspect-[4/3] overflow-hidden">
+                            <img
+                                src={trainer.profileImage}
+                                alt={trainer.fullName}
+                                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                            />
+                        </div>
+                        <div className="absolute top-4 right-4">
+                            <Badge className="bg-purple-500/90 text-white">
+                                {trainer.availableDays.length} days available
+                            </Badge>
+                        </div>
+                    </div>
+
+                    {/* Trainer Info */}
+                    <div className="p-6 space-y-4">
+                        <div>
+                            <h3 className="text-xl font-semibold text-white group-hover:text-purple-400 transition-colors mb-2">
+                                {trainer.fullName}
+                            </h3>
+                            <p className="text-gray-300 line-clamp-2">{trainer.details}</p>
+                        </div>
+
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-2 text-gray-300">
+                                <Award className="w-4 h-4 text-purple-400"/>
+                                <span>{trainer.yearsOfExperience} years of experience</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-300">
+                                <Clock className="w-4 h-4 text-purple-400"/>
+                                <span>{trainer.availableTime}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-300">
+                                <Calendar className="w-4 h-4 text-purple-400"/>
+                                <span>{trainer.availableDays.join(", ")}</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p className="text-sm font-medium text-gray-400 mb-2">Skills & Expertise</p>
+                            <div className="flex flex-wrap gap-2">
+                                {trainer.skills.map((skill) => (
+                                    <Badge
+                                        key={skill}
+                                        className="bg-purple-500/20 text-purple-300 border border-purple-500/30"
+                                    >
+                                        {skill}
+                                    </Badge>
+                                ))}
+                            </div>
+                        </div>
+
+
+                       <Link to={trainer._id}>
+                           <Button
+                               className="w-full mt-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                           >
+                               View Profile
+                               <ChevronRight className="w-4 h-4 ml-2"/>
+                           </Button>
+                       </Link>
                     </div>
                 </CardContent>
-                <CardFooter className="p-6 pt-0">
-                    <Button asChild className="w-full bg-purple-600 hover:bg-purple-700">
-                        <Link to={`/trainers/${_id}`}>
-                            Know More
-                        </Link>
-                    </Button>
-                </CardFooter>
             </Card>
-        </motion.div>
     )
 }
-
