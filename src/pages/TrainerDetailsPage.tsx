@@ -3,18 +3,29 @@ import {Card, CardContent} from "@/components/ui/card"
 import {Clock, Calendar} from "lucide-react"
 import {useQuery} from "@tanstack/react-query"
 import useAuthStore from "@/store/authStore.ts"
-import type {TrainerFormData} from "@/schema/schema.ts"
 import {LoadingState} from "@/components/data-states/loading-state.tsx"
 import BecomeTrainerCTA from "@/components/BecomeTrainerCTA.tsx"
 import TimeSlots from "@/components/TimeSlots.tsx";
 import {useParams} from "react-router";
 import {getTrainerApplicationDetails} from "@/api/admin.ts";
 
+interface trainerInfoDetails {
+    _id: string
+    fullName: string
+    email: string
+    profileImage: string
+    yearsOfExperience: number
+    age: number
+    availableDays: string[]
+    availableTime: string
+    details: string
+    skills: string[]
+}
+
 export default function TrainerDetailsPage() {
     const {_id} = useParams()
-    console.log("id", _id)
     const {currentUser} = useAuthStore()
-    const {data: trainerInfo, isLoading: isTrainerLoading} = useQuery<TrainerFormData>({
+    const {data: trainerInfo, isLoading: isTrainerLoading} = useQuery<trainerInfoDetails>({
         queryKey: ["trainer", currentUser?.email],
         queryFn: () => getTrainerApplicationDetails(_id || ""),
         //@ts-ignore
@@ -111,7 +122,7 @@ export default function TrainerDetailsPage() {
                         </Card>
                     )}
 
-                    <TimeSlots/>
+                    <TimeSlots email={trainerInfo?.email}/>
                 </div>
                 <BecomeTrainerCTA/>
             </div>

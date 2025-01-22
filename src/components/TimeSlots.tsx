@@ -6,11 +6,9 @@ import {Button} from "@/components/ui/button.tsx";
 import {useQuery} from "@tanstack/react-query";
 import {getTrainerSlots} from "@/api/trainer.ts";
 import React from "react";
-import useAuthStore from "@/store/authStore.ts";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
 
 type Slot = {
-    _id: string
     slotName: string
     startTime: string
     slotDuration: string
@@ -19,13 +17,12 @@ type Slot = {
     additionalInfo?: string
 }
 
-export default function TimeSlots(){
-    const { currentUser } = useAuthStore()
-
+export default function TimeSlots({email}: { email: string | undefined}) {
+    console.log(email)
     const { data: slotsList } = useQuery<Slot[]>({
-        queryKey: ["slots", currentUser?.email],
-        queryFn: () => getTrainerSlots(currentUser?.email || ""),
-        enabled: !!currentUser,
+        queryKey: ["slots", email],
+        queryFn: () => getTrainerSlots(email || ""),
+        enabled: !!email,
     })
     const uniqueDays = React.useMemo(() => {
         if (!slotsList) return []
@@ -64,7 +61,7 @@ export default function TimeSlots(){
                                         {slotsList
                                             .filter((slot) => slot.selectedDays.includes(day))
                                             .map((slot) => (
-                                                <Card key={slot._id} className="bg-gray-700/30 border-gray-600">
+                                                <Card key={email} className="bg-gray-700/30 border-gray-600">
                                                     <CardContent className="p-4">
                                                         <div className="flex items-center justify-between">
                                                             <div className="space-y-1">
