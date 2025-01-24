@@ -187,6 +187,7 @@ export default function PaymentPage() {
                                             <FormLabel className="text-gray-200">Full Name</FormLabel>
                                             <FormControl>
                                                 <Input
+                                                    disabled
                                                     readOnly
                                                     placeholder="John Doe"
                                                     {...field}
@@ -206,6 +207,7 @@ export default function PaymentPage() {
                                             <FormLabel className="text-gray-200">Email</FormLabel>
                                             <FormControl>
                                                 <Input
+                                                    disabled
                                                     readOnly
                                                     placeholder="john@example.com"
                                                     {...field}
