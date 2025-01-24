@@ -88,6 +88,7 @@ export default function PaymentPage() {
             cvc: ''
         }
     });
+    //update env
 
     const onSubmit = () => {
         paymentMutation.mutate({amount: price, planName});
