@@ -1,6 +1,6 @@
 import {Button} from "@/components/ui/button.tsx";
 
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell} from "recharts"
+import {Tooltip, ResponsiveContainer, PieChart, Pie, Cell} from "recharts"
 import {DollarSign, Users, Mail, CreditCard, Calendar, ArrowUpDown} from "lucide-react"
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 import {Badge} from "@/components/ui/badge"
@@ -12,21 +12,6 @@ import {DataTable} from "@/components/TransactionsTable.tsx";
 import {BreadcrumbItem, BreadcrumbPage} from "@/components/ui/breadcrumb.tsx";
 import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
 
-// Dummy data for the membership comparison chart
-const membershipData = [
-    {name: "Newsletter Subscribers", value: 1200},
-    {name: "Paid Members", value: 800},
-]
-
-// Dummy data for monthly revenue
-const monthlyRevenue = [
-    {month: "Jan", revenue: 2400},
-    {month: "Feb", revenue: 3600},
-    {month: "Mar", revenue: 3200},
-    {month: "Apr", revenue: 4500},
-    {month: "May", revenue: 3800},
-    {month: "Jun", revenue: 5000},
-]
 
 const COLORS = ["#9333ea", "#e879f9"]
 
@@ -123,7 +108,7 @@ const columns: ColumnDef<Transaction>[] = [
         accessorKey: "status",
         header: "Status",
         cell: ({row}) => (
-            <Badge variant="default" className="bg-green-800 text-white">
+            <Badge variant="default" className="bg-green-800 hover:bg-green-900 text-white capitalize">
                 {row.getValue("status")}
             </Badge>
         ),
@@ -135,6 +120,7 @@ export default function AdminBalancePage() {
         queryKey: ["statistics"],
         queryFn: () => getStatistics(),
     })
+
 
     return (
         <>
@@ -150,78 +136,56 @@ export default function AdminBalancePage() {
                         <LoadingState/>
                     ) : (
                         <>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <Card className="bg-gray-800 border-purple-900/60">
-                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                        <CardTitle className="text-sm font-medium text-gray-300">Total
-                                            Balance</CardTitle>
-                                        <div
-                                            className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
-                                            <DollarSign className="w-6 h-6 text-green-400"/>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="text-3xl font-bold text-white">${statistics?.totalRevenue}</div>
-                                    </CardContent>
-                                </Card>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 ">
+                                <div className={"flex flex-col gap-4"}>
+                                    <Card className="bg-gray-800 border-purple-900/60">
+                                        <CardHeader
+                                            className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                            <CardTitle className="text-sm font-medium text-gray-300">Total
+                                                Balance</CardTitle>
+                                            <div
+                                                className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                                                <DollarSign className="w-6 h-6 text-green-400"/>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div
+                                                className="text-3xl font-bold text-white">${statistics?.totalRevenue}</div>
+                                        </CardContent>
+                                    </Card>
 
-                                <Card className="bg-gray-800 border-purple-900/60">
-                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                        <CardTitle className="text-sm font-medium text-gray-300">Total
-                                            Members</CardTitle>
-                                        <div
-                                            className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                            <Users className="w-6 h-6 text-purple-400"/>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="text-3xl font-bold text-white">{statistics?.totalMembers}</div>
-                                    </CardContent>
-                                </Card>
+                                    <Card className="bg-gray-800 border-purple-900/60">
+                                        <CardHeader
+                                            className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                            <CardTitle className="text-sm font-medium text-gray-300">Total
+                                                Members</CardTitle>
+                                            <div
+                                                className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center">
+                                                <Users className="w-6 h-6 text-purple-400"/>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div
+                                                className="text-3xl font-bold text-white">{statistics?.totalMembers}</div>
+                                        </CardContent>
+                                    </Card>
 
-                                <Card className="bg-gray-800 border-purple-900/60">
-                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                        <CardTitle className="text-sm font-medium text-gray-300">Newsletter
-                                            Subscribers</CardTitle>
-                                        <div
-                                            className="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center">
-                                            <Mail className="w-6 h-6 text-pink-400"/>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="text-3xl font-bold text-white">1,200</div>
-                                    </CardContent>
-                                </Card>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <Card className="bg-gray-800 border-purple-900/60">
-                                    <CardHeader>
-                                        <CardTitle className="text-gray-300">Monthly Revenue</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="h-80">
-                                            <ResponsiveContainer width="100%" height="100%">
-                                                <BarChart data={monthlyRevenue}>
-                                                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))"/>
-                                                    <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))"/>
-                                                    <YAxis stroke="hsl(var(--muted-foreground))"/>
-                                                    <Tooltip
-                                                        contentStyle={{
-                                                            backgroundColor: "hsl(var(--card))",
-                                                            border: "1px solid hsl(var(--border))",
-                                                            borderRadius: "0.5rem",
-                                                            color: "hsl(var(--card-foreground))",
-                                                        }}
-                                                    />
-                                                    <Bar dataKey="revenue" fill="hsl(var(--primary))"
-                                                         radius={[4, 4, 0, 0]}/>
-                                                </BarChart>
-                                            </ResponsiveContainer>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-
+                                    <Card className="bg-gray-800 border-purple-900/60">
+                                        <CardHeader
+                                            className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                            <CardTitle className="text-sm font-medium text-gray-300">Newsletter
+                                                Subscribers</CardTitle>
+                                            <div
+                                                className="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center">
+                                                <Mail className="w-6 h-6 text-pink-400"/>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div
+                                                className="text-3xl font-bold text-white">{statistics?.newsletterSubscribers}</div>
+                                        </CardContent>
+                                    </Card>
+                                </div>
                                 <Card className="bg-gray-800 border-purple-900/60">
                                     <CardHeader>
                                         <CardTitle className="text-gray-300">Members vs Subscribers</CardTitle>
@@ -231,7 +195,16 @@ export default function AdminBalancePage() {
                                             <ResponsiveContainer width="100%" height="100%">
                                                 <PieChart>
                                                     <Pie
-                                                        data={membershipData}
+                                                        data={[
+                                                            {
+                                                                name: "Newsletter Subscribers",
+                                                                value: statistics?.newsletterSubscribers || 0
+                                                            },
+                                                            {
+                                                                name: "Paid Members",
+                                                                value: statistics?.totalPaidMembers || 0
+                                                            }
+                                                        ]}
                                                         cx="50%"
                                                         cy="50%"
                                                         innerRadius={80}
@@ -239,15 +212,14 @@ export default function AdminBalancePage() {
                                                         fill="#8884d8"
                                                         paddingAngle={5}
                                                         dataKey="value"
-                                                        label={({
-                                                                    name,
-                                                                    percent
-                                                                }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                                                        style={{outline: "none"}}
+                                                        label={({name, percent}) => `${name} ${(percent * 100).toFixed(0)}%`}
                                                     >
-                                                        {membershipData.map((_, index) => (
-                                                            <Cell key={`cell-${index}`}
-                                                                  fill={COLORS[index % COLORS.length]}/>
-                                                        ))}
+                                                        {statistics?.newsletterSubscribers
+                                                            && statistics.totalPaidMembers
+                                                            && COLORS.map((color, index) => (
+                                                                <Cell key={index} fill={color}/>
+                                                            ))}
                                                     </Pie>
                                                     <Tooltip/>
                                                 </PieChart>
@@ -256,6 +228,7 @@ export default function AdminBalancePage() {
                                     </CardContent>
                                 </Card>
                             </div>
+
 
                             <Card className="bg-gray-800 border-purple-900/60">
                                 <CardHeader>

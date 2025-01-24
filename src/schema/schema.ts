@@ -104,6 +104,12 @@ export const addNewSlotSchema = z.object({
     additionalInfo: z.string().max(500, "Additional information must be 500 characters or less").optional(),
 })
 
+export const newsletterSchema = z.object({
+    name: z.string().min(2, 'Name must be at least 2 characters'),
+    email: z.string().email('Please enter a valid email address'),
+});
+
+export type NewsletterFormValues = z.infer<typeof newsletterSchema>;
 export type AddNewSlotFormData = z.infer<typeof addNewSlotSchema>
 export type LoginFormData = z.infer<typeof loginSchema>
 export type SignupFormData = z.infer<typeof signupSchema>

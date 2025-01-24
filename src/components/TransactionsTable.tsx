@@ -55,7 +55,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
     return (
         <div className="w-full">
-            <div className="flex items-center py-4">
+            <div className="flex items-center py-4 gap-4">
                 <Input
                     placeholder="Filter emails..."
                     value={(table.getColumn("userEmail")?.getFilterValue() as string) ?? ""}
@@ -64,11 +64,11 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                 />
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="ml-auto">
+                        <Button variant="outline" className="ml-auto bg-gray-900">
                             Columns <ChevronDown className="ml-2 h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent align="end" className={"bg-gray-900"}>
                         {table
                             .getAllColumns()
                             .filter((column) => column.getCanHide())
