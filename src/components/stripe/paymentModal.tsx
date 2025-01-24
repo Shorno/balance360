@@ -1,7 +1,7 @@
 import { loadStripe } from '@stripe/stripe-js';
 import { useMutation } from '@tanstack/react-query';
 import { CreditCard, CheckCircle, Clock } from 'lucide-react';
-import {createPaymentIntent} from "@/api/stripe.ts";
+import {createPaymentIntent} from "@/api/payments.ts";
 
 interface PaymentModalProps {
     isOpen: boolean;
