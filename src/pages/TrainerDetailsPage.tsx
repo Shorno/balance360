@@ -2,7 +2,6 @@ import {Badge} from "@/components/ui/badge"
 import {Card, CardContent} from "@/components/ui/card"
 import {Clock, Calendar} from "lucide-react"
 import {useQuery} from "@tanstack/react-query"
-import useAuthStore from "@/store/authStore.ts"
 import {LoadingState} from "@/components/data-states/loading-state.tsx"
 import BecomeTrainerCTA from "@/components/BecomeTrainerCTA.tsx"
 import TimeSlots from "@/components/TimeSlots.tsx";
@@ -24,10 +23,10 @@ interface trainerInfoDetails {
 
 export default function TrainerDetailsPage() {
     const {_id} = useParams()
-    const {currentUser} = useAuthStore()
     const {data: trainerInfo, isLoading: isTrainerLoading} = useQuery<trainerInfoDetails>({
-        queryKey: ["trainer", currentUser?.email],
+        queryKey: ["trainer", _id],
         queryFn: () => getTrainerApplicationDetails(_id || ""),
+        enabled: !!_id,
         //@ts-ignore
         select: (data ) => data.data,
     })
@@ -37,10 +36,10 @@ export default function TrainerDetailsPage() {
         <div className="min-h-screen bg-gray-900 py-40 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto space-y-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {isTrainerLoading ? (
+                    {isTrainerLoading? (
                         <LoadingState/>
                     ) : (
-                        <Card className="bg-gray-800/50 border-gray-700">
+                        <Card className="bg-gray-800/50 border-gray-700 h-min">
                             <CardContent className="p-6">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     {/* Profile Image */}
@@ -122,7 +121,7 @@ export default function TrainerDetailsPage() {
                         </Card>
                     )}
 
-                    <TimeSlots email={trainerInfo?.email}/>
+                    <TimeSlots email={trainerInfo?.email} trainerName={trainerInfo?.fullName}/>
                 </div>
                 <BecomeTrainerCTA/>
             </div>

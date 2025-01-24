@@ -21,6 +21,8 @@ import {DashboardRedirect} from "@/components/layouts/Routes/DashboardRedirect.t
 import AllClassesPage from "@/pages/AllClassesPage.tsx";
 import {Role} from "@/types";
 import {RoleProtectedRoute} from "@/components/layouts/Routes/RoleProtectedRoutes.tsx";
+import TrainerBookingPage from "@/pages/TrainerBookingPage.tsx";
+import PaymentPage from "@/pages/PaymentPage.tsx";
 
 function App() {
     return (
@@ -33,6 +35,10 @@ function App() {
                         <Route path="/trainers/:_id" element={<TrainerDetailsPage/>}/>
                         <Route path="/become-a-trainer" element={<BecomeATrainerPage/>}/>
                         <Route path="/classes" element={<AllClassesPage/>}/>
+                        <Route element={<ProtectedRoutes/>}>
+                            <Route path="/trainers/book-trainer" element={<TrainerBookingPage/>}/>
+                            <Route path={"/trainers/book-trainer/payment"} element={<PaymentPage/>}/>
+                        </Route>
                     </Route>
 
                     <Route path="/login" element={<LoginPage/>}/>
