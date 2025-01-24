@@ -124,10 +124,6 @@ export default function PaymentPage() {
 
     const isLoading = paymentMutation.isPending || confirmMutation.isPending;
 
-    if (isLoading) {
-        return <LoadingState/>
-    }
-
 
     return (
         <div className="min-h-screen bg-gray-900 py-32 px-4 sm:px-6 lg:px-8">

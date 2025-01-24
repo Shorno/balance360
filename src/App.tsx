@@ -23,6 +23,7 @@ import {Role} from "@/types";
 import {RoleProtectedRoute} from "@/components/layouts/Routes/RoleProtectedRoutes.tsx";
 import TrainerBookingPage from "@/pages/TrainerBookingPage.tsx";
 import PaymentPage from "@/pages/PaymentPage.tsx";
+import AdminBalancePage from "@/pages/Dashboard/Admin/BalancePage.tsx";
 
 function App() {
     return (
@@ -56,7 +57,7 @@ function App() {
                                         <Route path="trainers/applications/:_id"
                                                element={<TrainerApplicationDetailsPage/>}/>
                                         <Route path="add-class" element={<AddClassPage/>}/>
-                                        <Route path="balance" element={<div>Balance Page</div>}/>
+                                        <Route path="balance" element={<AdminBalancePage/>}/>
                                         <Route path="newsletter-subscribers"
                                                element={<div>Newsletter Subscribers</div>}/>
                                         <Route path="add-forum" element={<div>Add Forum</div>}/>

@@ -22,11 +22,16 @@ export const getApprovedTrainers = async () => {
 }
 
 export const rejectTrainerApplication = async (id: string, rejectionReason: string) => {
-    const response = await secureApi.post(`/admin/trainer-applications/${id}/reject`, { rejectionReason });
+    const response = await secureApi.post(`/admin/trainer-applications/${id}/reject`, {rejectionReason});
     return response.data;
 };
 
 export const addClass = async (classData: ClassFormValues) => {
     const response = await secureApi.post('/admin/classes', classData);
+    return response.data;
+}
+
+export const getStatistics = async () => {
+    const response = await secureApi.get('/admin/statistics');
     return response.data;
 }
