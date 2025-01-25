@@ -5,6 +5,7 @@ import {Button} from './ui/button';
 import {useVoteMutation} from "@/hooks/useVoteMutation.ts";
 import useAuthStore from "@/store/authStore.ts";
 import toast from "react-hot-toast";
+import {useNavigate} from "react-router";
 
 interface PostCardProps {
     _id: string;
@@ -36,9 +37,18 @@ export default function ForumPostCard({
                                           votes = {upvotes: 0, downvotes: 0, voters: []}
                                       }: PostCardProps) {
 
-
+    const navigate = useNavigate();
     const {mutate: handleVote, isPending} = useVoteMutation();
     const {currentUser} = useAuthStore();
+
+    const handleVoteClick = (voteType: 'up' | 'down') => {
+        if (!currentUser) {
+            toast.error('Please login to vote');
+            navigate('/login');
+            return;
+        }
+        handleVote({postId: _id, voteType});
+    };
 
     const userVote = votes?.voters?.find(v => v.email === currentUser?.email)?.voteType;
 
@@ -103,8 +113,7 @@ export default function ForumPostCard({
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => handleVote({postId: _id, voteType: 'up'})}
-                                disabled={isPending || !currentUser}
+                                onClick={() => handleVoteClick('up')}
                                 className={`text-gray-400 hover:text-green-400 hover:bg-green-400/10 ${
                                     userVote === 'up' ? 'text-green-400' : ''
                                 } ${isPending ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -116,8 +125,7 @@ export default function ForumPostCard({
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => handleVote({postId: _id, voteType: 'down'})}
-                                disabled={isPending || !currentUser}
+                                onClick={() => handleVoteClick('down')}
                                 className={`text-gray-400 hover:text-red-400 hover:bg-red-400/10 ${
                                     userVote === 'down' ? 'text-red-400' : ''
                                 } ${isPending ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -127,7 +135,7 @@ export default function ForumPostCard({
                             </Button>
                         </div>
                         <Button
-                            onClick={() => toast('Feature coming soon!',{icon: 'ℹ️'})}
+                            onClick={() => toast('Feature coming soon!', {icon: 'ℹ️'})}
                             variant="ghost"
                             size="sm"
                             className="text-purple-400 hover:bg-purple-400/10"
