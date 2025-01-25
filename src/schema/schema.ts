@@ -109,6 +109,20 @@ export const newsletterSchema = z.object({
     email: z.string().email('Please enter a valid email address'),
 });
 
+
+
+export const forumSchema = z.object({
+    title: z.string().min(5, 'Title must be at least 5 characters'),
+    content: z.string().min(50, 'Content must be at least 50 characters'),
+    category: z.string().min(2, 'Category is required'),
+    image: z.string().url('Please provide a valid image URL'),
+    tags: z.string().min(2, 'Tags are required'),
+    difficulty: z.enum(['Beginner', 'Intermediate', 'Advanced']),
+    estimatedReadTime: z.string().min(2, 'Estimated read time is required'),
+    role : z.string().min(1, 'Role is required')
+});
+
+export type ForumValues = z.infer<typeof forumSchema>;
 export type NewsletterFormValues = z.infer<typeof newsletterSchema>;
 export type AddNewSlotFormData = z.infer<typeof addNewSlotSchema>
 export type LoginFormData = z.infer<typeof loginSchema>

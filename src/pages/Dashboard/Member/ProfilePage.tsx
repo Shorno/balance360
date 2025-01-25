@@ -79,7 +79,7 @@ export default function ProfilePage() {
             const imageUrl = await uploadImage(file)
             form.setValue('profileImage', imageUrl, {shouldValidate: true})
             toast.success("Image uploaded successfully")
-        } catch (error: any) {
+        } catch{
             toast.error("Failed to upload image. Please try again.")
         }
     }
@@ -102,7 +102,7 @@ export default function ProfilePage() {
             await createUserInDB(currentUser)
             setHasChanges(false)
             toast.success("Profile updated successfully.")
-        } catch (error: any) {
+        } catch{
             toast.error("Failed to update profile. Please try again.")
         }
     }

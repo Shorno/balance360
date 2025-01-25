@@ -128,9 +128,14 @@ export default function SignupForm() {
                             <FormItem>
                                 <FormLabel className="text-gray-200">Profile Photo</FormLabel>
                                 <FormControl>
-                                    <UploadAndPreviewPhoto
-                                        onImageUpload={handleImageUpload}
-                                    />
+                                    <div className="h-40 flex items-center justify-center">
+                                        <UploadAndPreviewPhoto
+                                            onImageUpload={handleImageUpload}
+                                            imageClassName="h-32 w-32 rounded-full object-cover  mx-auto  border-4 border-gray-800"
+                                            containerClassName="h-full w-full"
+                                            previewClassName="h-full w-full flex items-center justify-center"
+                                        />
+                                    </div>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>

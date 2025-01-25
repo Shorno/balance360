@@ -11,16 +11,8 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import {ChevronDown} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 interface DataTableProps<TData, TValue> {
@@ -28,7 +20,7 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
 }
 
-export default function TransactionsTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export default function SubscribersTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -53,47 +45,15 @@ export default function TransactionsTable<TData, TValue>({ columns, data }: Data
         },
         initialState : {
             pagination :{
-                pageSize: 5
+                pageSize: 10
             }
         }
     })
 
     return (
-        <div className="w-full">
-            <div className="flex items-center py-4 gap-4">
-                <Input
-                    placeholder="Filter emails..."
-                    value={(table.getColumn("userEmail")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) => table.getColumn("userEmail")?.setFilterValue(event.target.value)}
-                    className="max-w-sm border border-purple-800"
-                />
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="ml-auto bg-gray-900">
-                            Columns <ChevronDown className="ml-2 h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className={"bg-gray-900"}>
-                        {table
-                            .getAllColumns()
-                            .filter((column) => column.getCanHide())
-                            .map((column) => {
-                                return (
-                                    <DropdownMenuCheckboxItem
-                                        key={column.id}
-                                        className="capitalize"
-                                        checked={column.getIsVisible()}
-                                        onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                                    >
-                                        {column.id}
-                                    </DropdownMenuCheckboxItem>
-                                )
-                            })}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </div>
+        <div className="w-full py-10">
             <div className="rounded-md border grid grid-cols-1">
-                <Table>
+                <Table className={"shadow-lg shadow-black"}>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>

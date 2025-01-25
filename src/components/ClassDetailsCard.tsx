@@ -12,6 +12,7 @@ import {Skeleton} from "@/components/ui/skeleton.tsx";
 interface ClassDetailsCardProps extends ClassFormValues {
     _id: string
     trainers: string[]
+    bookingCount: number
 }
 
 
@@ -30,17 +31,26 @@ export default function ClassDetailsCard({classItem}: { classItem: ClassDetailsC
         select: (data) => data?.trainers
     })
 
+    console.log(classItem)
+
 
     return (
         <Card
             className="bg-gray-800/50 border-gray-700 overflow-hidden hover:border-purple-500/50 transition-all duration-300">
-            <div className="aspect-video w-full overflow-hidden">
+            <div className="aspect-video w-full overflow-hidden relative">
                 <img
                     src={classItem?.image}
                     alt={classItem?.name}
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
+                <Badge
+                    variant="secondary"
+                    className="bg-purple-500 text-white border border-purple-500/30 absolute top-2 right-2"
+                >
+                        Total Bookings: {classItem?.bookingCount}
+                </Badge>
             </div>
+
             <CardHeader>
                 <div className="flex justify-between items-start">
                     <div>

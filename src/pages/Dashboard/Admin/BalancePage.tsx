@@ -8,9 +8,9 @@ import {useQuery} from "@tanstack/react-query"
 import {getStatistics} from "@/api/admin"
 import {LoadingState} from "@/components/data-states/loading-state"
 import type {ColumnDef} from "@tanstack/react-table"
-import {DataTable} from "@/components/TransactionsTable.tsx";
 import {BreadcrumbItem, BreadcrumbPage} from "@/components/ui/breadcrumb.tsx";
 import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
+import TransactionsTable from "@/components/TransactionsTable.tsx";
 
 
 const COLORS = ["#9333ea", "#e879f9"]
@@ -235,7 +235,7 @@ export default function AdminBalancePage() {
                                     <CardTitle className="text-gray-300">Recent Transactions</CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <DataTable columns={columns} data={statistics?.recentTransactions || []}/>
+                                    <TransactionsTable columns={columns} data={statistics?.recentTransactions || []}/>
                                 </CardContent>
                             </Card>
                         </>

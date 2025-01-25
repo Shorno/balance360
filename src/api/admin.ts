@@ -35,3 +35,5 @@ export const getStatistics = async () => {
     const response = await secureApi.get('/admin/statistics');
     return response.data;
 }
+
+

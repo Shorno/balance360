@@ -24,6 +24,9 @@ import {RoleProtectedRoute} from "@/components/layouts/Routes/RoleProtectedRoute
 import TrainerBookingPage from "@/pages/TrainerBookingPage.tsx";
 import PaymentPage from "@/pages/PaymentPage.tsx";
 import AdminBalancePage from "@/pages/Dashboard/Admin/BalancePage.tsx";
+import NewsLetterPage from "@/pages/Dashboard/Admin/NewsLetterPage.tsx";
+import CreatePostForm from "@/pages/Dashboard/Admin/ForumForm.tsx";
+import ForumPostsPage from "@/pages/ForumPostsPage.tsx";
 
 function App() {
     return (
@@ -36,6 +39,7 @@ function App() {
                         <Route path="/trainers/:_id" element={<TrainerDetailsPage/>}/>
                         <Route path="/become-a-trainer" element={<BecomeATrainerPage/>}/>
                         <Route path="/classes" element={<AllClassesPage/>}/>
+                        <Route path="/community" element={<ForumPostsPage/>}/>
                         <Route element={<ProtectedRoutes/>}>
                             <Route path="/trainers/book-trainer" element={<TrainerBookingPage/>}/>
                             <Route path={"/trainers/book-trainer/payment"} element={<PaymentPage/>}/>
@@ -59,8 +63,8 @@ function App() {
                                         <Route path="add-class" element={<AddClassPage/>}/>
                                         <Route path="balance" element={<AdminBalancePage/>}/>
                                         <Route path="newsletter-subscribers"
-                                               element={<div>Newsletter Subscribers</div>}/>
-                                        <Route path="add-forum" element={<div>Add Forum</div>}/>
+                                               element={<NewsLetterPage/>}/>
+                                        <Route path="add-forum" element={<CreatePostForm/>}/>
                                     </Route>
                                 </Route>
 
