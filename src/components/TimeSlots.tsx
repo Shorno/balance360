@@ -9,7 +9,7 @@ import React from "react";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import {useNavigate} from "react-router";
 
-type Slot = {
+export type Slot = {
     slotName: string
     startTime: string
     slotDuration: string

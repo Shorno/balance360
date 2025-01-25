@@ -7,7 +7,7 @@ interface Vote {
     voteType: 'up' | 'down';
 }
 
-interface Post {
+export interface Post {
     _id: string;
     title: string;
     content: string;

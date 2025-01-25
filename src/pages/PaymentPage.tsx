@@ -1,129 +1,124 @@
-import {useLocation} from 'react-router';
+import {useLocation, useNavigate} from "react-router"
 import {useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {z} from "zod"
-import {loadStripe} from '@stripe/stripe-js';
-import {useMutation} from '@tanstack/react-query';
-import {confirmPayment, createPaymentIntent} from '../api/payments.ts';
-import {CreditCard, CheckCircle, Clock, User, Calendar, Package, DollarSign, Dumbbell} from 'lucide-react';
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
+import {loadStripe} from "@stripe/stripe-js"
+import {useMutation} from "@tanstack/react-query"
+import {confirmPayment, createPaymentIntent} from "../api/payments.ts"
+import {CreditCard, CheckCircle, Clock, User, Calendar, Package, DollarSign, Dumbbell} from "lucide-react"
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
-import {Card, CardContent, CardHeader, CardTitle, CardDescription} from "@/components/ui/card";
-import useAuthStore from "@/store/authStore.ts";
-import toast from "react-hot-toast";
-import {LoadingState} from "@/components/data-states/loading-state.tsx";
+import {Card, CardContent, CardHeader, CardTitle, CardDescription} from "@/components/ui/card"
+import useAuthStore from "@/store/authStore.ts"
+import toast from "react-hot-toast"
+import {LoadingState} from "@/components/data-states/loading-state.tsx"
+import {useState} from "react"
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
 
-const paymentFormSchema = z.object({
-    fullName: z.string().min(2, "Full name is required"),
-    email: z.string().email("Invalid email address"),
-    cardNumber: z.string().min(16, "Invalid card number"),
-    expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "Invalid expiry date (MM/YY)"),
-    cvc: z.string().min(3, "Invalid CVC").max(4, "Invalid CVC")
-}).partial({
-    fullName: true,
-    email: true
-});
+const paymentFormSchema = z
+    .object({
+        fullName: z.string().min(2, "Full name is required"),
+        email: z.string().email("Invalid email address"),
+        cardNumber: z.string().min(16, "Invalid card number"),
+        expiryDate: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "Invalid expiry date (MM/YY)"),
+        cvc: z.string().min(3, "Invalid CVC").max(4, "Invalid CVC"),
+    })
+    .partial({
+        fullName: true,
+        email: true,
+    })
 
-type PaymentFormData = z.infer<typeof paymentFormSchema>;
+type PaymentFormData = z.infer<typeof paymentFormSchema>
 
 export default function PaymentPage() {
-    const {currentUser} = useAuthStore();
-    const location = useLocation();
-    // const navigate = useNavigate();
-    const {slotInfo, price, planName, trainerName} = location.state;
-
+    const {currentUser} = useAuthStore()
+    const location = useLocation()
+    const navigate = useNavigate();
+    const {slotInfo, price, planName, trainerName} = location.state
 
     const confirmMutation = useMutation({
         mutationFn: confirmPayment,
         onSuccess: () => {
-            toast.success('Payment confirmed successfully!');
-            // navigate('/success');
+            setPaymentSuccess(true)
+            toast.success("Payment confirmed successfully!")
         },
         onError: (error: any) => {
-            toast.error(`Confirmation failed: ${error.response?.data?.error || error.message}`);
-            console.error('Confirmation error:', error);
-        }
-    });
+            toast.error(`Confirmation failed: ${error.response?.data?.error || error.message}`)
+            console.error("Confirmation error:", error)
+        },
+    })
 
     const paymentMutation = useMutation({
         mutationFn: createPaymentIntent,
         onSuccess: async (data) => {
             try {
-                const stripe = await stripePromise;
-                if (!stripe) throw new Error('Stripe failed to load');
+                const stripe = await stripePromise
+                if (!stripe) throw new Error("Stripe failed to load")
 
                 const result = await stripe.confirmCardPayment(data.clientSecret, {
                     payment_method: {
                         card: {
-                            token: 'tok_visa',
+                            token: "tok_visa",
                         },
                         billing_details: {
-                            name: form.getValues('fullName'),
-                            email: form.getValues('email'),
+                            name: form.getValues("fullName"),
+                            email: form.getValues("email"),
                         },
                     },
-                });
+                })
 
                 if (result.error) {
-                    console.error(result.error);
-                    toast.error('Payment failed. Please try again.');
+                    console.error(result.error)
+                    toast.error("Payment failed. Please try again.")
                 } else {
-
-                    console.log('Stripe success. Calling confirm with:', {
+                    console.log("Stripe success. Calling confirm with:", {
                         slotId: slotInfo._id,
                         price,
                         planName,
                         trainerEmail: slotInfo.trainerEmail,
-                        stripePaymentId: result.paymentIntent.id
-                    });
+                        stripePaymentId: result.paymentIntent.id,
+                    })
 
-                    if (result.paymentIntent.status === 'succeeded') {
+                    if (result.paymentIntent.status === "succeeded") {
                         confirmMutation.mutate({
                             slotId: slotInfo._id,
                             userEmail: currentUser?.email || "",
                             price,
                             planName,
                             trainerEmail: slotInfo.trainerEmail,
-                            stripePaymentId: result.paymentIntent.id
-                        });
-                        toast('Payment successful!', {icon: '🎉'});
+                            stripePaymentId: result.paymentIntent.id,
+                        })
+                        setPaymentSuccess(true)
+                        toast("Payment successful!", {icon: "🎉"})
                         // navigate('/success'); // Navigate to success page
                     }
                 }
             } catch (error) {
-                toast.error('Payment confirmation failed. Please try again.');
-                console.error('Payment confirmation failed:', error);
+                toast.error("Payment confirmation failed. Please try again.")
+                console.error("Payment confirmation failed:", error)
             }
         },
-    });
+    })
 
     const form = useForm<PaymentFormData>({
         resolver: zodResolver(paymentFormSchema),
         defaultValues: {
-            fullName: currentUser?.displayName || '',
-            email: currentUser?.email || '',
-            cardNumber: '',
-            expiryDate: '',
-            cvc: ''
-        }
-    });
+            fullName: currentUser?.displayName || "",
+            email: currentUser?.email || "",
+            cardNumber: "",
+            expiryDate: "",
+            cvc: "",
+        },
+    })
 
     const onSubmit = () => {
-        paymentMutation.mutate({amount: price, planName});
-    };
+        paymentMutation.mutate({amount: price, planName})
+    }
 
-    const isLoading = paymentMutation.isPending || confirmMutation.isPending;
-
+    const isLoading = paymentMutation.isPending || confirmMutation.isPending
+    const [paymentSuccess, setPaymentSuccess] = useState(false)
 
     return (
         <div className="min-h-screen bg-gray-900 py-32 px-4 sm:px-6 lg:px-8">
@@ -208,137 +203,153 @@ export default function PaymentPage() {
                             </div>
                         </div>
 
-                        {isLoading ? <LoadingState/> :
-                            (
-                                <Form {...form}>
-                                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                                        <FormField
-                                            control={form.control}
-                                            name="fullName"
-                                            render={({field}) => (
-                                                <FormItem>
-                                                    <FormLabel className="text-gray-200">Full Name</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            disabled
-                                                            readOnly
-                                                            placeholder="John Doe"
-                                                            {...field}
-                                                            className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage/>
-                                                </FormItem>
-                                            )}
-                                        />
-
-                                        <FormField
-                                            control={form.control}
-                                            name="email"
-                                            render={({field}) => (
-                                                <FormItem>
-                                                    <FormLabel className="text-gray-200">Email</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            disabled
-                                                            readOnly
-                                                            placeholder="john@example.com"
-                                                            {...field}
-                                                            className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage/>
-                                                </FormItem>
-                                            )}
-                                        />
-
-                                        <FormField
-                                            control={form.control}
-                                            name="cardNumber"
-                                            render={({field}) => (
-                                                <FormItem>
-                                                    <FormLabel className="text-gray-200">Card Number</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            placeholder="4242 4242 4242 4242"
-                                                            {...field}
-                                                            className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage/>
-                                                </FormItem>
-                                            )}
-                                        />
-
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <FormField
-                                                control={form.control}
-                                                name="expiryDate"
-                                                render={({field}) => (
-                                                    <FormItem>
-                                                        <FormLabel className="text-gray-200">Expiry Date</FormLabel>
-                                                        <FormControl>
-                                                            <Input
-                                                                placeholder="MM/YY"
-                                                                {...field}
-                                                                className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
-                                                            />
-                                                        </FormControl>
-                                                        <FormMessage/>
-                                                    </FormItem>
-                                                )}
-                                            />
-
-                                            <FormField
-                                                control={form.control}
-                                                name="cvc"
-                                                render={({field}) => (
-                                                    <FormItem>
-                                                        <FormLabel className="text-gray-200">CVC</FormLabel>
-                                                        <FormControl>
-                                                            <Input
-                                                                placeholder="123"
-                                                                {...field}
-                                                                className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
-                                                            />
-                                                        </FormControl>
-                                                        <FormMessage/>
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
-
-                                        <Button
-                                            type="submit"
-                                            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg rounded-lg transition-all duration-200 transform"
-                                            disabled={paymentMutation.isPending}
-                                        >
-                                            {paymentMutation.isPending ? (
-                                                <>
-                                            <span
-                                                className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
-                                                    Processing...
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <CreditCard className="w-5 h-5 mr-2"/>
-                                                    Pay ${price}
-                                                </>
-                                            )}
-                                        </Button>
-
-                                        {paymentMutation.isError && (
-                                            <div className="text-red-400 text-sm mt-4">
-                                                Payment failed. Please try again.
-                                            </div>
+                        {paymentSuccess ? (
+                            <div className="flex flex-col items-center justify-center space-y-4">
+                                <CheckCircle className="w-16 h-16 text-green-500"/>
+                                <h2 className="text-2xl font-bold text-white">Payment Successful!</h2>
+                                <p className="text-gray-400 text-center">
+                                    Thank you for your booking. You will receive a confirmation email shortly.
+                                </p>
+                                <Button
+                                    onClick={() => {
+                                        navigate('/classes')
+                                    }}
+                                    className="mt-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                                >
+                                    Explore More Classes
+                                </Button>
+                            </div>
+                        ) : isLoading ? (
+                            <LoadingState/>
+                        ) : (
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                                    <FormField
+                                        control={form.control}
+                                        name="fullName"
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <FormLabel className="text-gray-200">Full Name</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled
+                                                        readOnly
+                                                        placeholder="John Doe"
+                                                        {...field}
+                                                        className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
                                         )}
-                                    </form>
-                                </Form>
-                            )
-                        }
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <FormLabel className="text-gray-200">Email</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled
+                                                        readOnly
+                                                        placeholder="john@example.com"
+                                                        {...field}
+                                                        className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="cardNumber"
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <FormLabel className="text-gray-200">Card Number</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder="4242 4242 4242 4242"
+                                                        {...field}
+                                                        className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                    />
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <FormField
+                                            control={form.control}
+                                            name="expiryDate"
+                                            render={({field}) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-gray-200">Expiry Date</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="MM/YY"
+                                                            {...field}
+                                                            className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage/>
+                                                </FormItem>
+                                            )}
+                                        />
+
+                                        <FormField
+                                            control={form.control}
+                                            name="cvc"
+                                            render={({field}) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-gray-200">CVC</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="123"
+                                                            {...field}
+                                                            className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage/>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+
+                                    <Button
+                                        type="submit"
+                                        className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg rounded-lg transition-all duration-200 transform"
+                                        disabled={paymentMutation.isPending}
+                                    >
+                                        {paymentMutation.isPending ? (
+                                            <>
+                                                <span
+                                                    className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+                                                Processing...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <CreditCard className="w-5 h-5 mr-2"/>
+                                                Pay ${price}
+                                            </>
+                                        )}
+                                    </Button>
+
+                                    {paymentMutation.isError && (
+                                        <div className="text-red-400 text-sm mt-4">Payment failed. Please try
+                                            again.</div>
+                                    )}
+                                </form>
+                            </Form>
+                        )}
                     </div>
                 </CardContent>
             </Card>
         </div>
-    );
+    )
 }
+

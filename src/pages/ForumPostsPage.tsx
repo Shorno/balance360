@@ -1,6 +1,8 @@
 import {useQuery} from '@tanstack/react-query';
 import ForumPostCard from "@/components/ForumPostCard.tsx";
 import {getForumPosts} from "@/api/forum.ts";
+import {LoadingState} from "@/components/data-states/loading-state.tsx";
+import {Post} from "@/hooks/useVoteMutation.ts";
 
 export default function ForumPostsPage() {
 
@@ -9,13 +11,6 @@ export default function ForumPostsPage() {
         queryFn: getForumPosts,
     })
 
-
-
-    console.log(forumPosts)
-
-    if (isLoading) {
-        return <div className="text-center text-gray-400">Loading posts...</div>;
-    }
 
     return (
         <div className="min-h-screen bg-gray-900 py-32 px-4 sm:px-6 lg:px-8">
@@ -29,14 +24,22 @@ export default function ForumPostsPage() {
                     </p>
                 </div>
 
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {forumPosts?.map((post:any) => (
-                        <ForumPostCard
-                            key={post._id}
-                            {...post}
-                            votes={post.votes || { upvotes: 0, downvotes: 0, voters: [] }}
-                        />
-                    ))}
+
+                    {
+                        isLoading ? <LoadingState/>
+                            :
+                            (
+                                forumPosts?.map((post: Post) => (
+                                    <ForumPostCard
+                                        key={post._id}
+                                        {...post}
+                                        votes={post.votes || {upvotes: 0, downvotes: 0, voters: []}}
+                                    />
+                                ))
+                            )
+                    }
                 </div>
 
                 <div className="mt-12 flex justify-center gap-4">

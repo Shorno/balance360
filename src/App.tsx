@@ -76,7 +76,6 @@ function App() {
                                     </Route>
                                 </Route>
 
-                                {/* Member Routes */}
                                 <Route element={<RoleProtectedRoute allowedRoles={[Role.Member]}/>}>
                                     <Route path="member">
                                         <Route path="profile" element={<ProfilePage/>}/>

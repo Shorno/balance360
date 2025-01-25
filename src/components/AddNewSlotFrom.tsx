@@ -39,6 +39,7 @@ export default function AddNewSlotForm() {
         mutationFn: addSlot,
         onSuccess: () => {
             toast.success("Slot added successfully")
+            form.reset()
         },
         onError: () => {
             toast.error("Failed to add new slot")
