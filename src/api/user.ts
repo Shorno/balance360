@@ -30,3 +30,9 @@ export const getUserDetails = async (email: string) => {
     const response = await api.get(`/users/info/${email}`);
     return response.data;
 }
+
+export const addReview = async (review:any) => {
+    console.log(review)
+    const response = await secureApi.post(`/reviews`, review);
+    return response.data;
+}
