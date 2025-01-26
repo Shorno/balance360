@@ -10,7 +10,6 @@ export default function AllTrainersPage() {
         queryFn: () => getApprovedTrainers(),
         select: (data) => data?.data
     })
-    console.log(trainers)
 
 
     return (

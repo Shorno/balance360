@@ -37,7 +37,7 @@ export default function NewsletterSection() {
     };
 
     return (
-        <div className="w-full max-w-xl mx-auto px-4">
+        <div className="w-full py-20 max-w-xl mx-auto px-4">
             <Card
                 className="bg-gray-800/50 border-gray-700 overflow-hidden hover:border-purple-500/50 transition-all duration-300">
                 <CardHeader className="text-center">

@@ -1,17 +1,21 @@
 import Hero from "@/components/home/Hero.tsx";
 import FeaturesSection from "@/components/FeatureSection.tsx";
-import {useUserRole} from "@/hooks/useUserRole.ts";
-import {Role} from "@/types";
 import NewsletterSection from "@/components/NewsLetterSection.tsx";
+import AboutSection from "@/components/AboutSection.tsx";
+import TestimonialSection from "@/components/TestimonialSection.tsx";
+import TeamSection from "@/components/TeamSection.tsx";
+import FeaturedClasses from "@/components/FeaturedClasses.tsx";
 
 
 export default function Home() {
-    const role: Role = useUserRole()
-    console.log(role)
     return (
         <>
             <Hero/>
             <FeaturesSection/>
+            <AboutSection/>
+            <TestimonialSection/>
+            <TeamSection/>
+            <FeaturedClasses/>
             <NewsletterSection/>
         </>
     )

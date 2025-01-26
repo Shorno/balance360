@@ -40,7 +40,7 @@ export function FeatureSteps({
     }, [progress, features.length, autoPlayInterval])
 
     return (
-        <div className={cn("py-16 bg-gray-900", className)}>
+        <div className={cn("py-40 bg-gray-900", className)}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center text-white">
                     {title}

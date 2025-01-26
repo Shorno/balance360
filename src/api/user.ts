@@ -31,8 +31,18 @@ export const getUserDetails = async (email: string) => {
     return response.data;
 }
 
-export const addReview = async (review:any) => {
+export const addReview = async (review: any) => {
     console.log(review)
     const response = await secureApi.post(`/reviews`, review);
+    return response.data;
+}
+
+export const getAllUsers = async () => {
+    const response = await secureApi.get(`/users/all`);
+    return response.data;
+}
+
+export const getUsersWithReviews = async () => {
+    const response = await secureApi.get(`/users/reviews`);
     return response.data;
 }

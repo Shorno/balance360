@@ -1,15 +1,19 @@
-import {useQuery} from "@tanstack/react-query";
-import {getAllClasses} from "@/api/class.ts";
-import ClassDetailsCard from "@/components/ClassDetailsCard.tsx";
+import {featuredClasses} from "@/api/class.ts";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
+import {useQuery} from "@tanstack/react-query";
+import ClassDetailsCard from "@/components/ClassDetailsCard.tsx";
 
-
-export default function AllClassesPage() {
-    const {data: classList, isLoading} = useQuery({
-        queryKey: ['classes'],
-        queryFn: () => getAllClasses(),
+export default function FeaturedClasses() {
+    const {data: classList, isLoading, isError} = useQuery({
+        queryKey: ['featuredClasses'],
+        queryFn: () => featuredClasses(),
         select: (data) => data?.data
     })
+    console.log(classList)
+
+    if (isError) {
+        return <div>Error</div>
+    }
 
 
     return (

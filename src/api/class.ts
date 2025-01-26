@@ -9,3 +9,8 @@ export const getClassWithTrainers = async (id: string) => {
     const response = await secureApi.get(`/classes/${id}`);
     return response.data;
 }
+
+export const featuredClasses = async () => {
+    const response = await secureApi.get('/classes/featured');
+    return response.data;
+}
