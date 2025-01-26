@@ -23,3 +23,8 @@ export const getTrainerSlots = async (email: string) => {
     const response = await secureApi.get(`/trainers/slots/${email}`);
     return response.data;
 }
+
+export const getTrainerSlotsDetails = async (email: string) => {
+    const response = await secureApi.get(`/trainers/slots/details/${email}`);
+    return response.data;
+}

@@ -10,7 +10,6 @@ export default function AllClassesPage() {
         queryFn: () => getAllClasses(),
         select: (data) => data?.data
     })
-    console.log(classList)
     if (isLoading) {
         return <div className={"flex min-h-screen justify-center items-center"}>
             <LoadingState/>

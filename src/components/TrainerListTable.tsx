@@ -156,9 +156,9 @@ const columns: ColumnDef<TrainerApplicationData>[] = [
         cell: ({row}) => {
             const _id = row.original._id;
             return (
-                <Button variant={"outline"} onClick={() => console.log(_id)}>
+                <Button variant={"destructive"} onClick={() => console.log(_id)}>
                     <TrashIcon className="h-4 w-4 text-red-500"/>
-                    Remove as a Trainer
+                    Remove Trainer
                 </Button>
             );
         },

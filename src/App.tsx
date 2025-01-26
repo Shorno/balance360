@@ -15,7 +15,7 @@ import ActivityLogPage from "@/pages/Dashboard/Member/ActivityLogPage.tsx";
 import ProfilePage from "@/pages/Dashboard/Member/ProfilePage.tsx";
 import AddNewSlotPage from "@/pages/Trainer/AddNewSlotPage.tsx";
 import AddClassPage from "@/pages/Dashboard/Admin/AddClassPage.tsx";
-import ManageSlot from "@/pages/Trainer/ManageSlot.tsx";
+import ManageSlotsPage from "@/pages/Trainer/ManageSlotsPage.tsx";
 import DashboardLayout from "@/components/layouts/DashboardLayout.tsx";
 import {DashboardRedirect} from "@/components/layouts/Routes/DashboardRedirect.tsx";
 import AllClassesPage from "@/pages/AllClassesPage.tsx";
@@ -70,7 +70,7 @@ function App() {
 
                                 <Route element={<RoleProtectedRoute allowedRoles={[Role.Trainer]}/>}>
                                     <Route path="trainer">
-                                        <Route path="slots" element={<ManageSlot/>}/>
+                                        <Route path="slots" element={<ManageSlotsPage/>}/>
                                         <Route path="slots/new-slot" element={<AddNewSlotPage/>}/>
                                         <Route path="add-forum" element={<div>Add Forum</div>}/>
                                     </Route>

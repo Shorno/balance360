@@ -31,7 +31,7 @@ export default function ClassDetailsCard({classItem}: { classItem: ClassDetailsC
         select: (data) => data?.trainers
     })
 
-    console.log(classItem)
+
 
 
     return (

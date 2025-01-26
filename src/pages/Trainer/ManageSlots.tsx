@@ -1,231 +1,204 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
+import {useState} from "react"
+import {useQuery} from "@tanstack/react-query"
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
+    type ColumnFiltersState,
+    type SortingState,
+    type VisibilityState,
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    useReactTable,
+} from "@tanstack/react-table"
+import {ChevronDown, Search} from "lucide-react"
+import {Button} from "@/components/ui/button"
 import {
-    Calendar,
-    Clock,
-    User,
-    Trash2,
-    Mail,
-    Phone,
-    AlertTriangle,
-} from 'lucide-react';
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from '@/components/ui/alert-dialog.tsx';
-import {Badge} from "@/components/ui/badge.tsx";
-import {Button} from "@/components/ui/button.tsx";
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {Input} from "@/components/ui/input"
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
+import useAuthStore from "@/store/authStore"
+import {getTrainerSlotsDetails} from "@/api/trainer"
+import {cn} from "@/lib/utils"
+import {columns} from "@/pages/Trainer/Colums.tsx";
 
-// Dummy data for demonstration
-const DUMMY_SLOTS = [
-    {
-        id: '1',
-        date: '2024-02-25',
-        startTime: '09:00 AM',
-        endTime: '10:00 AM',
-        isBooked: true,
-        booking: {
-            clientName: 'John Doe',
-            email: 'john@example.com',
-            phone: '+1 234-567-8900',
-            fitnessGoal: 'Weight Loss',
-        },
-    },
-    {
-        id: '2',
-        date: '2024-02-25',
-        startTime: '10:30 AM',
-        endTime: '11:30 AM',
-        isBooked: false,
-    },
-    {
-        id: '3',
-        date: '2024-02-25',
-        startTime: '02:00 PM',
-        endTime: '03:00 PM',
-        isBooked: true,
-        booking: {
-            clientName: 'Sarah Smith',
-            email: 'sarah@example.com',
-            phone: '+1 234-567-8901',
-            fitnessGoal: 'Muscle Gain',
-        },
-    },
-    {
-        id: '4',
-        date: '2024-02-26',
-        startTime: '11:00 AM',
-        endTime: '12:00 PM',
-        isBooked: false,
-    },
-];
+export interface TrainerSlot {
+    _id: string;
+    additionalInfo: string;
+    bookedCount: number;
+    bookedUsers: BookedUser[];
+    createdAt: string;
+    selectedClass: string;
+    selectedDays: string[];
+    slotDuration: string;
+    slotName: string;
+    startTime: string;
+    trainerEmail: string;
+    updatedAt: string;
+}
+
+interface BookedUser {
+    _id: string;
+    userEmail: string;
+    paymentId: string;
+    bookingDate: string;
+    userDetails?: {
+        _id: string;
+        displayName: string;
+        email: string;
+        photoURL?: string;
+    };
+}
 
 export default function ManageSlots() {
-    const { data: slots, isLoading } = useQuery({
-        queryKey: ['trainer-slots'],
-        queryFn: () => Promise.resolve(DUMMY_SLOTS),
-    });
+    const {currentUser} = useAuthStore()
+    const {data: slots, isLoading} = useQuery<TrainerSlot[]>({
+        queryKey: ["slots", currentUser?.email],
+        queryFn: () => getTrainerSlotsDetails(currentUser?.email || ""),
+        enabled: !!currentUser?.email,
+        // @ts-ignore
+        select: (data) => data?.data,
+    })
 
-    const deleteSlotMutation = useMutation({
-        mutationFn: async (slotId: string) => {
-            // Implement delete logic here
-            console.log(`Deleting slot ${slotId}`);
+    const [sorting, setSorting] = useState<SortingState>([])
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+    const [rowSelection, setRowSelection] = useState({})
+
+    const table = useReactTable({
+        data: slots || [],
+        columns,
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
+        state: {
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection,
         },
-        onSuccess: () => {
-            // Refresh slots data
-            console.log('Slot deleted successfully');
-        },
-    });
+    })
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-                <div className="text-gray-400">Loading slots...</div>
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="text-muted-foreground">Loading slots...</div>
             </div>
-        );
+        )
     }
 
     return (
-        <div className="min-h-screen bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                        Manage Training Slots
-                    </h1>
-                    <p className="mt-2 text-gray-400">
-                        View and manage your training slots and bookings
-                    </p>
+        <div className="w-full space-y-6">
+            <div className="flex flex-col gap-4">
+                <h1 className="text-3xl font-bold">Manage Training Slots</h1>
+                <p className="text-muted-foreground">View and manage your training slots and bookings</p>
+            </div>
+            <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                    <Search className="h-4 w-4 text-muted-foreground"/>
+                    <Input
+                        placeholder="Search slots..."
+                        value={(table.getColumn("slotName")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) => table.getColumn("slotName")?.setFilterValue(event.target.value)}
+                        className="h-9 w-[250px] lg:w-[300px]"
+                    />
                 </div>
-
-                <div className="bg-gray-800/50 rounded-lg border border-gray-700 overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <Table>
-                            <TableHeader>
-                                <TableRow className="border-gray-700">
-                                    <TableHead className="text-gray-300">Date</TableHead>
-                                    <TableHead className="text-gray-300">Time</TableHead>
-                                    <TableHead className="text-gray-300">Status</TableHead>
-                                    <TableHead className="text-gray-300">Client Details</TableHead>
-                                    <TableHead className="text-gray-300">Actions</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {slots?.map((slot) => (
-                                    <TableRow
-                                        key={slot.id}
-                                        className="border-gray-700 hover:bg-gray-800/50"
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="ml-auto h-9 bg-gray-850">
+                            View <ChevronDown className="ml-2 h-4 w-4"/>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-[150px] bg-gray-900">
+                        {table
+                            .getAllColumns()
+                            .filter((column) => column.getCanHide())
+                            .map((column) => {
+                                return (
+                                    <DropdownMenuCheckboxItem
+                                        key={column.id}
+                                        className="capitalize"
+                                        checked={column.getIsVisible()}
+                                        onCheckedChange={(value) => column.toggleVisibility(value)}
                                     >
-                                        <TableCell className="text-gray-300">
-                                            <div className="flex items-center gap-2">
-                                                <Calendar className="w-4 h-4 text-purple-400" />
-                                                {slot.date}
-                                            </div>
+                                        {column.id}
+                                    </DropdownMenuCheckboxItem>
+                                )
+                            })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
+            <div className="rounded-lg border shadow-sm grid grid-cols-1">
+                <Table>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id} className="hover:bg-transparent">
+                                {headerGroup.headers.map((header) => {
+                                    return (
+                                        <TableHead key={header.id} className="h-11 px-4">
+                                            {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                        </TableHead>
+                                    )
+                                })}
+                            </TableRow>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {table.getRowModel().rows?.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && "selected"}
+                                    className={cn("hover:bg-secondary/50 transition-colors", row.getIsSelected() && "bg-secondary")}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id} className="py-3 px-4">
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
-                                        <TableCell className="text-gray-300">
-                                            <div className="flex items-center gap-2">
-                                                <Clock className="w-4 h-4 text-purple-400" />
-                                                {slot.startTime} - {slot.endTime}
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge
-                                                variant="outline"
-                                                className={`${
-                                                    slot.isBooked
-                                                        ? 'border-green-500/30 text-green-400 bg-green-500/10'
-                                                        : 'border-yellow-500/30 text-yellow-400 bg-yellow-500/10'
-                                                }`}
-                                            >
-                                                {slot.isBooked ? 'Booked' : 'Available'}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell className="text-gray-300">
-                                            {slot.isBooked && slot.booking ? (
-                                                <div className="space-y-1">
-                                                    <div className="flex items-center gap-2">
-                                                        <User className="w-4 h-4 text-purple-400" />
-                                                        {slot.booking.clientName}
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-sm text-gray-400">
-                                                        <Mail className="w-3 h-3" />
-                                                        {slot.booking.email}
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-sm text-gray-400">
-                                                        <Phone className="w-3 h-3" />
-                                                        {slot.booking.phone}
-                                                    </div>
-                                                    <Badge
-                                                        variant="outline"
-                                                        className="border-purple-500/30 text-purple-400 bg-purple-500/10"
-                                                    >
-                                                        Goal: {slot.booking.fitnessGoal}
-                                                    </Badge>
-                                                </div>
-                                            ) : (
-                                                <span className="text-gray-500">No booking</span>
-                                            )}
-                                        </TableCell>
-                                        <TableCell>
-                                            <AlertDialog>
-                                                <AlertDialogTrigger asChild>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
-                                                    >
-                                                        <Trash2 className="w-4 h-4" />
-                                                    </Button>
-                                                </AlertDialogTrigger>
-                                                <AlertDialogContent className="bg-gray-800 border-gray-700">
-                                                    <AlertDialogHeader>
-                                                        <AlertDialogTitle className="text-white flex items-center gap-2">
-                                                            <AlertTriangle className="w-5 h-5 text-red-400" />
-                                                            Delete Training Slot
-                                                        </AlertDialogTitle>
-                                                        <AlertDialogDescription className="text-gray-400">
-                                                            Are you sure you want to delete this training slot?
-                                                            {slot.isBooked && (
-                                                                <span className="block mt-2 text-red-400">
-                                  Warning: This slot is currently booked!
-                                </span>
-                                                            )}
-                                                        </AlertDialogDescription>
-                                                    </AlertDialogHeader>
-                                                    <AlertDialogFooter>
-                                                        <AlertDialogCancel className="bg-gray-700 text-gray-300 hover:bg-gray-600 border-gray-600">
-                                                            Cancel
-                                                        </AlertDialogCancel>
-                                                        <AlertDialogAction
-                                                            onClick={() => deleteSlotMutation.mutate(slot.id)}
-                                                            className="bg-red-500 hover:bg-red-600 text-white"
-                                                        >
-                                                            Delete
-                                                        </AlertDialogAction>
-                                                    </AlertDialogFooter>
-                                                </AlertDialogContent>
-                                            </AlertDialog>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </div>
+                                    ))}
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={columns.length} className="h-24 text-center">
+                                    No results found.
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
+            <div className="flex items-center justify-end  space-x-2 py-4">
+                <div className="flex items-center space-x-2">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                        className="h-8"
+                    >
+                        Previous
+                    </Button>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        className="h-8"
+                    >
+                        Next
+                    </Button>
                 </div>
             </div>
         </div>
-    );
+    )
 }
