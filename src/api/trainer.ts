@@ -28,3 +28,8 @@ export const getTrainerSlotsDetails = async (email: string) => {
     const response = await secureApi.get(`/trainers/slots/details/${email}`);
     return response.data;
 }
+
+export const deleteSlot = async (slotId: string) => {
+    const response = await secureApi.delete(`/trainers/slots/${slotId}`);
+    return response.data;
+}

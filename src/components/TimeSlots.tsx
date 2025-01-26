@@ -10,6 +10,7 @@ import {LoadingState} from "@/components/data-states/loading-state"
 import {useNavigate} from "react-router"
 
 export type Slot = {
+    _id: string
     slotName: string
     startTime: string
     slotDuration: string

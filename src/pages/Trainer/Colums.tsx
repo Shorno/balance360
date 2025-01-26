@@ -1,9 +1,10 @@
 import type { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, Trash2 } from "lucide-react"
+import { ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import UserList from "@/pages/Trainer/UserList"
 import {TrainerSlot} from "@/pages/Trainer/ManageSlots.tsx";
+import {SlotsAction} from "@/pages/Trainer/SlotsAction.tsx";
 
 export const columns: ColumnDef<TrainerSlot>[] = [
     {
@@ -104,15 +105,7 @@ export const columns: ColumnDef<TrainerSlot>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => {
-            const slot = row.original
-            return (
-                <Button variant="destructive" size={"sm"} onClick={() => console.log(slot._id)}>
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Remove Slot
-                </Button>
-            )
-        },
+        cell: ({ row }) => <SlotsAction row={row} />,
     },
 ]
 
