@@ -25,6 +25,7 @@ import useAuthStore from "@/store/authStore"
 import {getTrainerSlotsDetails} from "@/api/trainer"
 import {cn} from "@/lib/utils"
 import {columns} from "@/pages/Trainer/Colums.tsx";
+import {LoadingState} from "@/components/data-states/loading-state.tsx";
 
 export interface TrainerSlot {
     _id: string;
@@ -88,14 +89,6 @@ export default function ManageSlots() {
         },
     })
 
-    if (isLoading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="text-muted-foreground">Loading slots...</div>
-            </div>
-        )
-    }
-
     return (
         <div className="w-full space-y-6">
             <div className="flex flex-col gap-4">
@@ -138,44 +131,48 @@ export default function ManageSlots() {
                 </DropdownMenu>
             </div>
             <div className="rounded-lg border shadow-sm grid grid-cols-1">
-                <Table>
-                    <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id} className="hover:bg-transparent">
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead key={header.id} className="h-11 px-4">
-                                            {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                                        </TableHead>
-                                    )
-                                })}
-                            </TableRow>
-                        ))}
-                    </TableHeader>
-                    <TableBody>
-                        {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                    data-state={row.getIsSelected() && "selected"}
-                                    className={cn("hover:bg-secondary/50 transition-colors", row.getIsSelected() && "bg-secondary")}
-                                >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id} className="py-3 px-4">
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                {isLoading ? <LoadingState/> :
+                    (
+                        <Table>
+                            <TableHeader>
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <TableRow key={headerGroup.id} className="hover:bg-transparent">
+                                        {headerGroup.headers.map((header) => {
+                                            return (
+                                                <TableHead key={header.id} className="h-11 px-4">
+                                                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                                </TableHead>
+                                            )
+                                        })}
+                                    </TableRow>
+                                ))}
+                            </TableHeader>
+                            <TableBody>
+                                {table.getRowModel().rows?.length ? (
+                                    table.getRowModel().rows.map((row) => (
+                                        <TableRow
+                                            key={row.id}
+                                            data-state={row.getIsSelected() && "selected"}
+                                            className={cn("hover:bg-secondary/50 transition-colors", row.getIsSelected() && "bg-secondary")}
+                                        >
+                                            {row.getVisibleCells().map((cell) => (
+                                                <TableCell key={cell.id} className="py-3 px-4">
+                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell colSpan={columns.length} className="h-24 text-center">
+                                            No results found.
                                         </TableCell>
-                                    ))}
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results found.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    )
+                }
             </div>
             <div className="flex items-center justify-end  space-x-2 py-4">
                 <div className="flex items-center space-x-2">

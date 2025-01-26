@@ -23,3 +23,10 @@ export const getApplicationStatus = async (email: string) => {
     const response = await api.get(`/users/application/${email}`);
     return response.data;
 }
+
+
+export const getUserDetails = async (email: string) => {
+    console.log(email)
+    const response = await api.get(`/users/info/${email}`);
+    return response.data;
+}

@@ -27,6 +27,7 @@ import AdminBalancePage from "@/pages/Dashboard/Admin/BalancePage.tsx";
 import NewsLetterPage from "@/pages/Dashboard/Admin/NewsLetterPage.tsx";
 import CreatePostForm from "@/pages/Dashboard/Admin/ForumForm.tsx";
 import ForumPostsPage from "@/pages/ForumPostsPage.tsx";
+import BookedTrainerPage from "@/pages/Dashboard/Member/BookedTrainerPage.tsx";
 
 function App() {
     return (
@@ -80,7 +81,7 @@ function App() {
                                     <Route path="member">
                                         <Route path="profile" element={<ProfilePage/>}/>
                                         <Route path="activity-log" element={<ActivityLogPage/>}/>
-                                        <Route path="booked-trainers" element={<div>Booked Trainers</div>}/>
+                                        <Route path="booked-trainers" element={<BookedTrainerPage/>}/>
                                     </Route>
                                 </Route>
                             </Route>
