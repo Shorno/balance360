@@ -27,15 +27,10 @@ export default function AllTrainers() {
         return <ErrorState/>
     }
 
-
     return (
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
-
-            {
-                isLoading ? <LoadingState/> : <TrainersListTable data={trainers}/>
-
-            }
+            {isLoading ? <LoadingState/> : <TrainersListTable data={trainers}/>}
         </>
     )
 }

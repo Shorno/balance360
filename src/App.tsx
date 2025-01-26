@@ -37,10 +37,10 @@ function App() {
                         <Route index element={<Home/>}/>
                         <Route path="/trainers" element={<AllTrainersPage/>}/>
                         <Route path="/trainers/:_id" element={<TrainerDetailsPage/>}/>
-                        <Route path="/become-a-trainer" element={<BecomeATrainerPage/>}/>
                         <Route path="/classes" element={<AllClassesPage/>}/>
                         <Route path="/community" element={<ForumPostsPage/>}/>
                         <Route element={<ProtectedRoutes/>}>
+                            <Route path="/become-a-trainer" element={<BecomeATrainerPage/>}/>
                             <Route path="/trainers/book-trainer" element={<TrainerBookingPage/>}/>
                             <Route path={"/trainers/book-trainer/payment"} element={<PaymentPage/>}/>
                         </Route>
@@ -72,7 +72,7 @@ function App() {
                                     <Route path="trainer">
                                         <Route path="slots" element={<ManageSlotsPage/>}/>
                                         <Route path="slots/new-slot" element={<AddNewSlotPage/>}/>
-                                        <Route path="add-forum" element={<div>Add Forum</div>}/>
+                                        <Route path="add-forum" element={<CreatePostForm/>}/>
                                     </Route>
                                 </Route>
 

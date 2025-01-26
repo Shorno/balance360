@@ -12,8 +12,6 @@ const breadcrumb =
 
 
 export default function ManageSlotsPage() {
-
-
     return (
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>

@@ -14,7 +14,7 @@ import {
 import {
     ArrowUpDown,
     ChevronDown,
-    Search, TrashIcon,
+    Search,
 } from 'lucide-react'
 
 import {Button} from "@/components/ui/button"
@@ -36,6 +36,7 @@ import {
 import {cn} from "@/lib/utils"
 import {Badge} from "@/components/ui/badge"
 import {TrainerApplicationData} from "@/types";
+import {TrainerActions} from "@/pages/Trainer/TrainerActions.tsx";
 
 const columns: ColumnDef<TrainerApplicationData>[] = [
     {
@@ -153,16 +154,8 @@ const columns: ColumnDef<TrainerApplicationData>[] = [
         id: "actions",
         header: "Actions",
         enableHiding: false,
-        cell: ({row}) => {
-            const _id = row.original._id;
-            return (
-                <Button variant={"destructive"} onClick={() => console.log(_id)}>
-                    <TrashIcon className="h-4 w-4 text-red-500"/>
-                    Remove Trainer
-                </Button>
-            );
-        },
-    },
+        cell: ({row}) => <TrainerActions row={row}/>
+    }
 ]
 
 export function TrainersListTable({data}: { data: TrainerApplicationData[] }) {

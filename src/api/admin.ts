@@ -36,4 +36,9 @@ export const getStatistics = async () => {
     return response.data;
 }
 
+export const removeTrainer = async (id: string) => {
+    const response = await secureApi.delete(`/admin/trainers/${id}`);
+    return response.data;
+}
+
 

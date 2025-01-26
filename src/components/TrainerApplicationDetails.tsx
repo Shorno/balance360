@@ -36,7 +36,6 @@ export default function TrainerApplicationDetails({application}: TrainerApplicat
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
     const [rejectionFeedback, setRejectionFeedback] = useState("")
 
-    console.log(application)
 
     const navigate = useNavigate()
 
