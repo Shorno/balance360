@@ -46,6 +46,7 @@ export default function AddNewSlotForm() {
         }
     })
 
+    console.log(classList)
     const availableDayOptions = trainerInfo?.availableDays.map(day => ({
         value: day,
         label: day

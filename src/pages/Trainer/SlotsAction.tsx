@@ -43,7 +43,7 @@ export function SlotsAction({row}: { row: { original: Slot } }) {
             <DialogTrigger asChild>
                 <Button variant={"destructive"} size={"sm"}>
                     <TrashIcon className="h-4 w-4 text-red-500"/>
-                    Remove Trainer
+                    Remove Slot
                 </Button>
             </DialogTrigger>
             <DialogContent

@@ -1,8 +1,14 @@
 import {api} from "@/lib/axios.ts";
 
-export const getAllClasses = async (page = 1, limit = 6) => {
+
+export const getAllClasses = async () => {
+    const response = await api.get(`/classes/all`);
+    return response.data;
+}
+
+export const getPaginatedClasses = async (page = 1, limit = 6) => {
     const response = await api.get(`/public/classes`, {
-        params: { page, limit }
+        params: {page, limit}
     });
     return response.data;
 }

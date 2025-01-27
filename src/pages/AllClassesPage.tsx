@@ -3,7 +3,7 @@ import ClassDetailsCard from "@/components/ClassDetailsCard.tsx";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import {ClassPagination} from "@/components/ClassPagination.tsx";
 import {useNavigate, useParams} from "react-router";
-import {getAllClasses} from "@/api/public.ts";
+import {getPaginatedClasses} from "@/api/public.ts";
 
 const ITEMS_PER_PAGE = 6;
 export default function AllClassesPage() {
@@ -14,7 +14,7 @@ export default function AllClassesPage() {
 
     const {data: classesData, isLoading} = useQuery({
         queryKey: ['allClasses', currentPage],
-        queryFn: () => getAllClasses(currentPage, ITEMS_PER_PAGE),
+        queryFn: () => getPaginatedClasses(currentPage, ITEMS_PER_PAGE),
     });
 
 
