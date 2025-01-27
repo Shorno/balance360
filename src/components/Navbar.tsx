@@ -1,18 +1,29 @@
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { User, Menu, X, Home, Users, Dumbbell, MessageSquare, LogInIcon, LogOutIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Link } from "react-router"
-import { ModeToggle } from "@/components/shared/mode-toggle"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {useState, useEffect} from "react"
+import {motion, AnimatePresence} from "framer-motion"
+import {
+    User,
+    Menu,
+    X,
+    Home,
+    Users,
+    Dumbbell,
+    MessageSquare,
+    LogInIcon,
+    LogOutIcon,
+    LayoutDashboardIcon
+} from "lucide-react"
+import {Button} from "@/components/ui/button"
+import {Link} from "react-router"
+import {ModeToggle} from "@/components/shared/mode-toggle"
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import useAuthStore from "@/store/authStore.ts"
 import AuthUserProfile from "@/components/AuthUserProfile.tsx"
 
 const navItems = [
-    { name: "Home", href: "/", icon: Home },
-    { name: "All Trainers", href: "/trainers", icon: Users },
-    { name: "All Classes", href: "/classes", icon: Dumbbell },
-    { name: "Community", href: "/community", icon: MessageSquare },
+    {name: "Home", href: "/", icon: Home},
+    {name: "All Trainers", href: "/trainers", icon: Users},
+    {name: "All Classes", href: "/classes", icon: Dumbbell},
+    {name: "Community", href: "/community", icon: MessageSquare},
 ]
 
 const menuVariants = {
@@ -66,7 +77,7 @@ const menuItemVariants = {
 }
 
 const borderVariants = {
-    hidden: { scaleX: 0 },
+    hidden: {scaleX: 0},
     visible: {
         scaleX: 1,
         transition: {
@@ -80,7 +91,7 @@ const borderVariants = {
 }
 
 export default function Navbar() {
-    const { currentUser, logout } = useAuthStore()
+    const {currentUser, logout} = useAuthStore()
     const [isOpen, setIsOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
 
@@ -97,13 +108,18 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
+    // Add dashboard to nav items when user is logged in
+    const mobileNavItems = currentUser
+        ? [...navItems, {name: "Dashboard", href: "/dashboard", icon: LayoutDashboardIcon}]
+        : navItems
+
     return (
         <motion.nav
             className={`fixed w-full z-50 transition-all duration-300 ${
                 isScrolled ? "bg-black/50 backdrop-blur-sm shadow-md" : "bg-transparent"
             }`}
-            initial={{ y: -100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            initial={{y: -100, opacity: 0}}
+            animate={{y: 0, opacity: 1}}
             transition={{
                 type: "spring",
                 stiffness: 300,
@@ -126,7 +142,7 @@ export default function Navbar() {
                                         className="text-gray-300 hover:bg-purple-500/30 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
                                     >
                                         <motion.span
-                                            whileHover={{ scale: 1.05 }}
+                                            whileHover={{scale: 1.05}}
                                             transition={{
                                                 type: "spring",
                                                 stiffness: 300,
@@ -143,8 +159,8 @@ export default function Navbar() {
                     </div>
                     <div className="hidden md:block">
                         <div className="ml-4 flex gap-4 items-center md:ml-6">
-                            <ModeToggle />
-                            <AuthUserProfile />
+                            <ModeToggle/>
+                            <AuthUserProfile/>
                         </div>
                     </div>
                     <div className="md:hidden">
@@ -153,9 +169,9 @@ export default function Navbar() {
                                 {isOpen ? (
                                     <motion.div
                                         key="close"
-                                        initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
-                                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                                        exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                                        initial={{opacity: 0, rotate: -90, scale: 0.5}}
+                                        animate={{opacity: 1, rotate: 0, scale: 1}}
+                                        exit={{opacity: 0, rotate: 90, scale: 0.5}}
                                         transition={{
                                             type: "spring",
                                             stiffness: 300,
@@ -163,14 +179,14 @@ export default function Navbar() {
                                             mass: 0.8,
                                         }}
                                     >
-                                        <X className="h-6 w-6" />
+                                        <X className="h-6 w-6"/>
                                     </motion.div>
                                 ) : (
                                     <motion.div
                                         key="menu"
-                                        initial={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                                        exit={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                                        initial={{opacity: 0, rotate: 90, scale: 0.5}}
+                                        animate={{opacity: 1, rotate: 0, scale: 1}}
+                                        exit={{opacity: 0, rotate: -90, scale: 0.5}}
                                         transition={{
                                             type: "spring",
                                             stiffness: 300,
@@ -178,7 +194,7 @@ export default function Navbar() {
                                             mass: 0.8,
                                         }}
                                     >
-                                        <Menu className="h-6 w-6" />
+                                        <Menu className="h-6 w-6"/>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -196,41 +212,48 @@ export default function Navbar() {
                         exit="closed"
                         variants={menuVariants}
                     >
-                        <motion.div className="px-2 py-3 bg-purple-900/30" variants={menuItemVariants}>
-                            <div className="flex w-full items-center justify-between ">
-                                {!currentUser ? (
+                        <motion.div
+                            className="px-4 py-4 space-y-4 bg-purple-900/30"
+                            variants={menuItemVariants}
+                        >
+                            {currentUser ? (
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <Avatar>
+                                            <AvatarImage src={currentUser?.photoURL || undefined}/>
+                                            <AvatarFallback>
+                                                <User className="text-purple-200"/>
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <div>
+                                            <h3 className="text-sm font-semibold text-white">{currentUser?.displayName}</h3>
+                                            <p className="text-xs text-gray-300">{currentUser?.email}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <ModeToggle/>
+                                        <Button
+                                            variant="destructive"
+                                            size="sm"
+                                            onClick={handleLogout}
+                                        >
+                                            <LogOutIcon className="h-4 w-4"/>
+                                        </Button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="flex items-center justify-between">
                                     <Link
                                         to="/login"
-                                        className="text-gray-300 flex items-center justify-center gap-2 hover:bg-purple-500/30 hover:text-white px-3 py-2 rounded-md text-base font-medium"
+                                        onClick={() => setIsOpen(false)}
+                                        className="text-gray-300 flex items-center gap-2 hover:bg-purple-500/30 hover:text-white px-3 py-2 rounded-md text-base font-medium"
                                     >
-                                        <LogInIcon className={"rotate-180"} />
-                                        Login
+                                        <LogInIcon className="rotate-180 h-4 w-4"/>
+                                        <span>Login</span>
                                     </Link>
-                                ) : (
-                                    <>
-                                        <div className={"flex gap-4 px-2"}>
-                                            <Avatar>
-                                                <AvatarImage src={currentUser?.photoURL || undefined} />
-                                                <AvatarFallback>
-                                                    <User className="text-purple-200" />
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <div>
-                                                <h3 className="text-sm font-semibold text-white">{currentUser?.displayName}</h3>
-                                                <p className="text-sm text-gray-300">{currentUser?.email}</p>
-                                            </div>
-                                        </div>
-                                    </>
-                                )}
-                                <div className={"flex gap-4 px-4"}>
-                                    <ModeToggle />
-                                    {currentUser && (
-                                        <Button variant="destructive" onClick={handleLogout}>
-                                            <LogOutIcon />
-                                        </Button>
-                                    )}
+                                    <ModeToggle/>
                                 </div>
-                            </div>
+                            )}
                         </motion.div>
 
                         <motion.div
@@ -241,14 +264,14 @@ export default function Navbar() {
                         />
 
                         <div className="px-2 pt-2 pb-4 space-y-1">
-                            {navItems.map((item) => (
+                            {mobileNavItems.map((item) => (
                                 <motion.div key={item.name} variants={menuItemVariants}>
                                     <Link
                                         onClick={() => setIsOpen(false)}
                                         to={item.href}
                                         className="flex items-center space-x-3 text-gray-300 hover:bg-purple-500/30 hover:text-white px-3 py-2 rounded-md text-base font-medium"
                                     >
-                                        <item.icon className="h-5 w-5" />
+                                        <item.icon className="h-5 w-5"/>
                                         <span>{item.name}</span>
                                     </Link>
                                 </motion.div>
@@ -260,4 +283,3 @@ export default function Navbar() {
         </motion.nav>
     )
 }
-

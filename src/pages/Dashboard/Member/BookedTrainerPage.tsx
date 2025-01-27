@@ -29,6 +29,7 @@ import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
 import {BreadcrumbItem, BreadcrumbPage} from "@/components/ui/breadcrumb.tsx";
 import toast from "react-hot-toast";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 const breadcrumb = (
     <BreadcrumbItem>
@@ -46,6 +47,7 @@ const reviewSchema = z.object({
 type ReviewFormValues = z.infer<typeof reviewSchema>;
 
 export default function BookedTrainerDetails() {
+    useDynamicTitle("Dashboard")
     const {currentUser} = useAuthStore();
     const [isReviewModalOpen, setIsReviewModalOpen] = React.useState(false);
     const [hoveredRating, setHoveredRating] = React.useState(0);

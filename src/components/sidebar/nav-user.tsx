@@ -1,8 +1,5 @@
 import {
-    BadgeCheck,
-    Bell,
     ChevronsUpDown,
-    CreditCard,
     LogOut,
     UserIcon,
 } from "lucide-react"
@@ -15,9 +12,7 @@ import {
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx"
 import {
@@ -27,8 +22,10 @@ import {
     useSidebar,
 } from "@/components/ui/sidebar.tsx"
 import {User} from "firebase/auth";
+import useAuthStore from "@/store/authStore.ts";
 
 export function NavUser({currentUser}: { currentUser: User | null }) {
+    const {logout} = useAuthStore()
     const {isMobile} = useSidebar()
 
     return (
@@ -55,27 +52,11 @@ export function NavUser({currentUser}: { currentUser: User | null }) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                         className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                        side={isMobile ? "bottom" : "right"}
+                        side={isMobile ? "bottom" : "top"}
                         align="end"
                         sideOffset={4}
                     >
-
-                        <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <BadgeCheck/>
-                                Account
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <CreditCard/>
-                                Billing
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Bell/>
-                                Notifications
-                            </DropdownMenuItem>
-                        </DropdownMenuGroup>
-                        <DropdownMenuSeparator/>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={logout}>
                             <LogOut/>
                             Log out
                         </DropdownMenuItem>

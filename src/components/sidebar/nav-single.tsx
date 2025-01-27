@@ -7,9 +7,9 @@ import {
     SidebarGroup,
     SidebarMenu,
     SidebarMenuButton,
-    SidebarMenuItem,
+    SidebarMenuItem, useSidebar,
 } from "@/components/ui/sidebar.tsx"
-import {Link} from "react-router";
+import {Link, useLocation} from "react-router";
 
 export function NavSingle({
                               navSingle
@@ -20,13 +20,20 @@ export function NavSingle({
         icon: LucideIcon
     }[]
 }) {
+    const location = useLocation()
+    const {setOpenMobile} = useSidebar();
+
 
     return (
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
             <SidebarMenu>
                 {navSingle.map((item) => (
                     <SidebarMenuItem key={item.name}>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton
+                            onClick={() => setOpenMobile(false)}
+                            asChild
+                            isActive={location.pathname === item.url}
+                        >
                             <Link to={item.url}>
                                 <item.icon/>
                                 <span>{item.name}</span>

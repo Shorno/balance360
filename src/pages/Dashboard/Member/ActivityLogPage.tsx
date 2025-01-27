@@ -22,6 +22,7 @@ import {useQuery} from "@tanstack/react-query";
 import useAuthStore from "@/store/authStore.ts";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import BecomeTrainerCTA from "@/components/BecomeTrainerCTA.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 
 const breadcrumb =
@@ -43,6 +44,7 @@ interface Application {
 }
 
 export default function ActivityLogPage() {
+    useDynamicTitle("Dashboard")
     const [isModalOpen, setIsModalOpen] = useState(false)
     const {currentUser} = useAuthStore()
 

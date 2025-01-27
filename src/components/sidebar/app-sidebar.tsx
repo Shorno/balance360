@@ -184,20 +184,6 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
                     <NavUser currentUser={currentUser}/>
                 )}
             </SidebarFooter>
-
-
-            {/*<SidebarHeader>*/}
-
-            {/*        <TeamSwitcher team={links.team}/>*/}
-            {/*</SidebarHeader>*/}
-
-            {/*<SidebarContent>*/}
-            {/*     <NavSingle navSingle={links.navSingle}/>*/}
-            {/*</SidebarContent>*/}
-
-            {/*<SidebarFooter>*/}
-            {/*        <NavUser currentUser={currentUser || ""}/>*/}
-            {/*</SidebarFooter>*/}
         </Sidebar>
     )
 }

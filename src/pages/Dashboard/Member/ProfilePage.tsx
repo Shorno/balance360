@@ -28,6 +28,7 @@ import {updateProfile} from 'firebase/auth'
 import toast from "react-hot-toast"
 import {ChangeEvent, useEffect, useState, useRef} from "react"
 import {createUserInDB} from "@/api/user.ts"
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 const breadcrumb = (
     <BreadcrumbItem>
@@ -47,6 +48,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>
 
 export default function ProfilePage() {
+    useDynamicTitle("Dashboard")
+
     const {currentUser} = useAuthStore()
     const {mutateAsync: uploadImage, isPending: isUploading} = useImageUpload()
     const [hasChanges, setHasChanges] = useState(false)
@@ -79,7 +82,7 @@ export default function ProfilePage() {
             const imageUrl = await uploadImage(file)
             form.setValue('profileImage', imageUrl, {shouldValidate: true})
             toast.success("Image uploaded successfully")
-        } catch{
+        } catch {
             toast.error("Failed to upload image. Please try again.")
         }
     }
@@ -102,7 +105,7 @@ export default function ProfilePage() {
             await createUserInDB(currentUser)
             setHasChanges(false)
             toast.success("Profile updated successfully.")
-        } catch{
+        } catch {
             toast.error("Failed to update profile. Please try again.")
         }
     }
