@@ -41,6 +41,7 @@ function App() {
                         <Route path="/classes" element={<AllClassesPage/>}/>
                         <Route path="/classes/:page?" element={<AllClassesPage/>}/>
                         <Route path="/community" element={<ForumPostsPage/>}/>
+                        <Route path="/community/:page?" element={<ForumPostsPage/>}/>
                         <Route element={<ProtectedRoutes/>}>
                             <Route path="/become-a-trainer" element={<BecomeATrainerPage/>}/>
                             <Route path="/trainers/book-trainer" element={<TrainerBookingPage/>}/>

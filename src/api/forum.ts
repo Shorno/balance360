@@ -6,8 +6,8 @@ export const postForum = async (data: ForumPost) => {
     return response.data;
 }
 
-export const getForumPosts = async () => {
-    const response = await api.get('/forum');
+export const getForumPosts = async (page = 1, limit = 10) => {
+    const response = await api.get('/forum', {params: {page, limit}});
     return response.data;
 }
 
