@@ -11,6 +11,7 @@ import type {ColumnDef} from "@tanstack/react-table"
 import {BreadcrumbItem, BreadcrumbPage} from "@/components/ui/breadcrumb.tsx";
 import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
 import TransactionsTable from "@/components/TransactionsTable.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 
 const COLORS = ["#9333ea", "#e879f9"]
@@ -116,6 +117,8 @@ const columns: ColumnDef<Transaction>[] = [
 ]
 
 export default function AdminBalancePage() {
+    useDynamicTitle("Dashboard")
+
     const {data: statistics, isLoading} = useQuery({
         queryKey: ["statistics"],
         queryFn: () => getStatistics(),

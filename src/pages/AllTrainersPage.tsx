@@ -2,9 +2,11 @@ import {useQuery} from "@tanstack/react-query";
 import TrainerCard, {TrainerInfoDetails} from "@/components/TrainerCard.tsx";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import {getAllTrainers} from "@/api/public.ts";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 
 export default function AllTrainersPage() {
+    useDynamicTitle("Trainers")
     const {data: trainers, isLoading} = useQuery({
         queryKey: ['trainers-list'],
         queryFn: () => getAllTrainers(),

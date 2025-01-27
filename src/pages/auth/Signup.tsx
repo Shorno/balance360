@@ -1,8 +1,11 @@
 import { motion } from 'motion/react'
 import { Link } from 'react-router'
 import SignupForm from "@/components/auth/SignupForm.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 export default function SignupPage() {
+    useDynamicTitle("Signup")
+
     return (
         <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
             <motion.div

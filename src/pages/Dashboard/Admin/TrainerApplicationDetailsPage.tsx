@@ -6,6 +6,7 @@ import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import {ErrorState} from "@/components/data-states/error-state.tsx";
 import {BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator} from "@/components/ui/breadcrumb.tsx";
 import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 
 const breadcrumb = <>
@@ -30,6 +31,8 @@ const breadcrumb = <>
     </BreadcrumbPage></>
 
 export default function TrainerApplicationDetailsPage() {
+    useDynamicTitle("Dashboard")
+
     const {_id} = useParams();
     console.log("id", _id)
     const {data: applicationDetails, isLoading, isError} = useQuery({

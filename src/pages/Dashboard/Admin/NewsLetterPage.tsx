@@ -7,6 +7,7 @@ import {useQuery} from "@tanstack/react-query";
 import {getAllSubscribers} from "@/api/newsletter.ts";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import SubscribersTable from "@/components/SubscribersTable.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 const breadcrumb =
     <BreadcrumbItem>
@@ -54,7 +55,10 @@ const columns: ColumnDef<Newsletter>[] = [
 
 ]
 
+
 export default function NewsLetterPage() {
+    useDynamicTitle("Dashboard")
+
     const {data: subscribers, isLoading} = useQuery({
         queryKey: ["subscribers"],
         queryFn: () => getAllSubscribers(),

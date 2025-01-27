@@ -14,6 +14,7 @@ import useAuthStore from "@/store/authStore.ts"
 import toast from "react-hot-toast"
 import {LoadingState} from "@/components/data-states/loading-state.tsx"
 import {useState} from "react"
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
 
@@ -33,6 +34,7 @@ const paymentFormSchema = z
 type PaymentFormData = z.infer<typeof paymentFormSchema>
 
 export default function PaymentPage() {
+    useDynamicTitle("Complete Payment")
     const {currentUser} = useAuthStore()
     const location = useLocation()
     const navigate = useNavigate();

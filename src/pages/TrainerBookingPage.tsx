@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Check, Clock, ChevronRight, Dumbbell, Shield, Sparkles, User, TimerIcon } from 'lucide-react';
+import React, {useState} from 'react';
+import {useNavigate, useLocation} from 'react-router';
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+import {Badge} from "@/components/ui/badge";
+import {Check, Clock, ChevronRight, Dumbbell, Shield, Sparkles, User, TimerIcon} from 'lucide-react';
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 interface MembershipPlan {
     id: string;
@@ -54,10 +55,11 @@ const membershipPlans: MembershipPlan[] = [
 ];
 
 export default function TrainerBookingPage() {
+    useDynamicTitle("Book Trainer")
     const navigate = useNavigate();
     const location = useLocation();
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-    const { state } = location;
+    const {state} = location;
     const slotInfo = state.slot;
 
     const plan: MembershipPlan | undefined = membershipPlans.find(plan => plan.id === selectedPlan);

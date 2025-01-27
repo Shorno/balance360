@@ -1,6 +1,7 @@
 import AddNewClassForm from "@/components/AddClassForm.tsx";
 import {BreadcrumbItem, BreadcrumbPage} from "@/components/ui/breadcrumb.tsx";
 import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 
 const breadcrumb =
@@ -13,6 +14,7 @@ const breadcrumb =
 
 
 export default function AddClassPage() {
+    useDynamicTitle("Dashboard")
     return (
 
         <>

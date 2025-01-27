@@ -28,11 +28,13 @@ import NewsLetterPage from "@/pages/Dashboard/Admin/NewsLetterPage.tsx";
 import CreatePostForm from "@/pages/Dashboard/Admin/ForumForm.tsx";
 import ForumPostsPage from "@/pages/ForumPostsPage.tsx";
 import BookedTrainerPage from "@/pages/Dashboard/Member/BookedTrainerPage.tsx";
+import ScrollToTop from "@/lib/ScrollToTop.tsx";
 
 function App() {
     return (
         <>
             <BrowserRouter>
+                <ScrollToTop/>
                 <Routes>
                     <Route element={<MainLayout/>}>
                         <Route index element={<Home/>}/>

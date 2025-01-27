@@ -4,9 +4,11 @@ import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import {ClassPagination} from "@/components/ClassPagination.tsx";
 import {useNavigate, useParams} from "react-router";
 import {getPaginatedClasses} from "@/api/public.ts";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 const ITEMS_PER_PAGE = 6;
 export default function AllClassesPage() {
+    useDynamicTitle("Classes")
     const {page} = useParams<{ page?: string }>()
     const navigate = useNavigate();
     const currentPage = parseInt(page || '1', 10) || 1;

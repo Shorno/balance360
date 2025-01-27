@@ -6,6 +6,7 @@ import {Link} from "react-router";
 import {ApplicationListTable} from "@/components/ApplicationListTable.tsx";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import {ErrorState} from "@/components/data-states/error-state.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 const breadcrumb = <>
     <BreadcrumbItem>
@@ -21,6 +22,8 @@ const breadcrumb = <>
     </BreadcrumbPage></>
 
 export default function TrainerApplications() {
+    useDynamicTitle("Dashboard")
+
     const {data: applications, isError, isLoading} = useQuery({
         queryKey: ['trainerApplications'],
         queryFn: getTrainerApplications,

@@ -5,6 +5,7 @@ import {getApprovedTrainers} from "@/api/admin.ts";
 import {TrainersListTable} from "@/components/TrainerListTable.tsx";
 import {BreadcrumbItem, BreadcrumbPage} from "@/components/ui/breadcrumb.tsx";
 import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 
 const breadcrumb =
@@ -17,6 +18,7 @@ const breadcrumb =
 
 
 export default function AllTrainers() {
+    useDynamicTitle("Dashboard")
     const {data: trainers, isLoading, isError} = useQuery({
         queryKey: ['trainers'],
         queryFn: () => getApprovedTrainers(),

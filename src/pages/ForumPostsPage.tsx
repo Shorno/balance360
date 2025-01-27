@@ -4,10 +4,12 @@ import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import {useNavigate, useParams} from "react-router";
 import {getForumPosts} from "@/api/forum.ts";
 import ForumPagination from "@/components/ForumPagination.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 const ITEMS_PER_PAGE = 6;
 
 export default function ForumPostsPage() {
+    useDynamicTitle("Forums")
     const {page} = useParams<{ page?: string }>();
     const navigate = useNavigate();
     const currentPage = parseInt(page || '1', 10) || 1;

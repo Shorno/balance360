@@ -6,9 +6,11 @@ import TestimonialSection from "@/components/TestimonialSection.tsx";
 import TeamSection from "@/components/TeamSection.tsx";
 import FeaturedClasses from "@/components/FeaturedClasses.tsx";
 import LatestForumPosts from "@/components/LatestForumPosts.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 
 export default function Home() {
+    useDynamicTitle("Home")
     return (
         <>
             <Hero/>

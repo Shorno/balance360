@@ -1,8 +1,10 @@
 import {motion} from "framer-motion"
 import BecomeATrainerForm from "@/components/BeATrainerForm.tsx";
+import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
 
 
 export default function BecomeATrainerPage() {
+    useDynamicTitle("Apply for Trainer")
 
 
     return (

@@ -22,6 +22,7 @@ import {Role} from "@/types";
 import {useUserRole} from "@/hooks/useUserRole.ts";
 import {useMemo} from "react";
 import {Skeleton} from "@/components/ui/skeleton.tsx";
+import {Link} from "react-router";
 
 
 const navigationConfig = {
@@ -151,17 +152,19 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
-                {!role ? (
-                    <div className={"flex mb-2"}>
-                        <Skeleton className="h-8 w-8 rounded-lg mt-3"/>
-                        <div className="flex flex-col ml-2 mt-4 gap-2">
-                            <Skeleton className="h-3 w-24"/>
-                            <Skeleton className="h-2 w-16"/>
+                <Link to={"/"}>
+                    {!role ? (
+                        <div className={"flex mb-2"}>
+                            <Skeleton className="h-8 w-8 rounded-lg mt-3"/>
+                            <div className="flex flex-col ml-2 mt-4 gap-2">
+                                <Skeleton className="h-3 w-24"/>
+                                <Skeleton className="h-2 w-16"/>
+                            </div>
                         </div>
-                    </div>
-                ) : (
-                    <TeamSwitcher team={links.team}/>
-                )}
+                    ) : (
+                        <TeamSwitcher team={links.team}/>
+                    )}
+                </Link>
             </SidebarHeader>
 
             <SidebarContent>
