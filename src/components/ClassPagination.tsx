@@ -1,13 +1,14 @@
-import {ChevronLeft, ChevronRight} from "lucide-react";
-import {Link} from "react-router";
+import {ChevronLeft, ChevronRight} from "lucide-react"
+import {Link} from "react-router"
 
 interface PaginationProps {
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
+    currentPage: number
+    totalPages: number
+    onPageChange: (page: number) => void
+    search: string
 }
 
-export function ClassPagination({currentPage, totalPages, onPageChange}: PaginationProps) {
+export function ClassPagination({currentPage, totalPages, onPageChange, search}: PaginationProps) {
     return (
         <div className="flex items-center justify-center gap-2 mt-8">
             <button
@@ -21,13 +22,14 @@ export function ClassPagination({currentPage, totalPages, onPageChange}: Paginat
             <div className="flex gap-1">
                 {Array.from({length: totalPages}, (_, i) => i + 1).map((page) => (
                     <Link
-                        to={`/classes/${page}`}
+                        to={`/classes/${page}?q=${encodeURIComponent(search)}`}
                         key={page}
-                        onClick={() => onPageChange(page)}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            onPageChange(page)
+                        }}
                         className={`px-4 py-2 rounded-lg ${
-                            currentPage === page
-                                ? "bg-purple-500 text-white"
-                                : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                            currentPage === page ? "bg-purple-500 text-white" : "bg-gray-800 text-gray-400 hover:bg-gray-700"
                         }`}
                     >
                         {page}
@@ -43,5 +45,6 @@ export function ClassPagination({currentPage, totalPages, onPageChange}: Paginat
                 <ChevronRight className="h-5 w-5"/>
             </button>
         </div>
-    );
+    )
 }
+

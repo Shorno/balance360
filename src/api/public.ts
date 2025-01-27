@@ -5,13 +5,21 @@ export const getAllClasses = async () => {
     const response = await api.get(`/classes/all`);
     return response.data;
 }
-
-export const getPaginatedClasses = async (page = 1, limit = 6) => {
-    const response = await api.get(`/public/classes`, {
-        params: {page, limit}
-    });
-    return response.data;
+export const searchClasses = async (searchQuery: string, page = 1, limit = 6) => {
+    const response = await api.get(`/classes/search`, {
+        params: { q: searchQuery, page, limit },
+    })
+    return response.data
 }
+
+
+export const getPaginatedClasses = async (page = 1, limit = 6, search = "") => {
+    const response = await api.get(`/public/classes`, {
+        params: {page, limit, search},
+    })
+    return response.data
+}
+
 
 export const getAllTrainers = async () => {
     const response = await api.get(`/public/trainers`);
