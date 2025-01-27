@@ -2,15 +2,25 @@ import {useQuery} from "@tanstack/react-query";
 import {getAllClasses} from "@/api/class.ts";
 import ClassDetailsCard from "@/components/ClassDetailsCard.tsx";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
+import {ClassPagination} from "@/components/ClassPagination.tsx";
+import {useNavigate, useParams} from "react-router";
 
-
+const ITEMS_PER_PAGE = 6;
 export default function AllClassesPage() {
-    const {data: classList, isLoading} = useQuery({
-        queryKey: ['classes'],
-        queryFn: () => getAllClasses(),
-        select: (data) => data?.data
-    })
+    const {page} = useParams<{ page?: string }>()
+    const navigate = useNavigate();
+    const currentPage = parseInt(page || '1', 10) || 1;
 
+
+    const {data: classesData, isLoading} = useQuery({
+        queryKey: ['allClasses', currentPage],
+        queryFn: () => getAllClasses(currentPage, ITEMS_PER_PAGE),
+    });
+
+
+    const handlePageChange = (newPage: number) => {
+        navigate(`/classes/${newPage}`);
+    };
 
     return (
         <div className="min-h-screen bg-gray-900 py-32 px-6 sm:px-6 lg:px-8">
@@ -25,17 +35,25 @@ export default function AllClassesPage() {
                     </p>
                 </div>
 
-                {
-                    isLoading ? <LoadingState/> :
-                        (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-                                {classList.map((classItem: any) => (
-                                    <ClassDetailsCard key={classItem._id} classItem={classItem}/>
-                                ))}
-                            </div>
-                        )
-                }
+                {isLoading ? (
+                    <LoadingState/>
+                ) : (
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+                            {classesData?.data.map((classItem: any) => (
+                                <ClassDetailsCard key={classItem._id} classItem={classItem}/>
+                            ))}
+                        </div>
 
+                        {classesData && classesData.totalPages > 0 && (
+                            <ClassPagination
+                                currentPage={currentPage}
+                                totalPages={classesData.totalPages}
+                                onPageChange={handlePageChange}
+                            />
+                        )}
+                    </>
+                )}
             </div>
         </div>
     );

@@ -1,9 +1,11 @@
 import {secureApi} from "@/lib/axios.ts";
 
-export const getAllClasses = async () => {
-    const response = await secureApi.get('/classes');
+export const getAllClasses = async (page = 1, limit = 6) => {
+    const response = await secureApi.get(`/classes`, {
+        params: { page, limit }
+    });
     return response.data;
-}
+};
 
 export const getClassWithTrainers = async (id: string) => {
     const response = await secureApi.get(`/classes/${id}`);
