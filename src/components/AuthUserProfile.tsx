@@ -54,19 +54,13 @@ export default function AuthUserProfile() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-purple-500/30" />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
-                        Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
+                    <DropdownMenuItem asChild className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
                         <Link to={"/dashboard"}>Dashboard</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
-                        Settings
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator className="bg-purple-500/30" />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
+                    <DropdownMenuItem asChild className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
                         <button onClick={logout} className="w-full text-left">
                             Logout
                         </button>
