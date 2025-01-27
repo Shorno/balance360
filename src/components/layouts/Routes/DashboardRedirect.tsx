@@ -11,7 +11,5 @@ export const DashboardRedirect = () => {
             return <Navigate to="/dashboard/trainer/slots"/>
         case 'member':
             return <Navigate to="/dashboard/member/profile"/>
-        default:
-            return <Navigate to="/"/>
     }
 }
