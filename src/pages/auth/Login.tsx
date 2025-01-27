@@ -2,6 +2,7 @@ import {motion} from 'framer-motion'
 import {Link} from 'react-router'
 import LoginForm from "@/components/auth/LoginForm.tsx";
 import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
+import logo from "@/assets/default-monochrome-white.svg";
 
 export default function LoginPage() {
     useDynamicTitle("Login")
@@ -16,8 +17,13 @@ export default function LoginPage() {
             >
                 <div className="max-w-md w-full mx-auto">
                     <div className="flex items-center gap-2 mb-8">
-                        <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-400 to-pink-600"/>
-                        <h1 className="text-2xl font-bold text-white">Balance360</h1>
+                        <Link to="/" className="flex-shrink-0">
+                            <img
+                                className={"size-10 object-cover w-full"}
+                                src={logo}
+                                alt={"logo"}
+                            />
+                        </Link>
                     </div>
 
                     <h2 className="text-2xl font-semibold text-white mb-2">

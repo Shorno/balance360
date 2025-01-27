@@ -27,11 +27,6 @@ import {Link} from "react-router";
 
 const navigationConfig = {
     admin: {
-        team: {
-            name: "Balance360",
-            logo: GalleryVerticalEnd,
-            plan: "Enterprise",
-        },
         navSingle: [
             {
                 name: "Trainers",
@@ -162,7 +157,7 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
                             </div>
                         </div>
                     ) : (
-                        <TeamSwitcher team={links.team}/>
+                        <TeamSwitcher/>
                     )}
                 </Link>
             </SidebarHeader>

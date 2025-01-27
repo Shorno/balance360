@@ -1,5 +1,6 @@
 import {Facebook, Linkedin, Instagram, Twitter} from 'lucide-react'
 import {Link} from "react-router";
+import logo from "@/assets/default-monochrome-white.svg";
 
 const socialLinks = [
     {icon: Facebook, href: '#', label: 'Facebook'},
@@ -22,10 +23,13 @@ export default function Footer() {
             className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-gray-900 dark:to-black w-full py-12 mt-auto">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Left Section - Logo and Description */}
                     <div className="space-y-4">
                         <Link to="/" className="flex items-center">
-                            <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">Balance360</span>
+                            <img
+                                className={"size-32 object-center"}
+                                src={logo}
+                                alt={"logo"}
+                            />
                         </Link>
                         <p className="text-gray-600 dark:text-gray-300 max-w-sm">
                             Your Go-To For Personalized Workouts, Meal Plans, And Expert Fitness Advice

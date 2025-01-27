@@ -18,6 +18,7 @@ import {ModeToggle} from "@/components/shared/mode-toggle"
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import useAuthStore from "@/store/authStore.ts"
 import AuthUserProfile from "@/components/AuthUserProfile.tsx"
+import logo from "/src/assets/default-monochrome-white.svg"
 
 const navItems = [
     {name: "Home", href: "/", icon: Home},
@@ -108,7 +109,6 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
-    // Add dashboard to nav items when user is logged in
     const mobileNavItems = currentUser
         ? [...navItems, {name: "Dashboard", href: "/dashboard", icon: LayoutDashboardIcon}]
         : navItems
@@ -131,7 +131,11 @@ export default function Navbar() {
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center">
                         <Link to="/" className="flex-shrink-0">
-                            <span className="text-2xl font-bold text-white">Balance360</span>
+                            <img
+                                className={"size-10 object-cover w-full"}
+                                src={logo}
+                                alt={"logo"}
+                            />
                         </Link>
                         <div className="hidden md:block ml-10">
                             <div className="flex items-baseline space-x-4">

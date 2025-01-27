@@ -60,7 +60,7 @@ export default function TrainerBookingPage() {
     const location = useLocation();
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
     const {state} = location;
-    const slotInfo = state.slot;
+    const slotInfo = state?.slot;
 
     const plan: MembershipPlan | undefined = membershipPlans.find(plan => plan.id === selectedPlan);
 
@@ -71,7 +71,7 @@ export default function TrainerBookingPage() {
                 slotInfo,
                 price: plan?.price,
                 planName: plan?.name,
-                trainerName: state.trainerName
+                trainerName: state?.trainerName
             }
         });
     };
@@ -79,17 +79,15 @@ export default function TrainerBookingPage() {
     return (
         <div className="min-h-screen bg-gray-900 py-32 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto space-y-8">
-                {/* Header Section */}
                 <div className="text-center">
                     <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
                         Book Your Training Session
                     </h1>
                     <p className="text-gray-300 max-w-2xl mx-auto">
-                        Choose your membership plan and start your fitness journey with {state.trainerName}
+                        Choose your membership plan and start your fitness journey with {state?.trainerName}
                     </p>
                 </div>
 
-                {/* Booking Info Card */}
                 <Card className="bg-gray-800/50 border-gray-700">
                     <CardHeader>
                         <CardTitle className="text-xl text-white">Session Details</CardTitle>
@@ -101,7 +99,7 @@ export default function TrainerBookingPage() {
                             </div>
                             <div>
                                 <p className="text-sm text-gray-400">Trainer</p>
-                                <p className="text-white font-medium">{state.trainerName}</p>
+                                <p className="text-white font-medium">{state?.trainerName}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -110,7 +108,7 @@ export default function TrainerBookingPage() {
                             </div>
                             <div>
                                 <p className="text-sm text-gray-400">Time Slot</p>
-                                <p className="text-white font-medium">{slotInfo.startTime}</p>
+                                <p className="text-white font-medium">{slotInfo?.startTime}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -119,7 +117,7 @@ export default function TrainerBookingPage() {
                             </div>
                             <div>
                                 <p className="text-sm text-gray-400">Slot Duration</p>
-                                <p className="text-white font-medium">{slotInfo.slotDuration}</p>
+                                <p className="text-white font-medium">{slotInfo?.slotDuration}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -132,7 +130,7 @@ export default function TrainerBookingPage() {
                                     <Badge
                                         className="bg-purple-500/20 hover:bg-purple-500/50 text-purple-300 border border-purple-500/30"
                                     >
-                                        {slotInfo.selectedClass}
+                                        {slotInfo?.selectedClass}
                                     </Badge>
                                 </div>
                             </div>

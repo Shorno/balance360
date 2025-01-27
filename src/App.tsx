@@ -29,6 +29,7 @@ import CreatePostForm from "@/pages/Dashboard/Admin/ForumForm.tsx";
 import ForumPostsPage from "@/pages/ForumPostsPage.tsx";
 import BookedTrainerPage from "@/pages/Dashboard/Member/BookedTrainerPage.tsx";
 import ScrollToTop from "@/lib/ScrollToTop.tsx";
+import NotFound from "@/pages/NotFound.tsx";
 
 function App() {
     return (
@@ -91,6 +92,7 @@ function App() {
                             </Route>
                         </Route>
                     </Route>
+                    <Route path="*" element={<NotFound/>}/>
                 </Routes>
             </BrowserRouter>
             <Toaster position={"top-center"}/>
