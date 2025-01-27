@@ -4,17 +4,18 @@ interface CreatePaymentIntent {
     amount: number;
     planName: string;
 }
+
 interface ConfirmPayment {
-    slotId: string;          // MongoDB slot ID
-    price: number;           // Payment amount
-    planName: string;        // Package name
-    trainerEmail: string;    // Trainer's email from slotInfo
-    stripePaymentId: string; // Stripe payment intent ID
-    userEmail: string;       // User's email
+    slotId: string;
+    price: number;
+    planName: string;
+    trainerEmail: string;
+    stripePaymentId: string;
+    userEmail: string;
 }
 
 
-export const createPaymentIntent = async ({ amount, planName }: CreatePaymentIntent) => {
+export const createPaymentIntent = async ({amount, planName}: CreatePaymentIntent) => {
     const response = await secureApi.post('/payments/create-payment-intent', {
         amount,
         planName,

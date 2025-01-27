@@ -2,15 +2,17 @@ import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
 import TrainerCard from './TrainerCard';
 import {useQuery} from "@tanstack/react-query";
-import {getApprovedTrainers} from "@/api/admin.ts";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
+import {getFeaturedTrainers} from "@/api/public.ts";
 
 const TeamSection = () => {
     const {data: featuredTrainers, isLoading} = useQuery({
-        queryKey: ['trainers'],
-        queryFn: () => getApprovedTrainers(),
-        select: (data) => data?.data
+        queryKey: ['featured-trainers'],
+        queryFn: () => getFeaturedTrainers(),
+        select: (data) => data
     })
+
+    console.log(featuredTrainers)
 
     return (
         <section className="py-16 bg-gray-900/50">
@@ -27,7 +29,7 @@ const TeamSection = () => {
 
                 {isLoading ? <LoadingState/> :
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {featuredTrainers.slice(0, 3).map((trainer: any) => (
+                        {featuredTrainers?.slice(0, 3).map((trainer: any) => (
                             <TrainerCard key={trainer._id} trainer={trainer}/>
                         ))}
                     </div>

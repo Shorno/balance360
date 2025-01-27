@@ -4,10 +4,10 @@ import {ChevronRight, Clock} from "lucide-react"
 import {Badge} from "@/components/ui/badge"
 import {Button} from "@/components/ui/button"
 import {useQuery} from "@tanstack/react-query"
-import {getTrainerSlots} from "@/api/trainer"
 import React from "react"
 import {LoadingState} from "@/components/data-states/loading-state"
 import {useNavigate} from "react-router"
+import {getTrainerSlots} from "@/api/public.ts";
 
 export type Slot = {
     _id: string

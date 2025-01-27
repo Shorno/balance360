@@ -42,7 +42,7 @@ export const getAllUsers = async () => {
     return response.data;
 }
 
-export const getUsersWithReviews = async () => {
-    const response = await secureApi.get(`/users/reviews`);
-    return response.data;
-}
+// export const getUsersWithReviews = async () => {
+//     const response = await secureApi.get(`/users/reviews`);
+//     return response.data;
+// }

@@ -1,9 +1,9 @@
 import {useQuery} from "@tanstack/react-query";
-import {getAllClasses} from "@/api/class.ts";
 import ClassDetailsCard from "@/components/ClassDetailsCard.tsx";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import {ClassPagination} from "@/components/ClassPagination.tsx";
 import {useNavigate, useParams} from "react-router";
+import {getAllClasses} from "@/api/public.ts";
 
 const ITEMS_PER_PAGE = 6;
 export default function AllClassesPage() {

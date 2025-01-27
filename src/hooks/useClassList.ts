@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import {getAllClasses} from "@/api/class.ts";
+import {getAllClasses} from "@/api/public.ts";
 
 export const useClassList = () => {
     const {data: classList, isLoading, isError} = useQuery({

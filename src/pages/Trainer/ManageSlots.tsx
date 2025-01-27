@@ -22,10 +22,10 @@ import {
 import {Input} from "@/components/ui/input"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
 import useAuthStore from "@/store/authStore"
-import {getTrainerSlotsDetails} from "@/api/trainer"
 import {cn} from "@/lib/utils"
 import {columns} from "@/pages/Trainer/Colums.tsx";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
+import {getTrainerSlotsDetails} from "@/api/public.ts";
 
 export interface TrainerSlot {
     _id: string;

@@ -43,40 +43,7 @@ export default function ForumPostsPage() {
                 </div>
 
                 <div className="mt-12 flex justify-center gap-4">
-                    {/*<Button*/}
-                    {/*    variant="outline"*/}
-                    {/*    onClick={() => setPage(p => Math.max(1, p - 1))}*/}
-                    {/*    disabled={page === 1}*/}
-                    {/*    className="border-gray-700 text-gray-400 hover:bg-gray-800"*/}
-                    {/*>*/}
-                    {/*    <ChevronLeft className="w-4 h-4 mr-2"/>*/}
-                    {/*    Previous*/}
-                    {/*</Button>*/}
-                    {/*<div className="flex items-center gap-2">*/}
-                    {/*    {Array.from({length: data?.totalPages || 1}).map((_, i) => (*/}
-                    {/*        <Button*/}
-                    {/*            key={i}*/}
-                    {/*            variant={page === i + 1 ? 'default' : 'outline'}*/}
-                    {/*            onClick={() => setPage(i + 1)}*/}
-                    {/*            className={`w-10 h-10 ${*/}
-                    {/*                page === i + 1*/}
-                    {/*                    ? 'bg-purple-500 hover:bg-purple-600'*/}
-                    {/*                    : 'border-gray-700 text-gray-400 hover:bg-gray-800'*/}
-                    {/*            }`}*/}
-                    {/*        >*/}
-                    {/*            {i + 1}*/}
-                    {/*        </Button>*/}
-                    {/*    ))}*/}
-                    {/*</div>*/}
-                    {/*<Button*/}
-                    {/*    variant="outline"*/}
-                    {/*    onClick={() => setPage(p => Math.min(data?.totalPages || 1, p + 1))}*/}
-                    {/*    disabled={page === (data?.totalPages || 1)}*/}
-                    {/*    className="border-gray-700 text-gray-400 hover:bg-gray-800"*/}
-                    {/*>*/}
-                    {/*    Next*/}
-                    {/*    <ChevronRight className="w-4 h-4 ml-2"/>*/}
-                    {/*</Button>*/}
+
                 </div>
             </div>
         </div>

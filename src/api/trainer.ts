@@ -19,15 +19,6 @@ export const addSlot = async (slot: AddNewSlotFormData,) => {
     return response.data;
 }
 
-export const getTrainerSlots = async (email: string) => {
-    const response = await secureApi.get(`/trainers/slots/${email}`);
-    return response.data;
-}
-
-export const getTrainerSlotsDetails = async (email: string) => {
-    const response = await secureApi.get(`/trainers/slots/details/${email}`);
-    return response.data;
-}
 
 export const deleteSlot = async (slotId: string) => {
     const response = await secureApi.delete(`/trainers/slots/${slotId}`);

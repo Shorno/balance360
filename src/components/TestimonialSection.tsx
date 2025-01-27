@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import {Star, ChevronLeft, ChevronRight, Quote} from 'lucide-react';
 import {useQuery} from "@tanstack/react-query";
-import {getUsersWithReviews} from "@/api/user.ts";
 import {cn} from "@/lib/utils.ts";
+import {getUsersWithReviews} from "@/api/public.ts";
 
 export interface User {
     _id: string;
@@ -40,6 +40,7 @@ const TestimonialsSection = () => {
         queryFn: getUsersWithReviews,
         select: (data) => data.data,
     })
+
 
     const [currentIndex, setCurrentIndex] = useState(0);
 

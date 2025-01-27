@@ -5,7 +5,6 @@ function AboutSection() {
         <section className="sm:py-32 py-10 bg-gray-900/50">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    {/* Image Column */}
                     <div className="relative">
                         <div className="aspect-square rounded-2xl overflow-hidden">
                             <img
@@ -42,7 +41,7 @@ function AboutSection() {
                                 </span>
                             </h2>
                             <p className="text-gray-300 leading-relaxed">
-                                At FitSync Pro, we're more than just a fitness platform – we're your partner in transformation.
+                                At Balance360, we're more than just a fitness platform – we're your partner in transformation.
                                 Founded in 2020, we've revolutionized the way people approach their fitness journey by combining
                                 cutting-edge technology with personalized training experiences.
                             </p>

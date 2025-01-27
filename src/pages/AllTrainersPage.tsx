@@ -1,13 +1,13 @@
 import {useQuery} from "@tanstack/react-query";
-import {getApprovedTrainers} from "@/api/admin.ts";
 import TrainerCard, {TrainerInfoDetails} from "@/components/TrainerCard.tsx";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
+import {getAllTrainers} from "@/api/public.ts";
 
 
 export default function AllTrainersPage() {
     const {data: trainers, isLoading} = useQuery({
-        queryKey: ['trainers'],
-        queryFn: () => getApprovedTrainers(),
+        queryKey: ['trainers-list'],
+        queryFn: () => getAllTrainers(),
         select: (data) => data?.data
     })
 

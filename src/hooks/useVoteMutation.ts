@@ -30,24 +30,45 @@ export const useVoteMutation = () => {
 
     return useMutation({
         mutationFn: ({postId, voteType}: { postId: string; voteType: 'up' | 'down' }) =>
-            voteOnPost(postId, voteType),
+            voteOnPost(postId, voteType, currentUser?.email),
         onMutate: async ({postId, voteType}) => {
             await queryClient.cancelQueries({queryKey: ['forumPosts']});
-
             const previousPosts = queryClient.getQueryData<Post[]>(['forumPosts']);
 
             queryClient.setQueryData<Post[]>(['forumPosts'], (old = []) =>
                 old.map(post => {
                     if (post._id === postId) {
-                        const newVoters = post.votes.voters
-                            .filter(v => v.email !== currentUser?.email)
-                            .concat(currentUser?.email ? {email: currentUser.email, voteType} : []);
+                        const existingVote = post.votes.voters.find(v => v.email === currentUser?.email);
+                        let newVoters = [...post.votes.voters];
+                        let newUpvotes = post.votes.upvotes;
+                        let newDownvotes = post.votes.downvotes;
+
+                        if (existingVote) {
+                            newUpvotes -= existingVote.voteType === 'up' ? 1 : 0;
+                            newDownvotes -= existingVote.voteType === 'down' ? 1 : 0;
+                            newVoters = newVoters.filter(v => v.email !== currentUser?.email);
+
+                            if (existingVote.voteType === voteType) {
+                                return {
+                                    ...post,
+                                    votes: {
+                                        upvotes: newUpvotes,
+                                        downvotes: newDownvotes,
+                                        voters: newVoters
+                                    }
+                                };
+                            }
+                        }
+
+                        newUpvotes += voteType === 'up' ? 1 : 0;
+                        newDownvotes += voteType === 'down' ? 1 : 0;
+                        newVoters.push({email: currentUser?.email || '', voteType});
 
                         return {
                             ...post,
                             votes: {
-                                upvotes: voteType === 'up' ? post.votes.upvotes + 1 : post.votes.upvotes,
-                                downvotes: voteType === 'down' ? post.votes.downvotes + 1 : post.votes.downvotes,
+                                upvotes: newUpvotes,
+                                downvotes: newDownvotes,
                                 voters: newVoters
                             }
                         };
@@ -55,7 +76,6 @@ export const useVoteMutation = () => {
                     return post;
                 })
             );
-
             return {previousPosts};
         },
         onError: (_err, _variables, context) => {
