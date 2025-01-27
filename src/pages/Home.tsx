@@ -5,6 +5,7 @@ import AboutSection from "@/components/AboutSection.tsx";
 import TestimonialSection from "@/components/TestimonialSection.tsx";
 import TeamSection from "@/components/TeamSection.tsx";
 import FeaturedClasses from "@/components/FeaturedClasses.tsx";
+import LatestForumPosts from "@/components/LatestForumPosts.tsx";
 
 
 export default function Home() {
@@ -13,10 +14,11 @@ export default function Home() {
             <Hero/>
             <FeaturesSection/>
             <AboutSection/>
-            <TestimonialSection/>
-            <TeamSection/>
             <FeaturedClasses/>
+            <TestimonialSection/>
+            <LatestForumPosts/>
             <NewsletterSection/>
+            <TeamSection/>
         </>
     )
 }

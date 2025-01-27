@@ -37,3 +37,8 @@ export const getTrainerSlots = async (email: string) => {
     const response = await api.get(`/trainers/slots/${email}`);
     return response.data;
 }
+
+export const latestForumPosts = async () => {
+    const response = await api.get(`/forum/latest`);
+    return response.data;
+}
