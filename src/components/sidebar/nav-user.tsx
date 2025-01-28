@@ -1,6 +1,6 @@
 import {
+    ArrowLeft,
     ChevronsUpDown,
-    LogOut,
     UserIcon,
 } from "lucide-react"
 
@@ -22,10 +22,9 @@ import {
     useSidebar,
 } from "@/components/ui/sidebar.tsx"
 import {User} from "firebase/auth";
-import useAuthStore from "@/store/authStore.ts";
+import {Link} from "react-router";
 
 export function NavUser({currentUser}: { currentUser: User | null }) {
-    const {logout} = useAuthStore()
     const {isMobile} = useSidebar()
 
     return (
@@ -56,9 +55,11 @@ export function NavUser({currentUser}: { currentUser: User | null }) {
                         align="end"
                         sideOffset={4}
                     >
-                        <DropdownMenuItem onClick={logout}>
-                            <LogOut/>
-                            Log out
+                        <DropdownMenuItem asChild>
+                            <Link to={"/"}>
+                                <ArrowLeft className="mr-2 size-4"/>
+                                Back to Home
+                            </Link>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
