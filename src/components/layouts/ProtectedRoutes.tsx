@@ -4,6 +4,7 @@ import {LoadingState} from "@/components/data-states/loading-state.tsx";
 
 export default function ProtectedRoutes() {
     const location = useLocation();
+
     const {currentUser, authLoading} = useAuthStore();
 
 

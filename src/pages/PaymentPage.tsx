@@ -15,6 +15,7 @@ import toast from "react-hot-toast"
 import {LoadingState} from "@/components/data-states/loading-state.tsx"
 import {useState} from "react"
 import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
+import {useBookingStore} from "@/store/useBookingStore.ts";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
 
@@ -38,7 +39,8 @@ export default function PaymentPage() {
     const {currentUser} = useAuthStore()
     const location = useLocation()
     const navigate = useNavigate();
-    const {slotInfo, price, planName, trainerName} = location.state
+    const {trainerName, slot, email} = useBookingStore()
+    const {price, planName} = location.state
 
     const confirmMutation = useMutation({
         mutationFn: confirmPayment,
@@ -76,20 +78,21 @@ export default function PaymentPage() {
                     toast.error("Payment failed. Please try again.")
                 } else {
                     console.log("Stripe success. Calling confirm with:", {
-                        slotId: slotInfo._id,
+                        slotId: slot?._id,
                         price,
                         planName,
-                        trainerEmail: slotInfo.trainerEmail,
+                        trainerEmail: email,
                         stripePaymentId: result.paymentIntent.id,
                     })
 
                     if (result.paymentIntent.status === "succeeded") {
                         confirmMutation.mutate({
-                            slotId: slotInfo._id,
+                            slotId: slot?._id || "",
                             userEmail: currentUser?.email || "",
                             price,
                             planName,
-                            trainerEmail: slotInfo.trainerEmail,
+                            //@ts-ignore
+                            trainerEmail: email,
                             stripePaymentId: result.paymentIntent.id,
                         })
                         setPaymentSuccess(true)
@@ -156,8 +159,8 @@ export default function PaymentPage() {
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-400">Time Slot</p>
-                                        <p className="text-white font-medium">{slotInfo.startTime}</p>
-                                        <p className="text-sm text-gray-400">Duration: {slotInfo.slotDuration}</p>
+                                        <p className="text-white font-medium">{slot?.startTime}</p>
+                                        <p className="text-sm text-gray-400">Duration: {slot?.slotDuration}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
@@ -167,7 +170,7 @@ export default function PaymentPage() {
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-400">Class</p>
-                                        <p className="text-white font-medium">{slotInfo.selectedClass}</p>
+                                        <p className="text-white font-medium">{slot?.selectedClass}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">

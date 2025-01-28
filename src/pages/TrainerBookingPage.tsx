@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {useNavigate, useLocation} from 'react-router';
+import {useNavigate} from 'react-router';
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {Badge} from "@/components/ui/badge";
 import {Check, Clock, ChevronRight, Dumbbell, Shield, Sparkles, User, TimerIcon} from 'lucide-react';
 import useDynamicTitle from "@/hooks/useDynamicTitle.tsx";
+import {useBookingStore} from "@/store/useBookingStore.ts";
 
 interface MembershipPlan {
     id: string;
@@ -57,10 +58,11 @@ const membershipPlans: MembershipPlan[] = [
 export default function TrainerBookingPage() {
     useDynamicTitle("Book Trainer")
     const navigate = useNavigate();
-    const location = useLocation();
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-    const {state} = location;
-    const slotInfo = state?.slot;
+    // const {state} = location;
+    // const slotInfo = state?.slot;
+
+    const {slot, trainerName} = useBookingStore();
 
     const plan: MembershipPlan | undefined = membershipPlans.find(plan => plan.id === selectedPlan);
 
@@ -68,13 +70,14 @@ export default function TrainerBookingPage() {
         if (!selectedPlan) return;
         navigate('/trainers/book-trainer/payment', {
             state: {
-                slotInfo,
                 price: plan?.price,
                 planName: plan?.name,
-                trainerName: state?.trainerName
             }
         });
     };
+
+    console.log("Slot Info: ", slot);
+
 
     return (
         <div className="min-h-screen bg-gray-900 py-32 px-4 sm:px-6 lg:px-8">
@@ -84,7 +87,7 @@ export default function TrainerBookingPage() {
                         Book Your Training Session
                     </h1>
                     <p className="text-gray-300 max-w-2xl mx-auto">
-                        Choose your membership plan and start your fitness journey with {state?.trainerName}
+                        Choose your membership plan and start your fitness journey with {trainerName}
                     </p>
                 </div>
 
@@ -99,7 +102,7 @@ export default function TrainerBookingPage() {
                             </div>
                             <div>
                                 <p className="text-sm text-gray-400">Trainer</p>
-                                <p className="text-white font-medium">{state?.trainerName}</p>
+                                <p className="text-white font-medium">{trainerName}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -108,7 +111,7 @@ export default function TrainerBookingPage() {
                             </div>
                             <div>
                                 <p className="text-sm text-gray-400">Time Slot</p>
-                                <p className="text-white font-medium">{slotInfo?.startTime}</p>
+                                <p className="text-white font-medium">{slot?.startTime}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -117,7 +120,7 @@ export default function TrainerBookingPage() {
                             </div>
                             <div>
                                 <p className="text-sm text-gray-400">Slot Duration</p>
-                                <p className="text-white font-medium">{slotInfo?.slotDuration}</p>
+                                <p className="text-white font-medium">{slot?.slotDuration}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -130,7 +133,7 @@ export default function TrainerBookingPage() {
                                     <Badge
                                         className="bg-purple-500/20 hover:bg-purple-500/50 text-purple-300 border border-purple-500/30"
                                     >
-                                        {slotInfo?.selectedClass}
+                                        {slot?.selectedClass}
                                     </Badge>
                                 </div>
                             </div>

@@ -24,6 +24,8 @@ export default function LoginForm() {
     const location = useLocation()
     const previousPage = location.state?.from?.pathname || '/';
 
+    console.log("Previous page: ", previousPage)
+
     const form = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
         defaultValues: {

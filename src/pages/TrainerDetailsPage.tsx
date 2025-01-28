@@ -32,7 +32,6 @@ export default function TrainerDetailsPage() {
         select: (data) => data.data,
     })
 
-    console.log(trainerInfo)
 
     return (
         <div className="min-h-screen bg-gray-900 py-40 px-4 sm:px-6 lg:px-8">

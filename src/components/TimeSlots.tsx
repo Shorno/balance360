@@ -8,6 +8,7 @@ import React from "react"
 import {LoadingState} from "@/components/data-states/loading-state"
 import {useNavigate} from "react-router"
 import {getTrainerSlots} from "@/api/public.ts";
+import {useBookingStore} from "@/store/useBookingStore.ts";
 
 export type Slot = {
     _id: string
@@ -44,6 +45,7 @@ export default function TimeSlots({
     }, [slotsList])
 
     const navigate = useNavigate()
+
 
     if (isLoading) {
         return (
@@ -116,14 +118,15 @@ export default function TimeSlots({
                                                         book && (
                                                             <Button
                                                                 className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
-                                                                onClick={() =>
+                                                                onClick={() => {
+                                                                    useBookingStore.getState().setBookingInfo(slot, email || "", trainerName || "");
                                                                     navigate(`/trainers/book-trainer`, {
                                                                         state: {
                                                                             slot: slot,
                                                                             trainerName,
                                                                         },
                                                                     })
-                                                                }
+                                                                }}
                                                             >
                                                                 Book Now
                                                                 <ChevronRight className="w-4 h-4 ml-2"/>
@@ -142,4 +145,6 @@ export default function TimeSlots({
         </Card>
     )
 }
+
+
 
