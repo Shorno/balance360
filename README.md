@@ -1,50 +1,44 @@
-# React + TypeScript + Vite
+# Balance360 - Ultimate Fitness Management 🏋️‍♂️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Demo:** [https://balance360.vercel.app/](https://your-deployed-link.com)  
+**Admin Email:** `Shorno_admin@gmail.com` | Password: `Shorno_admin@gmail.com`
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Key Features
 
-## Expanding the ESLint configuration
+1. **🏅 Multi-Role Access System**
+    - Distinct dashboards for Admin, Trainer, and Member roles
+2. **🔍 Class Discovery & Filtering**
+    - Search and filter fitness classes
+3. **🔐 Secure Authentication**
+    - JWT-protected routes with Google/Facebook login options
+4. **💳 Integrated Payment System**
+    - Stripe integration for seamless membership purchases
+5. **📅 Book Training Slot**
+    - Instant booking for fitness classes and personal training
+6. **👥 Trainer Social Profiles**
+    - Connect with trainers via social media links and profiles
+7. **💬 Interactive Fitness Forum**
+    - Community discussions with upvote/downvote system
+8. **📱 Responsive Mobile Design**
+    - Optimized experience across all device sizes
+9. **📧 Newsletter Subscription**
+    - Stay updated with fitness tips and promotions
+10. **🎯 Membership Packages**
+    - Choose from Basic, Standard, and Premium workout plans
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🛠️ Tech Stack
 
-- Configure the top-level `parserOptions` property like this:
+**Frontend**  
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css)
+![React Query](https://img.shields.io/badge/React_Query-FF4154?style=flat&logo=react-query)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+**Backend**  
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js)
+![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+**Services**  
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase)
+![Stripe](https://img.shields.io/badge/Stripe-008CDD?style=flat&logo=stripe)
