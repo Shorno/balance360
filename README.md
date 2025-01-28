@@ -1,6 +1,6 @@
 # Balance360 - Ultimate Fitness Management 🏋️‍♂️
 
-**Live Demo:** [https://balance360.vercel.app/](https://your-deployed-link.com)  
+**Live Demo:** [Balance360](https://balance360.vercel.app/)  
 **Admin Email:** `Shorno_admin@gmail.com` | Password: `Shorno_admin@gmail.com`
 
 
