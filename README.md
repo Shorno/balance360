@@ -1,10 +1,10 @@
-# Balance360
+# Balance360 : Ultimate Fitness Management 
 
 ## Overview
 Balance360 is a web application that helps users track and manage their financial transactions efficiently. It provides a seamless interface for users to add, edit, and view their income and expenses, ensuring better financial management.
 
 ## Screenshot
-![Screenshot](https://res.cloudinary.com/def3zwztt/image/upload/v1738736266/all-devices-black_dl3zs4.png)
+![Screenshot](https://res.cloudinary.com/def3zwztt/image/upload/v1738739363/all-devices-black_hfhboq.png)
 
 ## Key Features
 🏅 **Multi-Role Access System**  
@@ -28,22 +28,27 @@ Stay updated with fitness tips and promotions
 🎯 **Membership Packages**  
 Choose from Basic, Standard, and Premium workout plans  
 
-## npm Packages Used
-- **react-router:** Declarative routing for React
-- **zustand:** A lightweight, scalable state-management solution
-- **firebase:** Firebase authentication and related services
-- **react-hot-toast:** Beautiful notifications for user actions
-- **framer-motion:** Smooth animations for a better UI experience
-- **lucide-react:** A collection of open-source icons for React
+## Key Technologies Used
+### Frontend
+- **React.js**
+- **Vite**
+- **Zustand** (State management)
+- **Firebase** (Authentication & storage)
+- **React Query** (Data fetching & caching)
+- **Stripe.js** (Payment processing)
+- **Tailwind CSS** (Styling)
+- **Framer Motion** (Animations)
+- **Lucide React** (Icons)
+
+### Backend
+- **Node.js**
+- **Express.js**
+- **MongoDB** (Database)
+- **Stripe API** (Payment processing)
+- **JWT Authentication**
 
 ## Backend Repository Overview
 The backend repository powers the Balance360 application, handling user authentication, transaction storage, and financial data processing. Built using JavaScript, it provides secure APIs for smooth operation.
-
-### Backend Technologies Used
-- **JavaScript**
-- **Node.js**
-- **Express**
-- **MongoDB**
 
 ### Backend Repository URL
 [Balance360 Backend](https://github.com/Shorno/balance360-backend)
@@ -98,7 +103,10 @@ npm start
 Create a `.env` file in the root directory of the frontend repository and add the following environment variables:
 
 ```plaintext
+VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
 VITE_BASE_API_URL=your_api_url
+VITE_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+VITE_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_cloudinary_upload_preset
 VITE_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
 VITE_FIREBASE_APP_ID=your_firebase_app_id
 VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
@@ -112,8 +120,9 @@ VITE_FIREBASE_API_KEY=your_firebase_api_key
 Create a `.env` file in the root directory of the backend repository and add the following environment variables:
 
 ```plaintext
+MONGODB_URI=your_mongodb_uri
+STRIPE_SECRET_KEY=your_stripe_secret_key
 JWT_SECRET=your_jwt_secret
-DATABASE_URL=your_database_url
 ```
 
 ## Live Project Link
@@ -122,4 +131,3 @@ DATABASE_URL=your_database_url
 ## Relevant Resources
 - [Balance360 GitHub Repository](https://github.com/Shorno/balance360)
 - [Balance360 Backend GitHub Repository](https://github.com/Shorno/balance360-backend)
-
