@@ -15,13 +15,13 @@ const TeamSection = () => {
     console.log(featuredTrainers)
 
     return (
-        <section className="py-16 bg-gray-900/50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold text-white mb-4">
+                    <h2 className="text-3xl font-bold mb-4">
                         Meet Our Expert Trainers
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
+                    <p className=" max-w-2xl mx-auto text-gray-700 dark:text-gray-400">
                         Work with world-class fitness professionals who are dedicated to helping
                         you achieve your fitness goals through personalized guidance and expertise.
                     </p>
