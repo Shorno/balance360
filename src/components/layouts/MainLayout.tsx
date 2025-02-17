@@ -7,7 +7,7 @@ export default function MainLayout() {
         <>
             <div className={"flex flex-col min-h-screen"}>
                 <Navbar/>
-                <div className={"bg-gray-900"}>
+                <div>
                     <Outlet/>
                 </div>
                 <Footer/>

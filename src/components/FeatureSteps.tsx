@@ -40,9 +40,9 @@ export function FeatureSteps({
     }, [progress, features.length, autoPlayInterval])
 
     return (
-        <div className={cn("py-40 bg-gray-900", className)}>
+        <div className={cn("py-40 bg-white dark:bg-gray-900", className)}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center text-white">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center text-gray-900 dark:text-white">
                     {title}
                 </h2>
 
@@ -54,8 +54,8 @@ export function FeatureSteps({
                                 className={cn(
                                     "flex items-start gap-6 p-6 rounded-lg border transition-all duration-200",
                                     index === currentFeature
-                                        ? "border-purple-500 bg-gray-800"
-                                        : "border-gray-700 bg-gray-800/50"
+                                        ? "border-purple-500 bg-white dark:bg-gray-800 shadow-lg"
+                                        : "border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50"
                                 )}
                                 initial={{opacity: 0.3, y: 20}}
                                 animate={{
@@ -67,16 +67,18 @@ export function FeatureSteps({
                             >
                                 <div className={cn(
                                     "w-12 h-12 rounded-full flex items-center justify-center",
-                                    index === currentFeature ? "bg-purple-500 text-white" : "bg-gray-700 text-gray-300"
+                                    index === currentFeature
+                                        ? "bg-purple-500 text-white"
+                                        : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
                                 )}>
                                     {React.createElement(feature.icon, {size: 24})}
                                 </div>
 
                                 <div className="flex-1">
-                                    <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">
+                                    <h3 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white mb-2">
                                         {feature.title || feature.step}
                                     </h3>
-                                    <p className="text-sm md:text-base text-gray-300">
+                                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-300">
                                         {feature.content}
                                     </p>
                                 </div>
@@ -103,8 +105,7 @@ export function FeatureSteps({
                                                     alt={feature.title || feature.step}
                                                     className="w-full h-full object-cover"
                                                 />
-                                                <div
-                                                    className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"/>
+                                                <div className="absolute inset-0 bg-gradient-to-t from-white/50 via-white/20 to-transparent dark:from-gray-900 dark:via-gray-900/50"/>
                                             </motion.div>
                                         )
                                 )}
@@ -116,4 +117,3 @@ export function FeatureSteps({
         </div>
     )
 }
-
