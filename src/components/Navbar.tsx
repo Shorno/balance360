@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react"
+import {useState} from "react"
 import {motion, AnimatePresence} from "framer-motion"
 import {
     User,
@@ -19,6 +19,7 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import useAuthStore from "@/store/authStore.ts"
 import AuthUserProfile from "@/components/AuthUserProfile.tsx"
 import logo from "/src/assets/default-monochrome-white.svg"
+import logoLight from "/src/assets/default-monochrome-black.svg"
 
 const navItems = [
     {name: "Home", href: "/", icon: Home},
@@ -94,20 +95,11 @@ const borderVariants = {
 export default function Navbar() {
     const {currentUser, logout} = useAuthStore()
     const [isOpen, setIsOpen] = useState(false)
-    const [isScrolled, setIsScrolled] = useState(false)
 
     const handleLogout = () => {
         logout()
         setIsOpen(false)
     }
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50)
-        }
-        window.addEventListener("scroll", handleScroll)
-        return () => window.removeEventListener("scroll", handleScroll)
-    }, [])
 
     const mobileNavItems = currentUser
         ? [...navItems, {name: "Dashboard", href: "/dashboard", icon: LayoutDashboardIcon}]
@@ -115,9 +107,7 @@ export default function Navbar() {
 
     return (
         <motion.nav
-            className={`fixed w-full z-50 transition-all duration-300 ${
-                isScrolled ? "bg-black/50 backdrop-blur-sm shadow-md" : "bg-transparent"
-            }`}
+            className={"fixed w-full z-50 transition-all duration-300 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-sm dark:shadow-md"}
             initial={{y: -100, opacity: 0}}
             animate={{y: 0, opacity: 1}}
             transition={{
@@ -132,9 +122,14 @@ export default function Navbar() {
                     <div className="flex items-center">
                         <Link to="/" className="flex-shrink-0">
                             <img
-                                className={"size-10 object-cover w-full"}
+                                className="size-8 object-cover w-full dark:hidden"
+                                src={logoLight}
+                                alt="logo"
+                            />
+                            <img
+                                className="size-8 object-cover w-full hidden dark:block"
                                 src={logo}
-                                alt={"logo"}
+                                alt="logo"
                             />
                         </Link>
                         <div className="hidden md:block ml-10">
@@ -143,7 +138,7 @@ export default function Navbar() {
                                     <Link
                                         key={item.name}
                                         to={item.href}
-                                        className="text-gray-300 hover:bg-purple-500/30 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
+                                        className="text-gray-700 dark:text-gray-300 hover:bg-purple-100 dark:hover:bg-purple-500/30 hover:text-purple-700 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
                                     >
                                         <motion.span
                                             whileHover={{scale: 1.05}}
@@ -168,7 +163,11 @@ export default function Navbar() {
                         </div>
                     </div>
                     <div className="md:hidden">
-                        <Button variant="ghost" onClick={() => setIsOpen(!isOpen)} className="text-white">
+                        <Button
+                            variant="ghost"
+                            onClick={() => setIsOpen(!isOpen)}
+                            className="text-gray-700 dark:text-gray-300"
+                        >
                             <AnimatePresence mode="wait" initial={false}>
                                 {isOpen ? (
                                     <motion.div
@@ -210,14 +209,14 @@ export default function Navbar() {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        className="md:hidden bg-black/90 backdrop-blur-md overflow-hidden"
+                        className="md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-md overflow-hidden"
                         initial="closed"
                         animate="open"
                         exit="closed"
                         variants={menuVariants}
                     >
                         <motion.div
-                            className="px-4 py-4 space-y-4 bg-purple-900/30"
+                            className="px-4 py-4 space-y-4 bg-purple-100/30 dark:bg-purple-900/30"
                             variants={menuItemVariants}
                         >
                             {currentUser ? (
@@ -226,12 +225,16 @@ export default function Navbar() {
                                         <Avatar>
                                             <AvatarImage src={currentUser?.photoURL || undefined}/>
                                             <AvatarFallback>
-                                                <User className="text-purple-200"/>
+                                                <User className="text-purple-600 dark:text-purple-200"/>
                                             </AvatarFallback>
                                         </Avatar>
                                         <div>
-                                            <h3 className="text-sm font-semibold text-white">{currentUser?.displayName}</h3>
-                                            <p className="text-xs text-gray-300">{currentUser?.email}</p>
+                                            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+                                                {currentUser?.displayName}
+                                            </h3>
+                                            <p className="text-xs text-gray-600 dark:text-gray-300">
+                                                {currentUser?.email}
+                                            </p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -240,6 +243,7 @@ export default function Navbar() {
                                             variant="destructive"
                                             size="sm"
                                             onClick={handleLogout}
+                                            className="dark:bg-red-600 dark:hover:bg-red-700"
                                         >
                                             <LogOutIcon className="h-4 w-4"/>
                                         </Button>
@@ -250,7 +254,7 @@ export default function Navbar() {
                                     <Link
                                         to="/login"
                                         onClick={() => setIsOpen(false)}
-                                        className="text-gray-300 flex items-center gap-2 hover:bg-purple-500/30 hover:text-white px-3 py-2 rounded-md text-base font-medium"
+                                        className="text-gray-700 dark:text-gray-300 flex items-center gap-2 hover:bg-purple-100 dark:hover:bg-purple-500/30 hover:text-purple-700 dark:hover:text-white px-3 py-2 rounded-md text-base font-medium"
                                     >
                                         <LogInIcon className="rotate-180 h-4 w-4"/>
                                         <span>Login</span>
@@ -261,7 +265,7 @@ export default function Navbar() {
                         </motion.div>
 
                         <motion.div
-                            className="h-px bg-purple-500/30"
+                            className="h-px bg-gray-200 dark:bg-gray-700"
                             variants={borderVariants}
                             initial="hidden"
                             animate="visible"
@@ -273,7 +277,7 @@ export default function Navbar() {
                                     <Link
                                         onClick={() => setIsOpen(false)}
                                         to={item.href}
-                                        className="flex items-center space-x-3 text-gray-300 hover:bg-purple-500/30 hover:text-white px-3 py-2 rounded-md text-base font-medium"
+                                        className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:bg-purple-100 dark:hover:bg-purple-500/30 hover:text-purple-700 dark:hover:text-white px-3 py-2 rounded-md text-base font-medium"
                                     >
                                         <item.icon className="h-5 w-5"/>
                                         <span>{item.name}</span>

@@ -126,14 +126,13 @@ export default function PaymentPage() {
     const [paymentSuccess, setPaymentSuccess] = useState(false)
 
     return (
-        <div className="min-h-screen bg-gray-900 py-32 px-4 sm:px-6 lg:px-8">
-            <Card className="max-w-4xl mx-auto bg-gray-800/50 border-gray-700">
-                <CardHeader className="text-center pb-8 border-b border-gray-700">
-                    <CardTitle
-                        className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-32 px-4 sm:px-6 lg:px-8">
+            <Card className="max-w-4xl mx-auto bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 shadow-lg dark:shadow-none">
+                <CardHeader className="text-center pb-8 border-b border-gray-200 dark:border-gray-700">
+                    <CardTitle className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                         Complete Your Booking
                     </CardTitle>
-                    <CardDescription className="text-gray-400 mt-2">
+                    <CardDescription className="text-gray-600 dark:text-gray-400 mt-2">
                         Please review your booking details and complete the payment
                     </CardDescription>
                 </CardHeader>
@@ -143,66 +142,61 @@ export default function PaymentPage() {
                         <div className="space-y-6">
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3">
-                                    <div
-                                        className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                        <User className="w-5 h-5 text-purple-400"/>
+                                    <div className="w-10 h-10 rounded-full bg-purple-100/80 dark:bg-purple-500/20 flex items-center justify-center">
+                                        <User className="w-5 h-5 text-purple-600 dark:text-purple-400"/>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-gray-400">Trainer</p>
-                                        <p className="text-white font-medium">{trainerName}</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">Trainer</p>
+                                        <p className="text-gray-900 dark:text-white font-medium">{trainerName}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <div
-                                        className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                        <Calendar className="w-5 h-5 text-purple-400"/>
+                                    <div className="w-10 h-10 rounded-full bg-purple-100/80 dark:bg-purple-500/20 flex items-center justify-center">
+                                        <Calendar className="w-5 h-5 text-purple-600 dark:text-purple-400"/>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-gray-400">Time Slot</p>
-                                        <p className="text-white font-medium">{slot?.startTime}</p>
-                                        <p className="text-sm text-gray-400">Duration: {slot?.slotDuration}</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">Time Slot</p>
+                                        <p className="text-gray-900 dark:text-white font-medium">{slot?.startTime}</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">Duration: {slot?.slotDuration}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <div
-                                        className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                        <Dumbbell className="w-5 h-5 text-purple-400"/>
+                                    <div className="w-10 h-10 rounded-full bg-purple-100/80 dark:bg-purple-500/20 flex items-center justify-center">
+                                        <Dumbbell className="w-5 h-5 text-purple-600 dark:text-purple-400"/>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-gray-400">Class</p>
-                                        <p className="text-white font-medium">{slot?.selectedClass}</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">Class</p>
+                                        <p className="text-gray-900 dark:text-white font-medium">{slot?.selectedClass}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <div
-                                        className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                        <Package className="w-5 h-5 text-purple-400"/>
+                                    <div className="w-10 h-10 rounded-full bg-purple-100/80 dark:bg-purple-500/20 flex items-center justify-center">
+                                        <Package className="w-5 h-5 text-purple-600 dark:text-purple-400"/>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-gray-400">Package</p>
-                                        <p className="text-white font-medium">{planName}</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">Package</p>
+                                        <p className="text-gray-900 dark:text-white font-medium">{planName}</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <div
-                                        className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                        <DollarSign className="w-5 h-5 text-purple-400"/>
+                                    <div className="w-10 h-10 rounded-full bg-purple-100/80 dark:bg-purple-500/20 flex items-center justify-center">
+                                        <DollarSign className="w-5 h-5 text-purple-600 dark:text-purple-400"/>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-gray-400">Price</p>
-                                        <p className="text-white font-medium">${price}</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">Price</p>
+                                        <p className="text-gray-900 dark:text-white font-medium">${price}</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="border-t border-gray-700 pt-4 mt-6">
-                                <div className="flex items-center gap-2 text-gray-400">
-                                    <CheckCircle className="w-5 h-5 text-green-500"/>
+                            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-6">
+                                <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                                    <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-500"/>
                                     <span>Secure payment processing</span>
                                 </div>
-                                <div className="flex items-center gap-2 text-gray-400 mt-2">
-                                    <Clock className="w-5 h-5 text-blue-500"/>
+                                <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mt-2">
+                                    <Clock className="w-5 h-5 text-blue-600 dark:text-blue-500"/>
                                     <span>Instant booking confirmation</span>
                                 </div>
                             </div>
@@ -210,16 +204,14 @@ export default function PaymentPage() {
 
                         {paymentSuccess ? (
                             <div className="flex flex-col items-center justify-center space-y-4">
-                                <CheckCircle className="w-16 h-16 text-green-500"/>
-                                <h2 className="text-2xl font-bold text-white">Payment Successful!</h2>
-                                <p className="text-gray-400 text-center">
+                                <CheckCircle className="w-16 h-16 text-green-600 dark:text-green-500"/>
+                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Payment Successful!</h2>
+                                <p className="text-gray-600 dark:text-gray-400 text-center">
                                     Thank you for your booking. You will receive a confirmation email shortly.
                                 </p>
                                 <Button
-                                    onClick={() => {
-                                        navigate('/classes')
-                                    }}
-                                    className="mt-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                                    onClick={() => navigate('/classes')}
+                                    className="mt-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 hover:from-purple-700 hover:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600 text-white"
                                 >
                                     Explore More Classes
                                 </Button>
@@ -234,14 +226,14 @@ export default function PaymentPage() {
                                         name="fullName"
                                         render={({field}) => (
                                             <FormItem>
-                                                <FormLabel className="text-gray-200">Full Name</FormLabel>
+                                                <FormLabel className="text-gray-700 dark:text-gray-200">Full Name</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         disabled
                                                         readOnly
                                                         placeholder="John Doe"
                                                         {...field}
-                                                        className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                        className="bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-purple-600 dark:focus:ring-purple-400"
                                                     />
                                                 </FormControl>
                                                 <FormMessage/>
@@ -254,14 +246,14 @@ export default function PaymentPage() {
                                         name="email"
                                         render={({field}) => (
                                             <FormItem>
-                                                <FormLabel className="text-gray-200">Email</FormLabel>
+                                                <FormLabel className="text-gray-700 dark:text-gray-200">Email</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         disabled
                                                         readOnly
                                                         placeholder="john@example.com"
                                                         {...field}
-                                                        className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                        className="bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-purple-600 dark:focus:ring-purple-400"
                                                     />
                                                 </FormControl>
                                                 <FormMessage/>
@@ -274,12 +266,12 @@ export default function PaymentPage() {
                                         name="cardNumber"
                                         render={({field}) => (
                                             <FormItem>
-                                                <FormLabel className="text-gray-200">Card Number</FormLabel>
+                                                <FormLabel className="text-gray-700 dark:text-gray-200">Card Number</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         placeholder="4242 4242 4242 4242"
                                                         {...field}
-                                                        className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                        className="bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-purple-600 dark:focus:ring-purple-400"
                                                     />
                                                 </FormControl>
                                                 <FormMessage/>
@@ -293,12 +285,12 @@ export default function PaymentPage() {
                                             name="expiryDate"
                                             render={({field}) => (
                                                 <FormItem>
-                                                    <FormLabel className="text-gray-200">Expiry Date</FormLabel>
+                                                    <FormLabel className="text-gray-700 dark:text-gray-200">Expiry Date</FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             placeholder="MM/YY"
                                                             {...field}
-                                                            className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                            className="bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-purple-600 dark:focus:ring-purple-400"
                                                         />
                                                     </FormControl>
                                                     <FormMessage/>
@@ -311,12 +303,12 @@ export default function PaymentPage() {
                                             name="cvc"
                                             render={({field}) => (
                                                 <FormItem>
-                                                    <FormLabel className="text-gray-200">CVC</FormLabel>
+                                                    <FormLabel className="text-gray-700 dark:text-gray-200">CVC</FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             placeholder="123"
                                                             {...field}
-                                                            className="bg-gray-800 border-gray-600 text-white focus:ring-purple-400"
+                                                            className="bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-purple-600 dark:focus:ring-purple-400"
                                                         />
                                                     </FormControl>
                                                     <FormMessage/>
@@ -327,13 +319,12 @@ export default function PaymentPage() {
 
                                     <Button
                                         type="submit"
-                                        className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg rounded-lg transition-all duration-200 transform"
+                                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 hover:from-purple-700 hover:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600 text-white text-lg rounded-lg transition-all duration-200 transform"
                                         disabled={paymentMutation.isPending}
                                     >
                                         {paymentMutation.isPending ? (
                                             <>
-                                                <span
-                                                    className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+                                                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
                                                 Processing...
                                             </>
                                         ) : (
@@ -345,8 +336,9 @@ export default function PaymentPage() {
                                     </Button>
 
                                     {paymentMutation.isError && (
-                                        <div className="text-red-400 text-sm mt-4">Payment failed. Please try
-                                            again.</div>
+                                        <div className="text-red-600 dark:text-red-400 text-sm mt-4">
+                                            Payment failed. Please try again.
+                                        </div>
                                     )}
                                 </form>
                             </Form>

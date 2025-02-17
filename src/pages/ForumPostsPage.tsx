@@ -24,13 +24,13 @@ export default function ForumPostsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 py-32 px-6 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-32 px-6 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-4">
                         Fitness Knowledge Hub
                     </h1>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
+                    <p className="text-gray-700 dark:text-gray-300  max-w-2xl mx-auto">
                         Discover expert tips, workout guides, and nutrition advice from our certified trainers.
                     </p>
                 </div>

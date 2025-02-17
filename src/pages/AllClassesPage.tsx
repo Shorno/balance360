@@ -56,13 +56,13 @@ export default function AllClassesPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-900 py-32 px-6 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-32 px-6 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-4">
                         Explore Our Classes
                     </h1>
-                    <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+                    <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
                         Discover a wide range of fitness classes designed to help you achieve your goals. Join our
                         expert trainers and start your fitness journey today.
                     </p>
@@ -72,9 +72,13 @@ export default function AllClassesPage() {
                             placeholder="Search classes..."
                             value={searchQuery}
                             onChange={handleSearchChange}
-                            className="max-w-xs bg-gray-800 text-white border-gray-700 focus:border-purple-500"
+                            className="max-w-xs bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700 focus:border-purple-500"
                         />
-                        <Button type="submit" variant="secondary">
+                        <Button
+                            type="submit"
+                            variant="secondary"
+                            className="bg-purple-100 dark:bg-gray-700 text-purple-700 dark:text-white hover:bg-purple-200 dark:hover:bg-gray-600"
+                        >
                             <Search className="h-4 w-4 mr-2"/>
                             Search
                         </Button>
@@ -86,7 +90,7 @@ export default function AllClassesPage() {
                 ) : (
                     <>
                         {!classesData?.data?.length ? (
-                            <div className="text-center text-gray-400 py-12">
+                            <div className="text-center text-gray-500 dark:text-gray-400 py-12">
                                 <p className="text-xl">No classes found</p>
                                 <p className="mt-2">Try adjusting your search criteria</p>
                             </div>

@@ -1,6 +1,7 @@
 import {Facebook, Linkedin, Instagram, Twitter} from 'lucide-react'
 import {Link} from "react-router";
 import logo from "@/assets/default-monochrome-white.svg";
+import logoLight from "@/assets/default-monochrome-black.svg";
 
 const socialLinks = [
     {icon: Facebook, href: '#', label: 'Facebook'},
@@ -26,9 +27,14 @@ export default function Footer() {
                     <div className="space-y-4">
                         <Link to="/" className="flex items-center">
                             <img
-                                className={"size-32 object-center"}
+                                className="size-32 object-center dark:hidden"
+                                src={logoLight}
+                                alt="logo"
+                            />
+                            <img
+                                className="size-32 object-center hidden dark:block"
                                 src={logo}
-                                alt={"logo"}
+                                alt="logo"
                             />
                         </Link>
                         <p className="text-gray-600 dark:text-gray-300 max-w-sm">

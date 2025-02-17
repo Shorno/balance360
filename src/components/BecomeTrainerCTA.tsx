@@ -13,7 +13,7 @@ export default function BecomeTrainerCTA() {
                     <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
                         Want to Join Our Elite Training Team?
                     </h2>
-                    <p className="text-gray-300 mb-6">
+                    <p className="text-gray-700 dark:text-gray-300 mb-6">
                         Share your passion for fitness and help others achieve their goals. Join our team of
                         professional
                         trainers and make a difference in people's lives.

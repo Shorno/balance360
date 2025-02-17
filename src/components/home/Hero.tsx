@@ -59,7 +59,7 @@ export default function Hero() {
     }, [areImagesLoaded])
 
     return (
-        <div className="relative flex-grow min-h-[70dvh] flex items-center justify-center overflow-hidden">
+        <div className="relative mt-16 flex-grow min-h-[70dvh] flex items-center justify-center overflow-hidden">
             <div
                 className="absolute inset-0 w-full h-full"
                 style={{
