@@ -52,7 +52,7 @@ export default function TrainerApplicationDetailsPage() {
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
 
             {
-                isLoading ? <LoadingState/> : <TrainerApplicationDetails
+                isLoading ? <LoadingState className={"mt-32"}/> : <TrainerApplicationDetails
                     application={applicationDetails}
                 />
             }

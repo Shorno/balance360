@@ -69,11 +69,11 @@ export default function TransactionsTable<TData, TValue>({ columns, data }: Data
                 />
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="ml-auto bg-gray-900">
+                        <Button variant="outline" className="ml-auto">
                             Columns <ChevronDown className="ml-2 h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className={"bg-gray-900"}>
+                    <DropdownMenuContent align="end">
                         {table
                             .getAllColumns()
                             .filter((column) => column.getCanHide())

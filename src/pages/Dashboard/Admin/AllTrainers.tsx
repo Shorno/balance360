@@ -32,7 +32,7 @@ export default function AllTrainers() {
     return (
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
-            {isLoading ? <LoadingState/> : <TrainersListTable data={trainers}/>}
+            {isLoading ? <LoadingState className={"mt-32"}/> : <TrainersListTable data={trainers}/>}
         </>
     )
 }

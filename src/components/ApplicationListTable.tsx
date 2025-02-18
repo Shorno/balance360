@@ -197,7 +197,7 @@ export function ApplicationListTable({data}: { data: TrainerApplicationData[] })
     })
 
     return (
-        <div className="w-full space-y-6">
+        <div className="w-full space-y-6 mt-32  px-4 lg:px-10">
             <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                     <Search className="h-4 w-4 text-muted-foreground"/>
@@ -216,7 +216,7 @@ export function ApplicationListTable({data}: { data: TrainerApplicationData[] })
                             View <ChevronDown className="ml-2 h-4 w-4"/>
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-[150px] bg-gray-900">
+                    <DropdownMenuContent align="end" className="w-[150px]">
                         {table
                             .getAllColumns()
                             .filter((column) => column.getCanHide())

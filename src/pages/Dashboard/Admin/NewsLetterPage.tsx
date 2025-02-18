@@ -74,7 +74,7 @@ export default function NewsLetterPage() {
                 <h1 className="text-3xl font-bold">Newsletter Subscribers</h1>
             </div>
             {
-                isLoading ? <LoadingState/> : (
+                isLoading ? <LoadingState className={"mt-32"}/> : (
                     <SubscribersTable columns={columns} data={subscribers}/>
                 )
             }

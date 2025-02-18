@@ -51,7 +51,7 @@ export default function SubscribersTable<TData, TValue>({ columns, data }: DataT
     })
 
     return (
-        <div className="w-full py-10">
+        <div className="w-full mt-20 px-4 lg:px-10">
             <div className="rounded-md border grid grid-cols-1">
                 <Table className={"shadow-lg shadow-black"}>
                     <TableHeader>

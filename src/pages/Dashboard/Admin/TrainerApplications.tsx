@@ -38,7 +38,7 @@ export default function TrainerApplications() {
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
             {
-                isLoading ? <LoadingState/> : <ApplicationListTable data={applications}/>
+                isLoading ? <LoadingState className={"mt-32"}/> : <ApplicationListTable data={applications}/>
             }
 
         </>
