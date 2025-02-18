@@ -125,15 +125,15 @@ export default function ProfilePage() {
         <>
             <DashboardBreadcrumb breadcrumb={breadcrumb}/>
 
-            <div className="min-h-screen bg-gray-900 sm:p-6 lg:p-8">
+            <div className="mt-32 sm:p-6 lg:p-8">
                 <div className="max-w-3xl mx-auto space-y-6">
-                    <Card className="bg-gray-800/50 border-gray-700">
-                        <CardHeader className="border-b border-gray-700">
+                    <Card className="bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700">
+                        <CardHeader className="border-b border-gray-200 dark:border-gray-700">
                             <CardTitle
-                                className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
                                 Profile Settings
                             </CardTitle>
-                            <CardDescription className="text-gray-400">
+                            <CardDescription className="text-gray-600 dark:text-gray-400">
                                 Manage your account details and preferences
                             </CardDescription>
                         </CardHeader>
@@ -145,7 +145,7 @@ export default function ProfilePage() {
                                         name="profileImage"
                                         render={({field}) => (
                                             <FormItem className="space-y-4">
-                                                <FormLabel className="text-sm font-medium text-gray-400">
+                                                <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-400">
                                                     Profile Picture
                                                 </FormLabel>
                                                 <div className="flex items-center gap-6">
@@ -153,18 +153,18 @@ export default function ProfilePage() {
                                                         <img
                                                             src={field.value}
                                                             alt="Profile"
-                                                            className="w-24 h-24 rounded-full object-cover border-2 border-gray-700"
+                                                            className="w-24 h-24 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700"
                                                         />
                                                         <label
                                                             htmlFor="profile-image"
-                                                            className={`absolute bottom-0 right-0 p-1.5 rounded-full bg-gray-800 border border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                                            className={`absolute bottom-0 right-0 p-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                                             onClick={triggerFileInput}
                                                         >
                                                             {isUploading ? (
                                                                 <Loader2
-                                                                    className="w-4 h-4 mt-1 text-gray-300 animate-spin"/>
+                                                                    className="w-4 h-4 mt-1 text-gray-600 dark:text-gray-300 animate-spin"/>
                                                             ) : (
-                                                                <Camera className="w-4 h-4 text-gray-300"/>
+                                                                <Camera className="w-4 h-4 text-gray-600 dark:text-gray-300"/>
                                                             )}
                                                         </label>
                                                     </div>
@@ -174,11 +174,11 @@ export default function ProfilePage() {
                                                             size="sm"
                                                             onClick={triggerFileInput}
                                                             disabled={isUploading}
-                                                            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white disabled:opacity-50"
+                                                            className="bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 hover:from-purple-700 hover:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600 text-white disabled:opacity-50"
                                                         >
                                                             Change Photo
                                                         </Button>
-                                                        <p className="text-sm text-gray-500">
+                                                        <p className="text-sm text-gray-500 dark:text-gray-400">
                                                             JPG or PNG.
                                                         </p>
                                                     </div>
@@ -191,7 +191,7 @@ export default function ProfilePage() {
                                                     onChange={handleImageUpload}
                                                     disabled={isUploading}
                                                 />
-                                                <FormMessage className="text-red-400"/>
+                                                <FormMessage className="text-red-600 dark:text-red-400"/>
                                             </FormItem>
                                         )}
                                     />
@@ -203,23 +203,23 @@ export default function ProfilePage() {
                                                 name="fullName"
                                                 render={({field}) => (
                                                     <FormItem className="space-y-2">
-                                                        <FormLabel className="text-sm font-medium text-gray-400">
+                                                        <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-400">
                                                             <User className="w-4 h-4 inline-block mr-2 text-gray-500"/>
                                                             Full Name
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
                                                                 {...field}
-                                                                className="bg-gray-800/50 border-gray-700 text-white"
+                                                                className="bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
                                                             />
                                                         </FormControl>
-                                                        <FormMessage className="text-red-400"/>
+                                                        <FormMessage className="text-red-600 dark:text-red-400"/>
                                                     </FormItem>
                                                 )}
                                             />
 
                                             <div className="space-y-2">
-                                                <Label htmlFor="email" className="text-sm font-medium text-gray-400">
+                                                <Label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-400">
                                                     <Mail className="w-4 h-4 inline-block mr-2 text-gray-500"/>
                                                     Email Address
                                                 </Label>
@@ -228,17 +228,17 @@ export default function ProfilePage() {
                                                     type="email"
                                                     value={currentUser?.email || ''}
                                                     disabled
-                                                    className="bg-gray-800/30 border-gray-700 text-gray-400 cursor-not-allowed"
+                                                    className="bg-gray-50 dark:bg-gray-800/30 border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed"
                                                 />
-                                                <p className="text-xs text-gray-500">Email address cannot be changed</p>
+                                                <p className="text-xs text-gray-500 dark:text-gray-400">Email address cannot be changed</p>
                                             </div>
 
                                             <div className="space-y-2">
-                                                <Label className="text-sm font-medium text-gray-400">
+                                                <Label className="text-sm font-medium text-gray-700 dark:text-gray-400">
                                                     <Clock className="w-4 h-4 inline-block mr-2 text-gray-500"/>
                                                     Last Login
                                                 </Label>
-                                                <p className="text-sm text-gray-300">
+                                                <p className="text-sm text-gray-700 dark:text-gray-300">
                                                     {formatLastLogin(currentUser?.metadata.lastSignInTime || "")}
                                                 </p>
                                             </div>
@@ -249,7 +249,7 @@ export default function ProfilePage() {
                                         <Button
                                             type="submit"
                                             disabled={isSubmitting || isUploading || !hasChanges}
-                                            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white disabled:opacity-50"
+                                            className="bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 hover:from-purple-700 hover:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600 text-white disabled:opacity-50"
                                         >
                                             {(isSubmitting || isUploading) && (
                                                 <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
