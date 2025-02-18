@@ -19,7 +19,6 @@ import useAuthStore from "@/store/authStore.ts";
 import {AddNewSlotFormData, addNewSlotSchema, TrainerFormData} from "@/schema/schema.ts";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import {useClassList} from "@/hooks/useClassList.ts";
-import {reactSelectStyles} from "@/lib/selectStyle.ts";
 import {TimePicker} from "@/components/ui/time-picker.tsx";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {toast} from "react-hot-toast";
@@ -218,7 +217,6 @@ export default function AddNewSlotForm() {
                                                         }
                                                         className="react-select-container"
                                                         classNamePrefix="react-select"
-                                                        styles={reactSelectStyles}
                                                     />
                                                 </FormControl>
                                                 <FormMessage/>
@@ -250,7 +248,6 @@ export default function AddNewSlotForm() {
                                                             }
                                                             className="react-select-container"
                                                             classNamePrefix="react-select"
-                                                            styles={reactSelectStyles}
                                                         />
                                                     </FormControl>
                                                     <FormMessage/>

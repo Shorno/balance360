@@ -23,6 +23,7 @@ import {useUserRole} from "@/hooks/useUserRole.ts";
 import {useMemo} from "react";
 import {Skeleton} from "@/components/ui/skeleton.tsx";
 import {Link} from "react-router";
+import {ModeToggle} from "@/components/shared/mode-toggle.tsx";
 
 
 const navigationConfig = {
@@ -176,7 +177,10 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
                         </div>
                     </div>
                 ) : (
-                    <NavUser currentUser={currentUser}/>
+                    <div className={"flex justify-center items-center gap-2"}>
+                        <NavUser currentUser={currentUser}/>
+                        <ModeToggle/>
+                    </div>
                 )}
             </SidebarFooter>
         </Sidebar>

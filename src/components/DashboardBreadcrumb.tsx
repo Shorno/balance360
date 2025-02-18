@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/breadcrumb.tsx";
 import {ReactNode} from "react";
 
-export default function DashboardBreadcrumb({breadcrumb}: { breadcrumb?: ReactNode}) {
+export default function DashboardBreadcrumb({breadcrumb}: { breadcrumb?: ReactNode }) {
     return (
         <header
             className="flex fixed w-full z-50  bg-[#fafafa]  dark:bg-[#18181b] h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 border-b  dark:border-b-gray-600">

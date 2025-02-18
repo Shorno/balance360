@@ -19,7 +19,6 @@ export default function AuthUserProfile() {
     if (!currentUser) {
         return (
             <>
-
                 <Button asChild className="text-white bg-purple-500/70 hover:bg-purple-600">
                     <Link to="/login">Login</Link>
                 </Button>
@@ -41,29 +40,29 @@ export default function AuthUserProfile() {
                     </AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" forceMount className="w-56 bg-black/90 backdrop-blur-md text-gray-300 border-purple-500/30">
+            <DropdownMenuContent align="end" forceMount className="w-56 dark:bg-black/90 backdrop-blur-md dark:text-gray-300 border-purple-500/30">
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none text-white">
+                        <p className="text-sm font-medium leading-none">
                             {currentUser.displayName || 'User'}
                         </p>
-                        <p className="text-xs leading-none text-gray-400">
+                        <p className="text-xs leading-none ">
                             {currentUser.email || ''}
                         </p>
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-purple-500/30" />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem asChild className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
+                    <DropdownMenuItem asChild>
                         <Link to={"/dashboard"}>Dashboard</Link>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator className="bg-purple-500/30" />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem asChild className="hover:bg-purple-500/30 hover:text-white focus:bg-purple-500/30 focus:text-white">
-                        <button onClick={logout} className="w-full text-left">
+                    <DropdownMenuItem asChild>
+                        <Button variant={"destructive"} size={"sm"} onClick={logout} className="w-full">
                             Logout
-                        </button>
+                        </Button>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
             </DropdownMenuContent>

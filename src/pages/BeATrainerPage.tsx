@@ -8,7 +8,7 @@ export default function BecomeATrainerPage() {
 
 
     return (
-        <div className="bg-gray-900 min-h-screen flex justify-center items-center py-32">
+        <div className="min-h-screen dark:bg-gray-900 flex justify-center items-center py-32">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{opacity: 0, y: 20}}
