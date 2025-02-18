@@ -90,7 +90,7 @@ export default function ManageSlots() {
     })
 
     return (
-        <div className="w-full space-y-6">
+        <div className="w-full space-y-6 mt-32 px-4 lg:px-10">
             <div className="flex flex-col gap-4">
                 <h1 className="text-3xl font-bold">Manage Training Slots</h1>
                 <p className="text-muted-foreground">View and manage your training slots and bookings</p>

@@ -18,36 +18,36 @@ export function TimePicker({ onChange }: TimePickerProps) {
         <div className="flex flex-col space-y-2">
             <div className="flex space-x-2" id="time-picker">
                 <Select value={hour} onValueChange={setHour}>
-                    <SelectTrigger className="w-[70px] bg-gray-800 border-gray-600 text-white focus:ring-purple-400">
+                    <SelectTrigger className="w-[70px] dark:border border-gray-300/50">
                         <SelectValue placeholder="Hour" />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                    <SelectContent className="dark:border border-gray-300/50 dark:bg-gray-900">
                         {Array.from({ length: 12 }, (_, i) => i + 1).map((h) => (
-                            <SelectItem key={h} value={h.toString().padStart(2, '0')} className="text-white hover:bg-gray-700">
+                            <SelectItem key={h} value={h.toString().padStart(2, '0')}>
                                 {h.toString().padStart(2, '0')}
                             </SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
                 <Select value={minute} onValueChange={setMinute}>
-                    <SelectTrigger className="w-[70px] bg-gray-800 border-gray-600 text-white focus:ring-purple-400">
+                    <SelectTrigger className="w-[70px] dark:border border-gray-300/50">
                         <SelectValue placeholder="Min" />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                    <SelectContent className="dark:bg-gray-900">
                         {Array.from({ length: 60 }, (_, i) => i).map((m) => (
-                            <SelectItem key={m} value={m.toString().padStart(2, '0')} className="text-white hover:bg-gray-700">
+                            <SelectItem key={m} value={m.toString().padStart(2, '0')} className="">
                                 {m.toString().padStart(2, '0')}
                             </SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
                 <Select value={period} onValueChange={setPeriod}>
-                    <SelectTrigger className="w-[70px] bg-gray-800 border-gray-600 text-white focus:ring-purple-400">
+                    <SelectTrigger className="w-[70px] dark:border border-gray-300/50">
                         <SelectValue placeholder="AM/PM" />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-800 border-gray-700 text-white">
-                        <SelectItem value="AM" className="text-white hover:bg-gray-700">AM</SelectItem>
-                        <SelectItem value="PM" className="text-white hover:bg-gray-700">PM</SelectItem>
+                    <SelectContent className="dark:bg-gray-900">
+                        <SelectItem value="AM">AM</SelectItem>
+                        <SelectItem value="PM">PM</SelectItem>
                     </SelectContent>
                 </Select>
             </div>
