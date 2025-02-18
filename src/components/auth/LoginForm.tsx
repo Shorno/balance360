@@ -16,6 +16,21 @@ import useAuthStore from '@/store/authStore'
 import toast from "react-hot-toast"
 import {LoginFormData, loginSchema} from "@/schema/schema.ts";
 
+const DEMO_CREDENTIALS = {
+    member: {
+        email: "MaishaRahman@gmail.com",
+        password: "MaishaRahman@gmail.com"
+    },
+    trainer: {
+        email: "tonyhortonlife@gamil.com",
+        password: "Tonyhortonlife@gamil.com"
+    },
+    admin: {
+        email: "Shorno_admin@gmail.com",
+        password: "Shorno_admin@gmail.com"
+    }
+};
+
 export default function LoginForm() {
     const {login, signInWithGoogle} = useAuthStore()
     const [isLoading, setIsLoading] = useState(false)
@@ -35,6 +50,11 @@ export default function LoginForm() {
         mode: "onChange"
     })
 
+    const fillCredentials = (role: 'member' | 'trainer' | 'admin') => {
+        const credentials = DEMO_CREDENTIALS[role];
+        form.setValue('email', credentials.email);
+        form.setValue('password', credentials.password);
+    };
 
     const onSubmit = async (values: LoginFormData) => {
         const {email, password} = values;
@@ -68,10 +88,39 @@ export default function LoginForm() {
         }
     }
 
-
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <div className="space-y-2">
+                    <p className="text-sm text-gray-400 text-center mb-2">Quick Login Options:</p>
+                    <div className="grid grid-cols-3 gap-2">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => fillCredentials('member')}
+                            className="bg-blue-600/20 border-blue-500 text-blue-400 hover:bg-blue-600/30"
+                        >
+                            Member
+                        </Button>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => fillCredentials('trainer')}
+                            className="bg-green-600/20 border-green-500 text-green-400 hover:bg-green-600/30"
+                        >
+                            Trainer
+                        </Button>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => fillCredentials('admin')}
+                            className="bg-purple-600/20 border-purple-500 text-purple-400 hover:bg-purple-600/30"
+                        >
+                            Admin
+                        </Button>
+                    </div>
+                </div>
+
                 <Button
                     onClick={handleGoogleSignIn}
                     variant="outline"
@@ -86,8 +135,8 @@ export default function LoginForm() {
                         <div className="w-full border-t border-gray-700"></div>
                     </div>
                     <span className="relative z-10 bg-gray-900 px-4 text-sm text-gray-400">
-            Or continue with
-          </span>
+                        Or continue with
+                    </span>
                 </div>
 
                 <div className="space-y-4">
@@ -151,4 +200,3 @@ export default function LoginForm() {
         </Form>
     )
 }
-
