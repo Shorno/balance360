@@ -12,18 +12,18 @@ import {
     useReactTable,
 } from "@tanstack/react-table"
 import {ChevronDown, Search} from "lucide-react"
-import {Button} from "@/components/ui/button"
+import {Button} from "@/components/ui/button.tsx"
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {Input} from "@/components/ui/input"
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
-import useAuthStore from "@/store/authStore"
-import {cn} from "@/lib/utils"
-import {columns} from "@/pages/Trainer/Colums.tsx";
+} from "@/components/ui/dropdown-menu.tsx"
+import {Input} from "@/components/ui/input.tsx"
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.tsx"
+import useAuthStore from "@/store/authStore.ts"
+import {cn} from "@/lib/utils.ts"
+import {columns} from "@/pages/Dashboard/Trainer/Colums.tsx";
 import {LoadingState} from "@/components/data-states/loading-state.tsx";
 import {getTrainerSlotsDetails} from "@/api/public.ts";
 

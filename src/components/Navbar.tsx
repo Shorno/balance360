@@ -10,7 +10,7 @@ import {
     MessageSquare,
     LogInIcon,
     LogOutIcon,
-    LayoutDashboardIcon
+    LayoutDashboardIcon, UserIcon
 } from "lucide-react"
 import {Button} from "@/components/ui/button"
 import {Link} from "react-router"
@@ -33,6 +33,8 @@ const userNav = [
     {name: "All Trainers", href: "/trainers", icon: Users},
     {name: "All Classes", href: "/classes", icon: Dumbbell},
     {name: "Community", href: "/community", icon: MessageSquare},
+    {name: "My Profile", href: "/my-profile", icon: UserIcon},
+
 ]
 
 const menuVariants = {

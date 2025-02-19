@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Button} from "@/components/ui/button";
+import {Button} from "@/components/ui/button.tsx";
 import {TrashIcon} from 'lucide-react';
 import {
     Dialog,
@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog.tsx";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {removeTrainer} from "@/api/admin.ts";
 import toast from "react-hot-toast";

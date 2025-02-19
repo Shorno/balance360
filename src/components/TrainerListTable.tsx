@@ -36,7 +36,7 @@ import {
 import {cn} from "@/lib/utils"
 import {Badge} from "@/components/ui/badge"
 import {TrainerApplicationData} from "@/types";
-import {TrainerActions} from "@/pages/Trainer/TrainerActions.tsx";
+import {TrainerActions} from "@/pages/Dashboard/Trainer/TrainerActions.tsx";
 
 const columns: ColumnDef<TrainerApplicationData>[] = [
     {

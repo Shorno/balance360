@@ -1,11 +1,20 @@
 import {api, secureApi} from "@/lib/axios.ts";
 import {User} from "firebase/auth";
 
-export const createUserInDB = async (user: User) => {
+interface ExtendedUser extends User {
+    bio?: string;
+    website?: string;
+    location?: string;
+}
+
+export const createUserInDB = async (user: ExtendedUser) => {
     const dbUser = {
         email: user.email,
         displayName: user.displayName,
-        photoURL: user.photoURL
+        photoURL: user.photoURL,
+        bio: user.bio,
+        website: user.website,
+        location: user.location
     };
 
     const response = await secureApi.post('/users', dbUser);
@@ -41,8 +50,3 @@ export const getAllUsers = async () => {
     const response = await secureApi.get(`/users/all`);
     return response.data;
 }
-
-// export const getUsersWithReviews = async () => {
-//     const response = await secureApi.get(`/users/reviews`);
-//     return response.data;
-// }

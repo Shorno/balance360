@@ -1,6 +1,6 @@
 import DashboardBreadcrumb from "@/components/DashboardBreadcrumb.tsx";
 import {BreadcrumbItem, BreadcrumbPage} from "@/components/ui/breadcrumb.tsx";
-import ManageSlots from "@/pages/Trainer/ManageSlots.tsx";
+import ManageSlots from "@/pages/Dashboard/Trainer/ManageSlots.tsx";
 
 
 const breadcrumb =

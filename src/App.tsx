@@ -13,9 +13,9 @@ import TrainerApplicationDetailsPage from "@/pages/Dashboard/Admin/TrainerApplic
 import AllTrainers from "@/pages/Dashboard/Admin/AllTrainers.tsx";
 import ActivityLogPage from "@/pages/Dashboard/Member/ActivityLogPage.tsx";
 import ProfilePage from "@/pages/Dashboard/Member/ProfilePage.tsx";
-import AddNewSlotPage from "@/pages/Trainer/AddNewSlotPage.tsx";
+import AddNewSlotPage from "@/pages/Dashboard/Trainer/AddNewSlotPage.tsx";
 import AddClassPage from "@/pages/Dashboard/Admin/AddClassPage.tsx";
-import ManageSlotsPage from "@/pages/Trainer/ManageSlotsPage.tsx";
+import ManageSlotsPage from "@/pages/Dashboard/Trainer/ManageSlotsPage.tsx";
 import DashboardLayout from "@/components/layouts/DashboardLayout.tsx";
 import {DashboardRedirect} from "@/components/layouts/Routes/DashboardRedirect.tsx";
 import AllClassesPage from "@/pages/AllClassesPage.tsx";
@@ -30,6 +30,7 @@ import ForumPostsPage from "@/pages/ForumPostsPage.tsx";
 import BookedTrainerPage from "@/pages/Dashboard/Member/BookedTrainerPage.tsx";
 import ScrollToTop from "@/lib/ScrollToTop.tsx";
 import NotFound from "@/pages/NotFound.tsx";
+import MyProfilePage from "@/pages/MyProfilePage.tsx";
 
 function App() {
     return (
@@ -49,6 +50,7 @@ function App() {
                             <Route path="/become-a-trainer" element={<BecomeATrainerPage/>}/>
                             <Route path="/trainers/book-trainer" element={<TrainerBookingPage/>}/>
                             <Route path={"/trainers/book-trainer/payment"} element={<PaymentPage/>}/>
+                            <Route path="/my-profile" element={<MyProfilePage/>}/>
                         </Route>
                     </Route>
 

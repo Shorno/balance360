@@ -1,10 +1,10 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import UserList from "@/pages/Trainer/UserList"
-import {TrainerSlot} from "@/pages/Trainer/ManageSlots.tsx";
-import {SlotsAction} from "@/pages/Trainer/SlotsAction.tsx";
+import { Button } from "@/components/ui/button.tsx"
+import { Badge } from "@/components/ui/badge.tsx"
+import UserList from "@/pages/Dashboard/Trainer/UserList.tsx"
+import {TrainerSlot} from "@/pages/Dashboard/Trainer/ManageSlots.tsx";
+import {SlotsAction} from "@/pages/Dashboard/Trainer/SlotsAction.tsx";
 
 export const columns: ColumnDef<TrainerSlot>[] = [
     {
