@@ -12,10 +12,10 @@ const socialLinks = [
 
 const navLinks = [
     {name: 'Home', href: '/'},
-    {name: 'About', href: '/about'},
-    {name: 'Features', href: '/features'},
-    {name: 'Service', href: '/service'},
-    {name: 'Exercise', href: '/exercise'}
+    {name: 'Trainers', href: '/trainers'},
+    {name: 'Classes', href: '/classes'},
+    {name: 'Community', href: '/community'},
+    {name: 'Become a Trainer', href: '/become-a-trainer'}
 ]
 
 export default function Footer() {
@@ -85,7 +85,7 @@ export default function Footer() {
                                 href="mailto:balance360@gmail.com"
                                 className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                             >
-                                fittrack@gmail.com
+                                balance360@gmail.com
                             </a>
                         </div>
                     </div>
@@ -94,4 +94,3 @@ export default function Footer() {
         </footer>
     )
 }
-
