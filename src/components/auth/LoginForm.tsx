@@ -39,7 +39,6 @@ export default function LoginForm() {
     const location = useLocation()
     const previousPage = location.state?.from?.pathname || '/';
 
-    console.log("Previous page: ", previousPage)
 
     const form = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
@@ -50,10 +49,11 @@ export default function LoginForm() {
         mode: "onChange"
     })
 
-    const fillCredentials = (role: 'member' | 'trainer' | 'admin') => {
+    const fillCredentials = async (role: 'member' | 'trainer' | 'admin') => {
         const credentials = DEMO_CREDENTIALS[role];
         form.setValue('email', credentials.email);
         form.setValue('password', credentials.password);
+        await form.trigger()
     };
 
     const onSubmit = async (values: LoginFormData) => {

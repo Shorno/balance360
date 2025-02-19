@@ -63,6 +63,7 @@ function App() {
                                 <Route element={<RoleProtectedRoute allowedRoles={[Role.Admin]}/>}>
                                     <Route path="admin">
                                         <Route path="trainers" element={<AllTrainers/>}/>
+                                        <Route path="profile" element={<ProfilePage/>}/>
                                         <Route path="trainers/applications" element={<TrainerApplications/>}/>
                                         <Route path="trainers/applications/:_id"
                                                element={<TrainerApplicationDetailsPage/>}/>
@@ -76,6 +77,7 @@ function App() {
 
                                 <Route element={<RoleProtectedRoute allowedRoles={[Role.Trainer]}/>}>
                                     <Route path="trainer">
+                                        <Route path="profile" element={<ProfilePage/>}/>
                                         <Route path="slots" element={<ManageSlotsPage/>}/>
                                         <Route path="slots/new-slot" element={<AddNewSlotPage/>}/>
                                         <Route path="add-forum" element={<CreatePostForm/>}/>

@@ -111,7 +111,7 @@ export default function ManageSlots() {
                             View <ChevronDown className="ml-2 h-4 w-4"/>
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-[150px] bg-gray-900">
+                    <DropdownMenuContent align="end" className="w-[150px] ">
                         {table
                             .getAllColumns()
                             .filter((column) => column.getCanHide())

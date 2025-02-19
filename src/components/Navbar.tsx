@@ -21,7 +21,14 @@ import AuthUserProfile from "@/components/AuthUserProfile.tsx"
 import logo from "/src/assets/default-monochrome-white.svg"
 import logoLight from "/src/assets/default-monochrome-black.svg"
 
-const navItems = [
+
+const publicNav = [
+    {name: "Home", href: "/", icon: Home},
+    {name: "All Trainers", href: "/trainers", icon: Users},
+    {name: "All Classes", href: "/classes", icon: Dumbbell},
+]
+
+const userNav = [
     {name: "Home", href: "/", icon: Home},
     {name: "All Trainers", href: "/trainers", icon: Users},
     {name: "All Classes", href: "/classes", icon: Dumbbell},
@@ -95,6 +102,7 @@ const borderVariants = {
 export default function Navbar() {
     const {currentUser, logout} = useAuthStore()
     const [isOpen, setIsOpen] = useState(false)
+    const navItems = currentUser ? userNav : publicNav;
 
     const handleLogout = () => {
         logout()

@@ -59,6 +59,11 @@ const navigationConfig = {
                 url: "/dashboard/admin/add-forum",
                 icon: ListPlusIcon
             },
+            {
+                name: "Profile",
+                url: "/dashboard/admin/profile",
+                icon: UserIcon
+            },
         ],
     },
     trainer: {
@@ -82,6 +87,11 @@ const navigationConfig = {
                 name: "Add Forum",
                 url: "/dashboard/trainer/add-forum",
                 icon: ListPlusIcon
+            },
+            {
+                name: "Profile",
+                url: "/dashboard/trainer/profile",
+                icon: UserIcon
             },
         ],
     },

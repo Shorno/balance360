@@ -7,14 +7,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import useAuthStore from "@/store/authStore";
-import { UserIcon } from 'lucide-react';
-import { Link } from "react-router";
-import { Button } from "@/components/ui/button";
+import {UserIcon} from 'lucide-react';
+import {Link} from "react-router";
+import {Button} from "@/components/ui/button";
+import {useUserRole} from "@/hooks/useUserRole.ts";
 
 export default function AuthUserProfile() {
-    const { currentUser, logout } = useAuthStore()
+    const {currentUser, logout} = useAuthStore()
+    const role = useUserRole();
 
     if (!currentUser) {
         return (
@@ -36,11 +38,12 @@ export default function AuthUserProfile() {
                         alt={currentUser.displayName || undefined}
                     />
                     <AvatarFallback>
-                        <UserIcon className="text-gray-300" />
+                        <UserIcon className="text-gray-300"/>
                     </AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" forceMount className="w-56 dark:bg-black/90 backdrop-blur-md dark:text-gray-300 border-purple-500/30">
+            <DropdownMenuContent align="end" forceMount
+                                 className="w-56 dark:bg-black/90 backdrop-blur-md dark:text-gray-300 border-purple-500/30">
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                         <p className="text-sm font-medium leading-none">
@@ -51,13 +54,16 @@ export default function AuthUserProfile() {
                         </p>
                     </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-purple-500/30" />
+                <DropdownMenuSeparator className="bg-purple-500/30"/>
                 <DropdownMenuGroup>
                     <DropdownMenuItem asChild>
                         <Link to={"/dashboard"}>Dashboard</Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                        <Link to={`dashboard/${role}/profile`}>Profile</Link>
+                    </DropdownMenuItem>
                 </DropdownMenuGroup>
-                <DropdownMenuSeparator className="bg-purple-500/30" />
+                <DropdownMenuSeparator className="bg-purple-500/30"/>
                 <DropdownMenuGroup>
                     <DropdownMenuItem asChild>
                         <Button variant={"destructive"} size={"sm"} onClick={logout} className="w-full">
